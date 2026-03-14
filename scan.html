@@ -168,7 +168,7 @@
     }
     .overlay-success .icon { font-size: 5em; margin-bottom: 20px; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .overlay-success h2 { color: var(--gold-primary); font-size: 1.8em; margin-bottom: 10px; text-shadow: 0 0 20px var(--gold-dark); }
-    .overlay-success p { color: #fff; font-size: 1.1em; margin-bottom: 30px; }
+    .overlay-success p { color: #fff; font-size: 1.1em; margin-bottom: 30px; text-align: center; white-space: pre-line; }
     .btn-return { background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; border: none; padding: 15px 30px; border-radius: 20px; font-size: 1em; font-weight: bold; cursor: pointer; text-decoration: none; }
     
     @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -226,6 +226,9 @@
   </div>
 
   <script>
+    // 🛑 ใส่ API URL ของ Web App (Google Apps Script) ของคุณลงในช่องว่างด้านล่างนี้เลยครับ 🛑
+    const HARDCODED_API_URL = "ใส่_API_URL_ของคุณที่นี่"; 
+    
     // --- Helper Functions ---
     function safeGetStorage(key, defaultVal) {
       try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
@@ -259,8 +262,8 @@
     if (scanType === 'เข้างาน') hTitle.classList.add('in');
     else hTitle.classList.add('out');
 
-    // แก้ไข: ดึง API URL อย่างปลอดภัย (รองรับ api-config.js)
-    const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
+    // ดึง API URL โดยใช้ลิงก์ที่บังคับกรอก หรือ ดึงจาก Cache (ถ้ามี)
+    let apiUrl = HARDCODED_API_URL || safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
     
     let knownFaces = [];
     let isProcessing = false;
@@ -273,8 +276,8 @@
 
     // --- Initialization ---
     async function init() {
-      if (!apiUrl) {
-        setStatus('เกิดข้อผิดพลาด', 'ไม่พบ API URL กรุณาตั้งค่าก่อน', '⚠️');
+      if (!apiUrl || apiUrl === "ใส่_API_URL_ของคุณที่นี่") {
+        setStatus('เกิดข้อผิดพลาด', 'ไม่พบ API URL กรุณาตั้งค่าในหน้า Config ก่อน', '⚠️');
         return;
       }
 
