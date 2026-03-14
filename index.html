@@ -191,7 +191,6 @@
     .api-warning { display: none; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fcd34d; border-radius: 16px; padding: 12px 20px; width: 100%; max-width: 400px; margin-bottom: 20px; font-size: 0.85em; text-align: center; }
     .api-warning a { color: #fff; text-decoration: underline; }
 
-    /* อนิเมชันกระดิ่งสั่น */
     @keyframes shake {
       0% { transform: rotate(0deg); }
       25% { transform: rotate(-15deg); }
@@ -200,7 +199,7 @@
       100% { transform: rotate(0deg); }
     }
 
-    /* สไตล์สำหรับ AI & Broadcast */
+    /* สไตล์สำหรับ Translator & Broadcast */
     .fab-ai {
       position: fixed; bottom: 30px; right: 25px;
       background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
@@ -218,32 +217,32 @@
       animation: fadeInDown 0.5s ease;
     }
 
-    /* สไตล์สำหรับผังองค์กร (Org Chart) */
     .org-container { background: rgba(0,0,0,0.6); border-radius: 16px; padding: 15px 10px; max-height: 50vh; overflow-y: auto; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px; text-align: center; }
     .org-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; position: relative; }
     .org-row.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .org-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1; }
     
-    /* Level 1: Owner */
     .org-card.level-1 { background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(0,0,0,0.5)); border-color: var(--gold-primary); box-shadow: 0 0 15px rgba(212,175,55,0.2); }
     .org-card.level-1 .name { color: var(--gold-light); font-size: 1.1em; font-weight: 700; }
     .org-card.level-1 .role { color: var(--gold-primary); }
     
-    /* Level 2: Managers */
     .org-card.level-2 { border-color: rgba(212,175,55,0.5); }
     .org-card.level-2 .name { color: #fff; font-weight: 600; }
     
-    /* Other Levels */
     .org-card .name { color: #e2e8f0; font-size: 0.95em; font-weight: 500; }
     .org-card .role { color: var(--text-sub); font-size: 0.75em; margin-top: 2px; }
-    
-    /* เส้นเชื่อมต่อในผัง (ลูกศรลง) */
     .org-arrow { color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px; }
     
-    /* Scrollbar */
     .org-container::-webkit-scrollbar { width: 6px; }
     .org-container::-webkit-scrollbar-track { background: transparent; }
     .org-container::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 10px; }
+
+    /* สไตล์เฉพาะส่วนแปลภาษา */
+    .trans-box { width: 100%; padding: 15px; border-radius: 16px; border: 1px solid rgba(212,175,55,0.3); background: rgba(0,0,0,0.6); color: white; font-size: 1.1em; outline: none; resize: none; margin-bottom: 10px; font-family: 'Sarabun'; }
+    .trans-box:focus { border-color: var(--gold-primary); }
+    .trans-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+    .trans-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); border-radius: 12px; padding: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .trans-btn.active { background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; border-color: transparent; }
 
   </style>
 </head>
@@ -315,7 +314,6 @@
 
     <!-- --- Secondary List Actions --- -->
 
-    <!-- เมนูผังองค์กร -->
     <a href="#" onclick="openModal('orgChartModal')" class="card list-item c-org">
       <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>
       <div class="text-group">
@@ -385,7 +383,6 @@
       <div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div>
       
       <div class="org-container">
-        
         <!-- Level 1: Owner -->
         <div class="org-row">
           <div class="org-card level-1">
@@ -454,9 +451,7 @@
           <div class="org-card"><div class="name">แจ็ค</div><div class="role">ช่างทั่วไป</div></div>
           <div class="org-card"><div class="name">ตัวเล็ก</div><div class="role">ช่างทั่วไป</div></div>
         </div>
-
       </div>
-
       <button class="btn btn-outline" onclick="closeModal('orgChartModal')" id="t-btn-cancel6" style="margin-top: 5px;">ปิดหน้าต่าง</button>
     </div>
   </div>
@@ -586,37 +581,47 @@
     </div>
   </div>
 
-  <!-- Modal: AI Assistant -->
-  <div id="aiModal" class="modal-overlay">
-    <div class="modal-box" style="padding: 20px; max-width: 420px; display: flex; flex-direction: column; height: 85vh;">
-      <div class="modal-title" style="color: var(--gold-light); display: flex; align-items: center; justify-content: center; gap: 8px;">
-        ✨ AI ผู้ช่วยอัจฉริยะ
+  <!-- Modal: เครื่องมือแปลภาษา (Translator API แบบไม่ใช้ Key) -->
+  <div id="translatorModal" class="modal-overlay">
+    <div class="modal-box" style="padding: 20px; max-width: 420px; display: flex; flex-direction: column;">
+      <div class="modal-title" style="color: var(--gold-light); display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 5px;">
+        🌐 ระบบแปลภาษา & ออกเสียง
       </div>
-      <div class="modal-desc" style="margin-bottom: 15px;">สอบถามข้อมูล หรือพูดคุยด้วยเสียงได้เลย</div>
+      <div class="modal-desc" style="margin-bottom: 15px;">พูดหรือพิมพ์เพื่อแปลภาษาฟรี 100%</div>
       
-      <div id="aiChatBox" style="flex: 1; background: rgba(0,0,0,0.5); border-radius: 16px; border: 1px solid rgba(212,175,55,0.2); padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; text-align: left;">
-         <div style="background: rgba(212,175,55,0.1); padding: 12px 16px; border-radius: 18px; border-bottom-left-radius: 4px; color: #fff; align-self: flex-start; max-width: 85%; font-size: 0.95em; line-height: 1.5; border: 1px solid rgba(212,175,55,0.2);">
-           สวัสดีครับ! ผมคือ AI ของ 88 Designs มีอะไรให้ผมช่วยไหมครับ? 😊 (พิมพ์ข้อความ หรือกดปุ่มไมค์เพื่อพูดได้เลยครับ)
-         </div>
-      </div>
-
-      <div style="display: flex; gap: 10px; align-items: center;">
-        <button id="btnVoice" onclick="startVoiceRecognition()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 50px; height: 50px; color: #fff; font-size: 1.4em; cursor: pointer; flex-shrink: 0; transition: 0.3s; display: flex; align-items: center; justify-content: center;">
+      <!-- Input Text -->
+      <div style="position: relative; margin-bottom: 15px;">
+        <textarea id="transInput" class="trans-box" rows="3" placeholder="พิมพ์ข้อความ หรือกดไมค์เพื่อพูด..."></textarea>
+        <button id="btnTransVoice" onclick="startTransVoice()" style="position: absolute; right: 10px; bottom: 20px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 40px; height: 40px; color: #fff; font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;">
           🎤
         </button>
-        <input type="text" id="aiInput" style="flex: 1; padding: 14px; border-radius: 20px; border: 1px solid rgba(212,175,55,0.4); background: rgba(0,0,0,0.6); color: #fff; outline: none; font-family: 'Sarabun';" placeholder="พิมพ์ถาม AI...">
-        <button onclick="sendAiMessage()" style="background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); border: none; border-radius: 20px; padding: 0 20px; height: 50px; color: #000; font-weight: bold; cursor: pointer; flex-shrink: 0;">
-          ส่ง
+      </div>
+
+      <!-- Language Selector -->
+      <div style="color: var(--text-sub); font-size: 0.85em; text-align: left; margin-bottom: 5px;">เลือกภาษาที่ต้องการแปล:</div>
+      <div class="trans-btn-group">
+        <button class="trans-btn active" onclick="setTargetLang('th', this)">🇹🇭 ไทย</button>
+        <button class="trans-btn" onclick="setTargetLang('en', this)">🇬🇧 English</button>
+        <button class="trans-btn" onclick="setTargetLang('my', this)">🇲🇲 Myanmar</button>
+        <button class="trans-btn" onclick="setTargetLang('zh-CN', this)">🇨🇳 Chinese</button>
+      </div>
+
+      <!-- Output Text -->
+      <div style="position: relative;">
+        <textarea id="transOutput" class="trans-box" rows="3" placeholder="ผลลัพธ์คำแปล..." readonly style="background: rgba(212,175,55,0.05); color: var(--gold-light); border-color: rgba(212,175,55,0.5);"></textarea>
+        <button onclick="playTranslatedVoice()" style="position: absolute; right: 10px; bottom: 20px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; width: 40px; height: 40px; color: var(--gold-light); font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;">
+          🔊
         </button>
       </div>
-      
-      <button class="btn btn-outline" onclick="closeModal('aiModal')" style="margin-top: 15px;">ปิดหน้าต่าง</button>
+
+      <button class="btn btn-primary" onclick="doTranslate()" style="margin-top: 15px;">แปลภาษาเลย</button>
+      <button class="btn btn-outline" onclick="closeModal('translatorModal')">ปิดหน้าต่าง</button>
     </div>
   </div>
 
-  <!-- Floating Action Button for AI -->
-  <div class="fab-ai" onclick="openModal('aiModal')">
-    🤖
+  <!-- Floating Action Button for Translator -->
+  <div class="fab-ai" onclick="openModal('translatorModal')">
+    🌐
   </div>
 
   <script>
@@ -791,7 +796,6 @@
         setTxt('t-btn-cancel3', d['btn-close']);
         setTxt('t-btn-cancel4', d['btn-close']);
         setTxt('t-btn-cancel5', d['btn-close']);
-        setTxt('t-btn-cancel6', d['btn-close']);
         setTxt('t-btn-cancel-pwd', d['btn-cancel']);
         
         setTxt('btnSubmitLeave', d['btn-submit-l']);
@@ -992,145 +996,113 @@
       finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-search']; }
     }
 
-    // --- AI Assistant Logic ---
-    const apiKey = "AIzaSyDMku1GakADynMV3d-xupmM-Y2y_eY2TZ8"; 
+    // ==========================================
+    // --- ระบบแปลภาษาฟรี 100% (Translator API) ---
+    // ==========================================
+    let targetLangCode = 'th'; // ค่าเริ่มต้นแปลเป็นภาษาไทย
 
-    document.getElementById('aiInput').addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') sendAiMessage();
-    });
+    function setTargetLang(lang, btnElement) {
+      targetLangCode = lang;
+      // ลบสีปุ่มเก่า
+      document.querySelectorAll('.trans-btn').forEach(b => b.classList.remove('active'));
+      // ใส่สีปุ่มที่เพิ่งกด
+      btnElement.classList.add('active');
+    }
 
-    async function sendAiMessage() {
-      const inputEl = document.getElementById('aiInput');
+    async function doTranslate() {
+      const inputEl = document.getElementById('transInput');
       const text = inputEl.value.trim();
+      const outputEl = document.getElementById('transOutput');
+
       if (!text) return;
-      
-      appendAiMessage(text, 'user');
-      inputEl.value = '';
-      const loadingId = appendAiMessage('กำลังคิด...', 'ai', true);
-      
+      outputEl.value = "กำลังแปล...";
+
       try {
-        console.log("🚀 Model updated to: gemini-1.5-flash-latest");
+        // เรียกใช้ Google Translate API (แบบฟรี ไม่ต้องใช้ Key)
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLangCode}&dt=t&q=${encodeURIComponent(text)}`;
         
-        // แก้ไข: เติม -latest ต่อท้ายชื่อโมเดล เพื่อให้ระบบ Google ดึงเวอร์ชันที่ใช้งานได้จริงมาให้
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
-        const payload = {
-          contents: [{ parts: [{ text: text }] }],
-          systemInstruction: { parts: [{ text: "คุณคือ AI Assistant ของบริษัท 88 Designs ทำหน้าที่ตอบคำถามพนักงานแบบสั้นๆ เป็นมิตร มีอารมณ์ขัน และสุภาพ" }] }
-        };
-        
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        
+        const res = await fetch(url);
         const data = await res.json();
         
-        if (data.error) {
-           throw new Error(data.error.message);
+        let translatedText = "";
+        if (data && data[0]) {
+           data[0].forEach(part => {
+             if (part[0]) translatedText += part[0];
+           });
         }
-
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "ขออภัยครับ ไม่สามารถตอบคำถามได้ในขณะนี้";
         
-        updateAiMessage(loadingId, reply);
-        speakText(reply); // เล่นเสียงอัตโนมัติ
-      } catch (err) {
-        updateAiMessage(loadingId, "เกิดข้อผิดพลาด: " + err.message);
+        outputEl.value = translatedText;
+        // ให้อ่านออกเสียงอัตโนมัติเมื่อแปลเสร็จ
+        speakTranslatedText(translatedText, targetLangCode);
+        
+      } catch(e) {
+        outputEl.value = "เกิดข้อผิดพลาดในการแปล กรุณาลองใหม่ครับ";
       }
     }
 
-    function appendAiMessage(text, sender, isLoading = false) {
-      const chatBox = document.getElementById('aiChatBox');
-      const msgDiv = document.createElement('div');
-      const id = 'msg-' + Date.now();
-      msgDiv.id = id;
-      msgDiv.style.padding = '12px 16px';
-      msgDiv.style.borderRadius = '18px';
-      msgDiv.style.maxWidth = '85%';
-      msgDiv.style.marginBottom = '10px';
-      msgDiv.style.lineHeight = '1.5';
-      msgDiv.style.fontSize = '0.95em';
-      
-      if (sender === 'user') {
-        msgDiv.style.background = 'rgba(255,255,255,0.15)';
-        msgDiv.style.color = '#fff';
-        msgDiv.style.alignSelf = 'flex-end';
-        msgDiv.style.borderBottomRightRadius = '4px';
-      } else {
-        msgDiv.style.background = 'rgba(212,175,55,0.15)';
-        msgDiv.style.color = '#fff';
-        msgDiv.style.alignSelf = 'flex-start';
-        msgDiv.style.borderBottomLeftRadius = '4px';
-        msgDiv.style.border = '1px solid rgba(212,175,55,0.3)';
-        if(isLoading) msgDiv.style.opacity = '0.6';
-      }
-      
-      let formattedText = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-      msgDiv.innerHTML = formattedText;
-      
-      chatBox.appendChild(msgDiv);
-      chatBox.scrollTop = chatBox.scrollHeight;
-      return id;
-    }
-
-    function updateAiMessage(id, text) {
-      const msgDiv = document.getElementById(id);
-      if (msgDiv) {
-        let formattedText = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-        msgDiv.innerHTML = formattedText;
-        msgDiv.style.opacity = '1';
-        const chatBox = document.getElementById('aiChatBox');
-        chatBox.scrollTop = chatBox.scrollHeight;
+    function playTranslatedVoice() {
+      const text = document.getElementById('transOutput').value;
+      if (text && text !== "กำลังแปล..." && text !== "เกิดข้อผิดพลาดในการแปล กรุณาลองใหม่ครับ") {
+        speakTranslatedText(text, targetLangCode);
       }
     }
 
-    // --- Web Speech API (Voice Recognition) ---
-    let recognition;
-    if ('webkitSpeechRecognition' in window) {
-      recognition = new webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      
-      recognition.onstart = function() {
-        const btn = document.getElementById('btnVoice');
-        btn.style.background = 'var(--neon-out)';
-        btn.style.boxShadow = '0 0 15px var(--neon-out)';
-      };
-      
-      recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        document.getElementById('aiInput').value = transcript;
-        sendAiMessage(); // ค้นหาอัตโนมัติเมื่อพูดเสร็จ
-      };
-      
-      recognition.onerror = function(event) { resetVoiceBtn(); };
-      recognition.onend = function() { resetVoiceBtn(); };
-    }
-
-    function resetVoiceBtn() {
-      const btn = document.getElementById('btnVoice');
-      btn.style.background = 'rgba(255,255,255,0.1)';
-      btn.style.boxShadow = 'none';
-    }
-
-    function startVoiceRecognition() {
-      if (recognition) {
-        recognition.lang = currentLang === 'th' ? 'th-TH' : (currentLang === 'en' ? 'en-US' : 'my-MM');
-        try { recognition.start(); } catch(e) {}
-      } else {
-        alert("เบราว์เซอร์ของคุณไม่รองรับระบบสั่งงานด้วยเสียง (แนะนำให้ใช้ Google Chrome หรือ Safari)");
-      }
-    }
-
-    // --- Text-to-Speech (TTS) ---
-    function speakText(text) {
+    // --- Text-to-Speech (อ่านออกเสียง) ---
+    function speakTranslatedText(text, langCode) {
       if ('speechSynthesis' in window) {
         speechSynthesis.cancel(); 
-        const cleanText = text.replace(/[*#]/g, '');
-        const utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.lang = currentLang === 'th' ? 'th-TH' : (currentLang === 'en' ? 'en-US' : 'my-MM');
-        utterance.rate = 1.1; 
+        const utterance = new SpeechSynthesisUtterance(text);
+        
+        // ตั้งค่าสำเนียงตามภาษาที่แปล
+        let ttsLang = 'th-TH';
+        if (langCode === 'en') ttsLang = 'en-US';
+        else if (langCode === 'zh-CN') ttsLang = 'zh-CN';
+        else if (langCode === 'my') ttsLang = 'th-TH'; // มือถือส่วนใหญ่ไม่มีเสียงพม่า จึงตั้งให้อ่านแบบไทยแทน
+
+        utterance.lang = ttsLang;
+        utterance.rate = 0.9; // พูดช้าลงนิดนึงให้ฟังชัดๆ
         speechSynthesis.speak(utterance);
+      }
+    }
+
+    // --- Web Speech API (Voice Recognition / พิมพ์ด้วยเสียง) ---
+    let transRecognition;
+    if ('webkitSpeechRecognition' in window) {
+      transRecognition = new webkitSpeechRecognition();
+      transRecognition.continuous = false;
+      transRecognition.interimResults = false;
+      
+      transRecognition.onstart = function() {
+        const btn = document.getElementById('btnTransVoice');
+        btn.style.background = 'var(--neon-out)';
+        btn.style.boxShadow = '0 0 15px var(--neon-out)';
+        document.getElementById('transInput').placeholder = "กำลังฟัง... พูดได้เลยครับ";
+      };
+      
+      transRecognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('transInput').value = transcript;
+        doTranslate(); // สั่งแปลทันทีเมื่อพูดเสร็จ
+      };
+      
+      transRecognition.onerror = function(event) { resetTransVoiceBtn(); };
+      transRecognition.onend = function() { resetTransVoiceBtn(); };
+    }
+
+    function resetTransVoiceBtn() {
+      const btn = document.getElementById('btnTransVoice');
+      btn.style.background = 'rgba(255,255,255,0.1)';
+      btn.style.boxShadow = 'none';
+      document.getElementById('transInput').placeholder = "พิมพ์ข้อความ หรือกดไมค์เพื่อพูด...";
+    }
+
+    function startTransVoice() {
+      if (transRecognition) {
+        // ให้ฟังเสียงจากภาษาที่ตั้งค่าไว้ในแอพหลัก
+        transRecognition.lang = currentLang === 'th' ? 'th-TH' : (currentLang === 'en' ? 'en-US' : 'my-MM');
+        try { transRecognition.start(); } catch(e) {}
+      } else {
+        alert("เบราว์เซอร์ของคุณไม่รองรับระบบสั่งงานด้วยเสียง (แนะนำให้ใช้ Google Chrome หรือ Safari)");
       }
     }
   </script>
