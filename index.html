@@ -68,7 +68,31 @@
 
     /* Header & Live Clock */
     .header { text-align: center; margin-top: 50px; margin-bottom: 30px; animation: fadeInDown 0.8s ease; width: 100%; max-width: 400px; }
-    .logo { width: 160px; filter: invert(1) brightness(1.8); margin-bottom: 20px; }
+    
+    /* --- Epic Glowing Logo --- */
+    .epic-logo {
+      font-size: 2.8em;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      margin-bottom: 25px;
+      display: inline-block;
+      animation: pulsateLogo 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes pulsateLogo {
+      0% {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #3b82f6, 0 0 35px #3b82f6, 0 0 50px #8b5cf6;
+        transform: scale(0.98);
+      }
+      50% {
+        text-shadow: 0 0 5px #fff, 0 0 12px #fff, 0 0 25px #10b981, 0 0 45px #10b981, 0 0 70px #3b82f6;
+      }
+      100% {
+        text-shadow: 0 0 5px #fff, 0 0 15px #fff, 0 0 30px #ec4899, 0 0 60px #ec4899, 0 0 90px #f43f5e, 0 0 120px #f43f5e;
+        transform: scale(1.03);
+      }
+    }
     
     .clock-container {
       background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
@@ -207,8 +231,7 @@
 
   <!-- Header & Live Clock -->
   <div class="header">
-    <img src="logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='block';">
-    <div id="fallback-logo" style="display: none; font-size: 2.2em; font-weight: 800; color: #fff; letter-spacing: 2px; margin-bottom: 20px; text-shadow: 0 0 15px rgba(59,130,246,0.5);">88 DESIGNS</div>
+    <div class="epic-logo">88 DESIGNS</div>
     <div class="clock-container">
       <div class="greeting" id="greetingText">อรุณสวัสดิ์ ☀️</div>
       <div class="time-display" id="liveTime">00:00:00</div>
@@ -496,33 +519,47 @@
     let currentLang = localStorage.getItem('appLang') || 'th';
     
     function setLang(lang) {
-      currentLang = lang;
-      localStorage.setItem('appLang', lang);
-      
-      document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      try {
+        currentLang = lang;
+        localStorage.setItem('appLang', lang);
+        
+        // Update Button active states safely
+        document.querySelectorAll('.btn-lang').forEach(btn => {
+          if(btn.innerText.toLowerCase() === lang.toLowerCase()) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
 
-      const d = dict[lang];
-      for (let id in d) {
-        let el = document.getElementById(id);
-        if (el) el.innerHTML = d[id];
+        const d = dict[lang];
+        if (!d) return;
+
+        for (let id in d) {
+          let el = document.getElementById(id);
+          if (el) el.innerHTML = d[id];
+        }
+        
+        const setTxt = (id, txt) => { let e = document.getElementById(id); if(e) e.innerText = txt; }
+        const setPlc = (id, txt) => { let e = document.getElementById(id); if(e) e.placeholder = txt; }
+
+        setTxt('t-btn-cancel1', d['btn-cancel']);
+        setTxt('t-btn-cancel2', d['btn-cancel']);
+        setTxt('t-btn-cancel3', d['btn-close']);
+        setTxt('btnSubmitLeave', d['btn-submit-l']);
+        setTxt('btnCheckTime', d['btn-search']);
+        
+        setPlc('leaveName', d['placeholder-name']);
+        setPlc('checkName', d['placeholder-name']);
+        
+        if (typeof updateClock === 'function') updateClock(); 
+      } catch(err) {
+        console.error("SetLang Error: ", err);
       }
-      
-      document.getElementById('t-btn-cancel1').innerText = d['btn-cancel'];
-      document.getElementById('t-btn-cancel2').innerText = d['btn-cancel'];
-      document.getElementById('t-btn-cancel3').innerText = d['btn-close'];
-      document.getElementById('btnSubmitLeave').innerText = d['btn-submit-l'];
-      document.getElementById('btnCheckTime').innerText = d['btn-search'];
-      document.getElementById('leaveName').placeholder = d['placeholder-name'];
-      document.getElementById('checkName').placeholder = d['placeholder-name'];
-      updateClock(); // Update greeting lang instantly
     }
 
     window.onload = () => {
-      document.querySelectorAll('.btn-lang').forEach(btn => {
-        if(btn.innerText.toLowerCase() === currentLang) btn.classList.add('active');
-        else btn.classList.remove('active');
-      });
+      // Trigger setLang safely to initialize the text elements without breaking
       setLang(currentLang);
       
       if (!localStorage.getItem('gasApiUrl') && typeof GAS_API_URL === 'undefined') {
