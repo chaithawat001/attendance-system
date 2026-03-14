@@ -8,139 +8,182 @@
   <script src="js/api-config.js"></script>
   <style>
     :root {
-      --bg-base: #050505;
-      --card-bg: #141419;
-      --border-light: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(255, 255, 255, 0.2);
+      /* Luxury Black & Gold Theme */
+      --bg-base: #000000;
+      --card-bg: rgba(12, 12, 12, 0.85); 
+      
+      /* Gold Palette */
+      --gold-primary: #d4af37;
+      --gold-light: #fef08a;
+      --gold-dark: #b45309;
+      --border-light: rgba(212, 175, 55, 0.35);
+      --border-hover: rgba(255, 215, 0, 0.8);
+      
       --text-main: #ffffff;
-      --text-sub: #9ca3af;
-      --neon-in: #10b981;
-      --neon-out: #f43f5e;
-      --neon-leave: #8b5cf6;
-      --neon-time: #3b82f6;
-      --neon-holiday: #ec4899;
-      --neon-admin: #f59e0b;
+      --text-sub: #d1d5db;
+      
+      /* Semantic Colors (Muted for Luxury) */
+      --neon-in: #10b981;    /* Emerald */
+      --neon-out: #e11d48;   /* Ruby */
+      --neon-leave: #d4af37; /* Gold */
+      --neon-time: #fcd34d;  /* Light Gold */
+      --neon-holiday: #f59e0b; /* Amber */
+      --neon-admin: #fbbf24;   /* Warm Gold */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; -webkit-tap-highlight-color: transparent; }
 
     body {
       background-color: var(--bg-base);
+      /* พื้นหลังสีดำ-ทอง ที่อัปโหลดมา */
+      background-image: url('pngtree-black-gold-business-meeting-simple-image_37604.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      
       color: var(--text-main);
       display: flex; flex-direction: column; align-items: center;
       min-height: 100vh; padding: 20px 20px 80px;
       position: relative; overflow-x: hidden;
     }
 
+    /* ไล่สีดำทับบางๆ เพื่อให้ตัวหนังสืออ่านง่ายและดูมีมิติ (Vignette) */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
     .lang-switcher {
       position: absolute; top: 20px; right: 20px;
-      background: #141419; border: 1px solid var(--border-light);
+      background: rgba(10, 10, 10, 0.8); border: 1px solid var(--border-light);
       border-radius: 30px; display: flex; padding: 4px;
       z-index: 10;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
     .btn-lang {
-      background: transparent; border: none; color: var(--text-sub);
+      background: transparent; border: none; color: var(--gold-primary);
       border-radius: 20px; padding: 6px 14px; font-size: 0.85em; font-weight: 600;
-      cursor: pointer; transition: 0.2s;
+      cursor: pointer; transition: 0.3s;
     }
-    .btn-lang.active { background: #fff; color: #000; }
+    .btn-lang.active { 
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); 
+      color: #000; 
+    }
 
-    .header { text-align: center; margin-top: 50px; margin-bottom: 24px; width: 100%; max-width: 400px; }
+    .header { text-align: center; margin-top: 50px; margin-bottom: 24px; width: 100%; max-width: 400px; position: relative; z-index: 1; }
     
+    /* ตัวหนังสือ 88 DESIGNS สีทองเรืองแสงแบบคงที่ (ไม่มีอนิเมชัน) */
     .epic-logo {
       font-size: 2.8em; font-weight: 900; color: #ffffff; text-transform: uppercase;
-      letter-spacing: 5px; margin-bottom: 25px; display: inline-block;
-      text-shadow: 0 0 10px rgba(59,130,246,0.6), 0 0 20px rgba(59,130,246,0.4), 0 0 40px rgba(139,92,246,0.6);
+      letter-spacing: 6px; margin-bottom: 25px; display: inline-block;
+      text-shadow: 0 0 5px #fff, 0 0 15px var(--gold-light), 0 0 30px var(--gold-primary);
     }
     
     .clock-container {
-      background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 24px; padding: 20px;
-      display: inline-block; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 24px; padding: 22px;
+      display: inline-block; width: 100%; box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
     .greeting { 
-      font-size: 1.05em; color: var(--text-main); font-weight: 500; 
-      margin-bottom: 8px; padding: 4px 12px; border-radius: 12px;
-      display: inline-block; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 1.05em; color: var(--gold-light); font-weight: 500; 
+      margin-bottom: 8px; padding: 5px 14px; border-radius: 12px;
+      display: inline-block; background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.3);
     }
-    .time-display { font-size: 3em; font-weight: 700; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.2); font-variant-numeric: tabular-nums; line-height: 1; }
-    .date-display { font-size: 0.9em; color: var(--text-sub); margin-top: 8px; }
+    .time-display { 
+      font-size: 3.2em; font-weight: 700; letter-spacing: 2px; 
+      background: linear-gradient(180deg, #ffffff 0%, var(--gold-primary) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.2); 
+      font-variant-numeric: tabular-nums; line-height: 1; 
+    }
+    .date-display { font-size: 0.9em; color: var(--gold-primary); margin-top: 8px; font-weight: 300; letter-spacing: 1px; }
 
-    .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 16px; z-index: 1; }
+    .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 16px; z-index: 1; position: relative; }
 
     .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     
     .grid-card {
       background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 24px; text-decoration: none; position: relative; overflow: hidden;
-      transition: all 0.2s ease-in-out; box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 22px 10px; text-align: center;
+      transition: all 0.3s ease-in-out; box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 10px; text-align: center;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
     
     .grid-card:active { transform: scale(0.95); }
     .grid-card::before { content: ''; position: absolute; inset: 0; opacity: 0; transition: 0.3s; z-index: 0; }
     
-    .c-in:hover, .c-in:active { border-color: var(--neon-in); box-shadow: 0 5px 20px rgba(16,185,129,0.15); }
-    .c-out:hover, .c-out:active { border-color: var(--neon-out); box-shadow: 0 5px 20px rgba(244,63,94,0.15); }
-    .c-leave:hover, .c-leave:active { border-color: var(--neon-leave); box-shadow: 0 5px 20px rgba(139,92,246,0.15); }
-    .c-time:hover, .c-time:active { border-color: var(--neon-time); box-shadow: 0 5px 20px rgba(59,130,246,0.15); }
+    .c-in:hover, .c-in:active { border-color: var(--neon-in); box-shadow: 0 5px 25px rgba(16,185,129,0.2); }
+    .c-out:hover, .c-out:active { border-color: var(--neon-out); box-shadow: 0 5px 25px rgba(225,29,72,0.2); }
+    .c-leave:hover, .c-leave:active { border-color: var(--gold-light); box-shadow: 0 5px 25px rgba(212,175,55,0.2); }
+    .c-time:hover, .c-time:active { border-color: var(--gold-light); box-shadow: 0 5px 25px rgba(212,175,55,0.2); }
 
     .grid-card .icon-box {
-      width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
       transition: 0.3s; position: relative; z-index: 1; margin-bottom: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
     }
     
-    .c-in .icon-box { background: rgba(16,185,129,0.1); color: var(--neon-in); }
-    .c-out .icon-box { background: rgba(244,63,94,0.1); color: var(--neon-out); }
-    .c-leave .icon-box { background: rgba(139,92,246,0.1); color: var(--neon-leave); }
-    .c-time .icon-box { background: rgba(59,130,246,0.1); color: var(--neon-time); }
+    .c-in .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(0,0,0,0)); color: var(--neon-in); border-color: rgba(16,185,129,0.3); }
+    .c-out .icon-box { background: linear-gradient(135deg, rgba(225,29,72,0.15), rgba(0,0,0,0)); color: var(--neon-out); border-color: rgba(225,29,72,0.3); }
+    .c-leave .icon-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(0,0,0,0)); color: var(--neon-leave); border-color: rgba(212,175,55,0.3); }
+    .c-time .icon-box { background: linear-gradient(135deg, rgba(252,211,77,0.15), rgba(0,0,0,0)); color: var(--neon-time); border-color: rgba(252,211,77,0.3); }
     
-    .grid-card .m-title { font-size: 1.1em; font-weight: 600; color: #fff; position: relative; z-index: 1; line-height: 1.2; }
-    .grid-card .m-desc { font-size: 0.75em; color: var(--text-sub); position: relative; z-index: 1; margin-top: 4px; }
+    .grid-card .m-title { font-size: 1.1em; font-weight: 600; color: #fff; position: relative; z-index: 1; line-height: 1.2; letter-spacing: 0.5px; }
+    .grid-card .m-desc { font-size: 0.75em; color: var(--text-sub); position: relative; z-index: 1; margin-top: 6px; }
 
-    .list-item { display: flex; align-items: center; padding: 16px 20px; gap: 16px; background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 20px; text-decoration: none; transition: 0.2s; }
-    .list-item .icon-box { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+    .list-item { display: flex; align-items: center; padding: 18px 20px; gap: 16px; background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 20px; text-decoration: none; transition: 0.3s; backdrop-filter: blur(10px); }
+    .list-item .icon-box { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; border: 1px solid rgba(255,255,255,0.05); }
+    
     .c-gray .icon-box { background: rgba(255,255,255,0.05); color: #cbd5e1; }
-    .c-holi .icon-box { background: rgba(236,72,153,0.1); color: var(--neon-holiday); }
-    .c-admin .icon-box { background: rgba(245,158,11,0.1); color: var(--neon-admin); }
+    .c-holi .icon-box { background: linear-gradient(135deg, rgba(245,158,11,0.15), transparent); color: var(--neon-holiday); border-color: rgba(245,158,11,0.3); }
+    .c-admin .icon-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), transparent); color: var(--neon-admin); border-color: rgba(212,175,55,0.3); }
     
     .list-item .text-group { flex: 1; position: relative; z-index: 1; }
-    .list-item .m-title { font-size: 1em; font-weight: 500; color: #fff; margin-bottom: 2px; }
+    .list-item .m-title { font-size: 1em; font-weight: 500; color: #fff; margin-bottom: 3px; letter-spacing: 0.5px; }
     .list-item .m-desc { font-size: 0.8em; color: var(--text-sub); }
-    .list-item .arrow { color: var(--text-sub); transition: 0.2s; position: relative; z-index: 1; }
+    .list-item .arrow { color: var(--gold-primary); transition: 0.3s; position: relative; z-index: 1; opacity: 0.7; }
     .list-item:active { transform: scale(0.98); }
-    .list-item:hover .arrow { transform: translateX(5px); color: #fff; }
-    .list-item:hover { border-color: var(--border-hover); }
+    .list-item:hover .arrow { transform: translateX(5px); opacity: 1; }
+    .list-item:hover { border-color: var(--border-hover); box-shadow: 0 5px 15px rgba(212,175,55,0.1); }
 
     svg { width: 24px; height: 24px; stroke-width: 1.8; }
-    .divider { width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 8px 0; }
+    .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-light), transparent); margin: 8px 0; }
 
-    /* Modals */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
-    .modal-box { background: #111115; width: 100%; max-width: 360px; padding: 30px 25px; border-radius: 28px; text-align: center; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+    /* Modals - Luxury Styling */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+    .modal-box { background: #0a0a0c; width: 100%; max-width: 360px; padding: 30px 25px; border-radius: 28px; text-align: center; border: 1px solid var(--gold-primary); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(212,175,55,0.05); }
     
-    .modal-title { font-size: 1.25em; font-weight: 600; margin-bottom: 6px; color: #fff; }
+    .modal-title { font-size: 1.25em; font-weight: 600; margin-bottom: 6px; color: var(--gold-light); letter-spacing: 0.5px; }
     .modal-desc { font-size: 0.85em; color: var(--text-sub); margin-bottom: 24px; line-height: 1.4; }
     
-    .input-field { width: 100%; padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); color: white; font-size: 1em; text-align: center; margin-bottom: 16px; outline: none; transition: 0.2s; }
-    .input-field:focus { border-color: var(--neon-time); }
+    .input-field { width: 100%; padding: 16px; border-radius: 16px; border: 1px solid rgba(212,175,55,0.3); background: rgba(0,0,0,0.6); color: white; font-size: 1em; text-align: center; margin-bottom: 16px; outline: none; transition: 0.3s; }
+    .input-field:focus { border-color: var(--gold-primary); box-shadow: 0 0 15px rgba(212,175,55,0.2); }
+    .input-field::placeholder { color: #6b7280; }
 
-    .btn { width: 100%; padding: 16px; border-radius: 16px; border: none; font-size: 1em; font-weight: 600; cursor: pointer; transition: 0.2s; margin-bottom: 12px; }
+    .btn { width: 100%; padding: 16px; border-radius: 16px; border: none; font-size: 1em; font-weight: 600; cursor: pointer; transition: 0.3s; margin-bottom: 12px; letter-spacing: 0.5px; }
     .btn:active { transform: scale(0.96); }
-    .btn-primary { background: #fff; color: #000; }
-    .btn-outline { background: transparent; color: var(--text-sub); border: 1px solid rgba(255,255,255,0.1); }
+    .btn-primary { background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; box-shadow: 0 4px 15px rgba(212,175,55,0.3); }
+    .btn-outline { background: transparent; color: var(--gold-primary); border: 1px solid rgba(212,175,55,0.5); }
+    .btn-outline:hover { background: rgba(212,175,55,0.1); }
     
     .leave-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-    .btn-leave { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 14px 10px; border-radius: 16px; font-size: 0.9em; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .btn-leave { background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.2); color: #e2e8f0; padding: 14px 10px; border-radius: 16px; font-size: 0.9em; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px; }
     .btn-leave span { font-size: 1.5em; }
-    .btn-leave:active { background: rgba(139,92,246,0.15); border-color: var(--neon-leave); color: #fff; }
+    .btn-leave:active, .btn-leave:hover { background: rgba(212,175,55,0.15); border-color: var(--gold-primary); color: var(--gold-light); transform: translateY(-2px); }
     .btn-leave.full { grid-column: span 2; flex-direction: row; justify-content: center; gap: 10px; }
     .btn-leave.full span { font-size: 1.2em; }
 
-    .alert-banner { display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 14px; border-radius: 16px; margin-top: 16px; font-size: 0.9em; font-weight: 500; }
+    .alert-banner { display: none; background: rgba(225, 29, 72, 0.15); border: 1px solid rgba(225, 29, 72, 0.4); color: #fda4af; padding: 14px; border-radius: 16px; margin-top: 16px; font-size: 0.9em; font-weight: 500; }
 
-    .result-box { display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; margin-top: 16px; border: 1px solid rgba(255,255,255,0.05); }
-    .r-name { color: var(--neon-time); font-weight: 600; font-size: 1.2em; margin-bottom: 16px; }
-    .r-stat { font-size: 0.95em; display: flex; justify-content: space-between; margin-bottom: 10px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 12px; }
+    .result-box { display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; margin-top: 16px; border: 1px solid var(--border-light); }
+    .r-name { color: var(--gold-primary); font-weight: 600; font-size: 1.2em; margin-bottom: 16px; }
+    .r-stat { font-size: 0.95em; display: flex; justify-content: space-between; margin-bottom: 10px; background: rgba(212,175,55,0.05); padding: 12px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.1); }
     .r-stat:last-child { margin-bottom: 0; }
     .r-stat span:last-child { font-weight: 600; }
     
@@ -251,7 +294,7 @@
   <!-- Modal: เลือกประเภทการลา -->
   <div id="leaveSelectModal" class="modal-overlay">
     <div class="modal-box">
-      <div class="modal-title" id="t-l-title" style="color:var(--neon-leave);">เลือกประเภทการลา</div>
+      <div class="modal-title" id="t-l-title">เลือกประเภทการลา</div>
       <div class="modal-desc" id="t-l-desc">กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา</div>
       
       <div class="leave-grid">
@@ -270,7 +313,7 @@
   <!-- Modal: ระบุชื่อผู้ลา -->
   <div id="leaveSubmitModal" class="modal-overlay">
     <div class="modal-box">
-      <div class="modal-title" id="displayLeaveType" style="color:var(--neon-leave);">แจ้งลา</div>
+      <div class="modal-title" id="displayLeaveType">แจ้งลา</div>
       <div class="modal-desc" id="t-ls-desc">พิมพ์ชื่อ-นามสกุล ให้ตรงกับที่ลงทะเบียนไว้</div>
       <input type="text" id="leaveName" class="input-field" placeholder="ชื่อ-นามสกุล...">
       <button class="btn btn-primary" onclick="submitLeave()" id="btnSubmitLeave">ยืนยันการลา</button>
@@ -281,7 +324,7 @@
   <!-- Modal: เช็คเวลา (พนักงาน) -->
   <div id="checkTimeModal" class="modal-overlay">
     <div class="modal-box">
-      <div class="modal-title" id="t-c-title" style="color:var(--neon-time);">เช็คเวลาทำงาน</div>
+      <div class="modal-title" id="t-c-title">เช็คเวลาทำงาน</div>
       <div class="modal-desc" id="t-c-desc">ตรวจสอบ OT และเวลามาสายสะสม</div>
       <input type="text" id="checkName" class="input-field" placeholder="ชื่อ-นามสกุล...">
       <button class="btn btn-primary" onclick="fetchTime()" id="btnCheckTime">ค้นหาข้อมูล</button>
@@ -289,11 +332,11 @@
       <div id="resultBox" class="result-box">
         <div class="r-name" id="resName"></div>
         <div class="r-stat">
-          <span id="t-r-late" style="color:#94a3b8;">มาสายสะสม:</span> 
+          <span id="t-r-late" style="color:#d1d5db;">มาสายสะสม:</span> 
           <span id="resLate" style="color:var(--neon-out)"></span>
         </div>
         <div class="r-stat">
-          <span id="t-r-ot" style="color:#94a3b8;">ทำ OT สะสม:</span> 
+          <span id="t-r-ot" style="color:#d1d5db;">ทำ OT สะสม:</span> 
           <span id="resOT" style="color:var(--neon-in)"></span>
         </div>
       </div>
@@ -321,12 +364,12 @@
   <!-- Modal: ดูข้อมูลเวลาพนักงาน (Admin Only) -->
   <div id="adminViewModal" class="modal-overlay">
     <div class="modal-box" style="max-width: 420px; padding: 25px 20px;">
-      <div class="modal-title" id="t-a-title" style="color:var(--neon-admin);">📋 ข้อมูลเวลา (Admin)</div>
+      <div class="modal-title" id="t-a-title">📋 ข้อมูลเวลา (Admin)</div>
       <div class="modal-desc" id="t-a-desc">ตรวจสอบเวลาเข้า-ออกรายบุคคล</div>
       <input type="text" id="adminSearchName" class="input-field" placeholder="ชื่อ-นามสกุล...">
       <button class="btn btn-primary" onclick="fetchAdminData()" id="btnAdminSearch">ค้นหาข้อมูล</button>
       
-      <div id="adminResultBox" style="display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 15px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.05); max-height: 45vh; overflow-y: auto;">
+      <div id="adminResultBox" style="display: none; background: rgba(0,0,0,0.7); border-radius: 16px; padding: 15px; margin-top: 15px; border: 1px solid rgba(212,175,55,0.2); max-height: 45vh; overflow-y: auto;">
         <!-- Data will be injected here -->
       </div>
 
@@ -337,35 +380,35 @@
   <!-- Modal: Holiday Calendar -->
   <div id="holidayModal" class="modal-overlay">
     <div class="modal-box" style="padding: 25px 20px;">
-      <div class="modal-title" style="color:var(--neon-holiday);">🗓️ ปฏิทินวันหยุด 2026</div>
+      <div class="modal-title" id="t-menu-cal-title">🗓️ ปฏิทินวันหยุด 2026</div>
       <div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div>
       
-      <div style="background:rgba(0,0,0,0.5); border-radius:16px; padding:15px; max-height: 40vh; overflow-y:auto; text-align:left; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px;">
-        <h3 style="color: var(--neon-in); font-size: 1em; margin-bottom: 10px;">🏖️ สิทธิ์วันหยุดพักร้อน</h3>
+      <div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 40vh; overflow-y:auto; text-align:left; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px;">
+        <h3 style="color: var(--gold-light); font-size: 1em; margin-bottom: 10px;">🏖️ สิทธิ์วันหยุดพักร้อน</h3>
         <ul style="font-size: 0.85em; color: var(--text-sub); padding-left: 20px; line-height: 1.6; margin-bottom: 20px;">
           <li>พนักงานผ่านโปร ได้สิทธิ์ <b>6 วัน/ปี</b></li>
           <li>กรุณาแจ้งล่วงหน้า <b>3 วัน</b></li>
         </ul>
 
-        <h3 style="color: var(--neon-time); font-size: 1em; margin-bottom: 10px;">🇹🇭 วันหยุดนักขัตฤกษ์</h3>
+        <h3 style="color: var(--gold-primary); font-size: 1em; margin-bottom: 10px;">🇹🇭 วันหยุดนักขัตฤกษ์</h3>
         <div style="font-size: 0.85em; color: #fff; display: flex; flex-direction: column; gap: 8px;">
           <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--neon-holiday); min-width:50px;">1 ม.ค.</span><span>วันขึ้นปีใหม่</span>
+            <span style="color:var(--gold-primary); min-width:50px;">1 ม.ค.</span><span>วันขึ้นปีใหม่</span>
           </div>
           <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--neon-holiday); min-width:50px;">3 มี.ค.</span><span>วันมาฆบูชา</span>
+            <span style="color:var(--gold-primary); min-width:50px;">3 มี.ค.</span><span>วันมาฆบูชา</span>
           </div>
           <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--neon-holiday); min-width:50px;">6 เม.ย.</span><span>วันจักรี</span>
+            <span style="color:var(--gold-primary); min-width:50px;">6 เม.ย.</span><span>วันจักรี</span>
           </div>
           <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--neon-holiday); min-width:50px;">13-15 เม.ย.</span><span>สงกรานต์</span>
+            <span style="color:var(--gold-primary); min-width:50px;">13-15 เม.ย.</span><span>สงกรานต์</span>
           </div>
           <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--neon-holiday); min-width:50px;">1 พ.ค.</span><span>วันแรงงาน</span>
+            <span style="color:var(--gold-primary); min-width:50px;">1 พ.ค.</span><span>วันแรงงาน</span>
           </div>
           <div style="display:flex; gap:10px;">
-            <span style="color:var(--neon-holiday); min-width:50px;">31 ธ.ค.</span><span>วันสิ้นปี</span>
+            <span style="color:var(--gold-primary); min-width:50px;">31 ธ.ค.</span><span>วันสิ้นปี</span>
           </div>
         </div>
       </div>
@@ -415,13 +458,13 @@
       if (greetEl) {
         greetEl.innerText = greeting;
         if (greeting.includes('ปกติ') || greeting.includes('Normal') || greeting.includes('ပုံမှန်')) {
-          greetEl.style.color = 'var(--neon-in)'; greetEl.style.borderColor = 'rgba(16,185,129,0.3)';
+          greetEl.style.color = 'var(--neon-in)'; greetEl.style.borderColor = 'rgba(16,185,129,0.4)';
         } else if (greeting.includes('สาย') || greeting.includes('Late') || greeting.includes('နောက်ကျ')) {
-          greetEl.style.color = 'var(--neon-out)'; greetEl.style.borderColor = 'rgba(244,63,94,0.3)';
+          greetEl.style.color = 'var(--neon-out)'; greetEl.style.borderColor = 'rgba(225,29,72,0.4)';
         } else if (greeting.includes('ยังไม่ถึง') || greeting.includes('Working') || greeting.includes('အလုပ်ချိန်')) {
-          greetEl.style.color = 'var(--neon-holiday)'; greetEl.style.borderColor = 'rgba(236,72,153,0.3)';
+          greetEl.style.color = 'var(--gold-primary)'; greetEl.style.borderColor = 'rgba(212,175,55,0.4)';
         } else {
-          greetEl.style.color = 'var(--neon-time)'; greetEl.style.borderColor = 'rgba(59,130,246,0.3)';
+          greetEl.style.color = 'var(--gold-light)'; greetEl.style.borderColor = 'rgba(254,240,138,0.4)';
         }
       }
     }
@@ -448,7 +491,8 @@
         "t-a-title": "📋 ข้อมูลเวลา (Admin)", "t-a-desc": "ตรวจสอบเวลาเข้า-ออกรายบุคคล",
         "t-r-late": "มาสายสะสม:", "t-r-ot": "ทำ OT สะสม:", "t-warn-msg": "เดือนนี้คุณมาสายเกิน 30 นาทีแล้ว!",
         "btn-cancel": "ยกเลิก", "btn-close": "ปิดหน้าต่าง", "btn-submit-l": "ยืนยันการลา", "btn-search": "ค้นหาข้อมูล", "btn-confirm": "ยืนยัน",
-        "placeholder-name": "ชื่อ-นามสกุล...", "pwd-desc": "กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน"
+        "placeholder-name": "ชื่อ-นามสกุล...", "pwd-desc": "กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน",
+        "t-menu-cal-title": "🗓️ ปฏิทินวันหยุด 2026"
       },
       en: {
         "t-menu-in": "Check In", "t-desc-in": "Face scan",
@@ -470,7 +514,8 @@
         "t-a-title": "📋 Admin Records", "t-a-desc": "Check daily attendance details",
         "t-r-late": "Total Late:", "t-r-ot": "Total OT:", "t-warn-msg": "Warning! Late >30 mins this cycle!",
         "btn-cancel": "Cancel", "btn-close": "Close", "btn-submit-l": "Submit", "btn-search": "Search", "btn-confirm": "Confirm",
-        "placeholder-name": "Full Name...", "pwd-desc": "Enter admin password to access"
+        "placeholder-name": "Full Name...", "pwd-desc": "Enter admin password to access",
+        "t-menu-cal-title": "🗓️ Holiday Calendar 2026"
       },
       mm: {
         "t-menu-in": "အလုပ်ဝင်", "t-desc-in": "မျက်နှာဖတ်ရန်",
@@ -492,7 +537,8 @@
         "t-a-title": "📋 Admin မှတ်တမ်း", "t-a-desc": "နေ့စဉ်အချိန်ကြည့်ရန်",
         "t-r-late": "နောက်ကျစုစုပေါင်း:", "t-r-ot": "OT စုစုပေါင်း:", "t-warn-msg": "သတိပေးချက်! ယခုလ မိနစ် ၃၀ ကျော်နောက်ကျနေပါသည်!",
         "btn-cancel": "ပယ်ဖျက်", "btn-close": "ပိတ်မည်", "btn-submit-l": "အတည်ပြုပါ", "btn-search": "ရှာဖွေမည်", "btn-confirm": "အတည်ပြု",
-        "placeholder-name": "အမည်...", "pwd-desc": "စကားဝှက်ထည့်ပါ"
+        "placeholder-name": "အမည်...", "pwd-desc": "စကားဝှက်ထည့်ပါ",
+        "t-menu-cal-title": "🗓️ အားလပ်ရက် 2026"
       }
     };
 
@@ -577,7 +623,6 @@
       }
     }
 
-    // Capture enter key for password
     document.getElementById('adminPassword').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') verifyPassword();
     });
@@ -656,13 +701,12 @@
         const data = await res.json();
         
         if (data.success) {
-          let html = `<div style="color: var(--neon-admin); font-weight: 600; font-size: 1.15em; margin-bottom: 12px;">👤 ${name}</div>`;
+          let html = `<div style="color: var(--gold-primary); font-weight: 600; font-size: 1.15em; margin-bottom: 12px;">👤 ${name}</div>`;
           
-          // --- เพิ่มกล่องแสดงวันลารวมอัตโนมัติ ---
           html += `
-          <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; padding: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: #cbd5e1; font-size: 0.9em;">วันลาสะสม (รอบนี้):</span>
-            <span style="color: var(--neon-admin); font-weight: 700; font-size: 1.1em;">${data.totalLeaves || 0} วัน</span>
+          <div style="background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #d1d5db; font-size: 0.9em;">วันลาสะสม (รอบนี้):</span>
+            <span style="color: var(--gold-primary); font-weight: 700; font-size: 1.1em;">${data.totalLeaves || 0} วัน</span>
           </div>`;
           
           if (data.records && data.records.length > 0) {
@@ -670,7 +714,7 @@
              data.records.forEach(r => {
                 if (r.time !== '-' && r.time !== '') {
                     hasData = true;
-                    let typeColor = r.type === 'เข้างาน' ? 'var(--neon-in)' : (r.type === 'ออกงาน' ? 'var(--neon-out)' : 'var(--neon-holiday)');
+                    let typeColor = r.type === 'เข้างาน' ? 'var(--neon-in)' : (r.type === 'ออกงาน' ? 'var(--neon-out)' : 'var(--gold-primary)');
                     let stat = r.type === 'เข้างาน' ? r.statIn : r.statOut;
                     
                     html += `
