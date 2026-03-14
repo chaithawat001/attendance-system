@@ -226,7 +226,7 @@
   </div>
 
   <script>
-    // 🛑 ใส่ API URL ของ Web App (Google Apps Script) ของคุณลงในช่องว่างด้านล่างนี้เลยครับ 🛑
+    // 🛑 API URL Web App ที่ฝังไว้เพื่อให้ใช้งานได้เลยโดยไม่ต้องพึ่ง Cache 🛑
     const HARDCODED_API_URL = "https://script.google.com/macros/s/AKfycbwSq2fRZZxr6lP-07D9uw_B2chNk48U3UXPzD7zBQioTDCt2glr9oyV7HpcSxwKtQ0/exec"; 
     
     // --- Helper Functions ---
@@ -262,8 +262,8 @@
     if (scanType === 'เข้างาน') hTitle.classList.add('in');
     else hTitle.classList.add('out');
 
-    // ดึง API URL โดยใช้ลิงก์ที่บังคับกรอก หรือ ดึงจาก Cache (ถ้ามี)
-    let apiUrl = HARDCODED_API_URL || safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
+    // ดึง API URL (บังคับใช้ลิงก์ที่ให้มา)
+    let apiUrl = HARDCODED_API_URL;
     
     let knownFaces = [];
     let isProcessing = false;
@@ -276,8 +276,8 @@
 
     // --- Initialization ---
     async function init() {
-      if (!apiUrl || apiUrl === "ใส่_API_URL_ของคุณที่นี่") {
-        setStatus('เกิดข้อผิดพลาด', 'ไม่พบ API URL กรุณาตั้งค่าในหน้า Config ก่อน', '⚠️');
+      if (!apiUrl) {
+        setStatus('เกิดข้อผิดพลาด', 'ไม่พบ API URL', '⚠️');
         return;
       }
 
@@ -367,7 +367,7 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         if (detection) {
-          // ตีกรอบที่ตรวจจับได้ (Optional: วาดกรอบสีทองเบาๆ)
+          // ตีกรอบที่ตรวจจับได้
           const resizedDetection = faceapi.resizeResults(detection, displaySize);
           const box = resizedDetection.detection.box;
           
@@ -391,16 +391,16 @@
         } else {
            document.getElementById('subText').innerText = "ไม่พบใบหน้าในกรอบ";
         }
-      }, 500); // เช็คทุกๆ ครึ่งวินาทีเพื่อลดภาระเครื่อง
+      }, 500); 
     }
 
     async function handleSuccess(name) {
       setStatus(`พบ: ${name}`, 'กำลังบันทึกข้อมูลลงระบบ...', '🔄');
       
       try {
+        // ลบ Headers Content-Type ออกเพื่อป้องกันปัญหา CORS
         const res = await fetch(apiUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'logAttendance', name: name, type: scanType, lat: currentLat, lng: currentLng })
         });
         
@@ -424,7 +424,7 @@
             document.getElementById('successTitle').style.color = 'var(--neon-in)';
           }
 
-          // ปิดกล้องเพื่อประหยัดแบต
+          // ปิดกล้อง
           const stream = document.getElementById('video').srcObject;
           if (stream) stream.getTracks().forEach(track => track.stop());
 
@@ -438,6 +438,7 @@
           setStatus('พร้อมสแกน', 'ลองใหม่อีกครั้ง', '👁️');
         }
       } catch (err) {
+        console.error("Fetch Error:", err); // ตรวจสอบสาเหตุที่แท้จริงใน Console
         showToast('การเชื่อมต่อล้มเหลว', 'error');
         isProcessing = false;
         document.getElementById('laserLine').style.display = 'block';
