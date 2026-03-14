@@ -542,52 +542,13 @@
     </div>
   </div>
 
-  <!-- Modal: Holiday Calendar -->
-  <div id="holidayModal" class="modal-overlay">
-    <div class="modal-box" style="padding: 25px 20px;">
-      <div class="modal-title" id="t-menu-cal-title">🗓️ ปฏิทินวันหยุด 2026</div>
-      <div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div>
-      
-      <div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 40vh; overflow-y:auto; text-align:left; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px;">
-        <h3 style="color: var(--gold-light); font-size: 1em; margin-bottom: 10px;">🏖️ สิทธิ์วันหยุดพักร้อน</h3>
-        <ul style="font-size: 0.85em; color: var(--text-sub); padding-left: 20px; line-height: 1.6; margin-bottom: 20px;">
-          <li>พนักงานผ่านโปร ได้สิทธิ์ <b>6 วัน/ปี</b></li>
-          <li>กรุณาแจ้งล่วงหน้า <b>3 วัน</b></li>
-        </ul>
-
-        <h3 style="color: var(--gold-primary); font-size: 1em; margin-bottom: 10px;">🇹🇭 วันหยุดนักขัตฤกษ์</h3>
-        <div style="font-size: 0.85em; color: #fff; display: flex; flex-direction: column; gap: 8px;">
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">1 ม.ค.</span><span>วันขึ้นปีใหม่</span>
-          </div>
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">3 มี.ค.</span><span>วันมาฆบูชา</span>
-          </div>
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">6 เม.ย.</span><span>วันจักรี</span>
-          </div>
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">13-15 เม.ย.</span><span>สงกรานต์</span>
-          </div>
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">1 พ.ค.</span><span>วันแรงงาน</span>
-          </div>
-          <div style="display:flex; gap:10px;">
-            <span style="color:var(--gold-primary); min-width:50px;">31 ธ.ค.</span><span>วันสิ้นปี</span>
-          </div>
-        </div>
-      </div>
-      <button class="btn btn-outline" onclick="closeModal('holidayModal')" id="t-btn-cancel5">ปิดหน้าต่าง</button>
-    </div>
-  </div>
-
   <!-- Modal: เครื่องมือแปลภาษา (Translator API แบบไม่ใช้ Key) -->
   <div id="translatorModal" class="modal-overlay">
     <div class="modal-box" style="padding: 20px; max-width: 420px; display: flex; flex-direction: column;">
       <div class="modal-title" style="color: var(--gold-light); display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 5px;">
         🌐 ระบบแปลภาษา & ออกเสียง
       </div>
-      <div class="modal-desc" style="margin-bottom: 15px;">พูดหรือพิมพ์เพื่อแปลภาษาฟรี 100%</div>
+      <div class="modal-desc" style="margin-bottom: 15px;">พิมพ์หรือพูด จะแปลให้อัตโนมัติ</div>
       
       <!-- Input Text -->
       <div style="position: relative; margin-bottom: 15px;">
@@ -607,15 +568,14 @@
       </div>
 
       <!-- Output Text -->
-      <div style="position: relative;">
-        <textarea id="transOutput" class="trans-box" rows="3" placeholder="ผลลัพธ์คำแปล..." readonly style="background: rgba(212,175,55,0.05); color: var(--gold-light); border-color: rgba(212,175,55,0.5);"></textarea>
+      <div style="position: relative; margin-top: 5px;">
+        <textarea id="transOutput" class="trans-box" rows="3" placeholder="ผลลัพธ์คำแปลจะแสดงที่นี่..." readonly style="background: rgba(212,175,55,0.05); color: var(--gold-light); border-color: rgba(212,175,55,0.5);"></textarea>
         <button onclick="playTranslatedVoice()" style="position: absolute; right: 10px; bottom: 20px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; width: 40px; height: 40px; color: var(--gold-light); font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;">
           🔊
         </button>
       </div>
 
-      <button class="btn btn-primary" onclick="doTranslate()" style="margin-top: 15px;">แปลภาษาเลย</button>
-      <button class="btn btn-outline" onclick="closeModal('translatorModal')">ปิดหน้าต่าง</button>
+      <button class="btn btn-outline" onclick="closeModal('translatorModal')" style="margin-top: 10px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -796,6 +756,7 @@
         setTxt('t-btn-cancel3', d['btn-close']);
         setTxt('t-btn-cancel4', d['btn-close']);
         setTxt('t-btn-cancel5', d['btn-close']);
+        setTxt('t-btn-cancel6', d['btn-close']);
         setTxt('t-btn-cancel-pwd', d['btn-cancel']);
         
         setTxt('btnSubmitLeave', d['btn-submit-l']);
@@ -830,6 +791,17 @@
             }
           })
           .catch(e => console.log('Cannot fetch broadcast'));
+      }
+
+      // เปิดระบบจับการพิมพ์อัตโนมัติสำหรับการแปลภาษา
+      const transInput = document.getElementById('transInput');
+      if(transInput) {
+        transInput.addEventListener('input', function() {
+          clearTimeout(translateTimeout);
+          translateTimeout = setTimeout(() => {
+            doTranslate(false); // พิมพ์เสร็จ รอ 0.8 วิ แล้วแปลเลย (ไม่ต้องอ่านออกเสียง)
+          }, 800);
+        });
       }
     };
 
@@ -997,30 +969,37 @@
     }
 
     // ==========================================
-    // --- ระบบแปลภาษาฟรี 100% (Translator API) ---
+    // --- ระบบแปลภาษาฟรี 100% (Auto-Translate) ---
     // ==========================================
-    let targetLangCode = 'th'; // ค่าเริ่มต้นแปลเป็นภาษาไทย
+    let targetLangCode = 'th'; 
+    let translateTimeout = null;
 
     function setTargetLang(lang, btnElement) {
       targetLangCode = lang;
-      // ลบสีปุ่มเก่า
+      
+      // อัปเดตสีปุ่ม
       document.querySelectorAll('.trans-btn').forEach(b => b.classList.remove('active'));
-      // ใส่สีปุ่มที่เพิ่งกด
       btnElement.classList.add('active');
+      
+      // แปลอัตโนมัติทันทีที่เปลี่ยนภาษา
+      doTranslate(false); 
     }
 
-    async function doTranslate() {
+    async function doTranslate(fromVoice = false) {
       const inputEl = document.getElementById('transInput');
       const text = inputEl.value.trim();
       const outputEl = document.getElementById('transOutput');
 
-      if (!text) return;
+      if (!text) {
+        outputEl.value = "";
+        return;
+      }
+      
       outputEl.value = "กำลังแปล...";
 
       try {
-        // เรียกใช้ Google Translate API (แบบฟรี ไม่ต้องใช้ Key)
+        // เรียกใช้ Google Translate API ฟรี
         const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLangCode}&dt=t&q=${encodeURIComponent(text)}`;
-        
         const res = await fetch(url);
         const data = await res.json();
         
@@ -1032,8 +1011,11 @@
         }
         
         outputEl.value = translatedText;
-        // ให้อ่านออกเสียงอัตโนมัติเมื่อแปลเสร็จ
-        speakTranslatedText(translatedText, targetLangCode);
+        
+        // อ่านออกเสียงอัตโนมัติ *เฉพาะ* กรณีที่แปลมาจากการพูด (Voice) เท่านั้น เพื่อไม่ให้กวนใจเวลาพิมพ์
+        if (fromVoice) {
+          speakTranslatedText(translatedText, targetLangCode);
+        }
         
       } catch(e) {
         outputEl.value = "เกิดข้อผิดพลาดในการแปล กรุณาลองใหม่ครับ";
@@ -1053,19 +1035,18 @@
         speechSynthesis.cancel(); 
         const utterance = new SpeechSynthesisUtterance(text);
         
-        // ตั้งค่าสำเนียงตามภาษาที่แปล
         let ttsLang = 'th-TH';
         if (langCode === 'en') ttsLang = 'en-US';
         else if (langCode === 'zh-CN') ttsLang = 'zh-CN';
-        else if (langCode === 'my') ttsLang = 'th-TH'; // มือถือส่วนใหญ่ไม่มีเสียงพม่า จึงตั้งให้อ่านแบบไทยแทน
+        else if (langCode === 'my') ttsLang = 'th-TH'; 
 
         utterance.lang = ttsLang;
-        utterance.rate = 0.9; // พูดช้าลงนิดนึงให้ฟังชัดๆ
+        utterance.rate = 0.9; 
         speechSynthesis.speak(utterance);
       }
     }
 
-    // --- Web Speech API (Voice Recognition / พิมพ์ด้วยเสียง) ---
+    // --- Web Speech API (Voice Recognition / พูดเพื่อแปล) ---
     let transRecognition;
     if ('webkitSpeechRecognition' in window) {
       transRecognition = new webkitSpeechRecognition();
@@ -1082,7 +1063,9 @@
       transRecognition.onresult = function(event) {
         const transcript = event.results[0][0].transcript;
         document.getElementById('transInput').value = transcript;
-        doTranslate(); // สั่งแปลทันทีเมื่อพูดเสร็จ
+        
+        // เมื่อพูดเสร็จ ให้แปลอัตโนมัติ และ ส่งเสียงอ่าน (fromVoice = true)
+        doTranslate(true); 
       };
       
       transRecognition.onerror = function(event) { resetTransVoiceBtn(); };
@@ -1098,7 +1081,6 @@
 
     function startTransVoice() {
       if (transRecognition) {
-        // ให้ฟังเสียงจากภาษาที่ตั้งค่าไว้ในแอพหลัก
         transRecognition.lang = currentLang === 'th' ? 'th-TH' : (currentLang === 'en' ? 'en-US' : 'my-MM');
         try { transRecognition.start(); } catch(e) {}
       } else {
