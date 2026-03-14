@@ -263,6 +263,17 @@
     <p class="note">ปล่อยว่างไว้หากต้องการใช้แค่จุดเดียว</p>
   </div>
 
+  <!-- Broadcast Card (New) -->
+  <div class="card">
+    <div class="section-header">
+      <div class="section-icon orange" style="background: rgba(236,72,153,0.2);">📢</div>
+      <span class="section-title-text">ประกาศแจ้งเตือนพนักงาน (Broadcast)</span>
+    </div>
+    <label>ข้อความประกาศ (แสดงที่หน้าหลักทุกคน)</label>
+    <textarea id="broadcastMsg" rows="3" placeholder="พิมพ์ข้อความประกาศที่นี่..." style="width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; color: #e2e8f0; font-family: 'Sarabun'; outline: none; resize: vertical; margin-bottom: 10px;"></textarea>
+    <p class="note">หากต้องการปิดประกาศ ให้ลบข้อความนี้ทิ้งให้หมดครับ</p>
+  </div>
+
   <!-- Actions -->
   <button class="btn btn-save" onclick="saveAll()">
     💾 บันทึกการตั้งค่าทั้งหมด
@@ -294,6 +305,7 @@
         document.getElementById('lat2').value   = config.lat2   || '';
         document.getElementById('lng2').value   = config.lng2   || '';
         document.getElementById('radius').value = config.radius !== undefined ? config.radius : '0.5';
+        document.getElementById('broadcastMsg').value = config.broadcastMsg || '';
       })
       .catch(() => {}); // ถ้าโหลดไม่ได้ก็ข้ามไป
   }
@@ -322,6 +334,7 @@
     const lat2   = document.getElementById('lat2').value;
     const lng2   = document.getElementById('lng2').value;
     const radius = document.getElementById('radius').value;
+    const broadcastMsg = document.getElementById('broadcastMsg').value;
 
     if (!apiUrl) return showMsg('❌ กรุณากรอก API URL', 'error');
     if (!lat || !lng || radius === '') return showMsg('❌ กรุณากรอกข้อมูล GPS จุดที่ 1 และรัศมี', 'error');
@@ -333,7 +346,7 @@
     try {
       const res = await fetch(apiUrl, {
         method: 'POST',
-        body: JSON.stringify({ action: 'saveConfig', lat, lng, lat2, lng2, radius })
+        body: JSON.stringify({ action: 'saveConfig', lat, lng, lat2, lng2, radius, broadcastMsg })
       });
       const data = await res.json();
       showMsg('✅ ' + (data.message || 'บันทึกสำเร็จ'), 'success');
