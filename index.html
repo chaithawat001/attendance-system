@@ -1009,11 +1009,10 @@
       const loadingId = appendAiMessage('กำลังคิด...', 'ai', true);
       
       try {
-        // เพิ่ม Log เพื่อช่วยบังคับให้เบราว์เซอร์รู้ว่ามีการอัปเดตโค้ด
-        console.log("🚀 Model updated to: gemini-1.5-flash");
+        console.log("🚀 Model updated to: gemini-1.5-flash-latest");
         
-        // ใช้โมเดล gemini-1.5-flash สำหรับ API Key ทั่วไป
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        // แก้ไข: เติม -latest ต่อท้ายชื่อโมเดล เพื่อให้ระบบ Google ดึงเวอร์ชันที่ใช้งานได้จริงมาให้
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
         const payload = {
           contents: [{ parts: [{ text: text }] }],
           systemInstruction: { parts: [{ text: "คุณคือ AI Assistant ของบริษัท 88 Designs ทำหน้าที่ตอบคำถามพนักงานแบบสั้นๆ เป็นมิตร มีอารมณ์ขัน และสุภาพ" }] }
@@ -1027,7 +1026,6 @@
         
         const data = await res.json();
         
-        // ดักจับ Error จาก Google เพื่อให้รู้ว่าพังเพราะอะไร
         if (data.error) {
            throw new Error(data.error.message);
         }
