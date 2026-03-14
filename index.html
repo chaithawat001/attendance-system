@@ -8,9 +8,9 @@
   <script src="js/api-config.js"></script>
   <style>
     :root {
-      /* Pure Black Theme */
-      --bg-base: #000000;
-      --card-bg: rgba(20, 20, 25, 0.6);
+      /* Pure Black Theme - Optimized for Speed */
+      --bg-base: #050505;
+      --card-bg: #141419;
       --border-light: rgba(255, 255, 255, 0.08);
       --border-hover: rgba(255, 255, 255, 0.2);
       
@@ -35,41 +35,23 @@
       position: relative; overflow-x: hidden;
     }
 
-    /* Ambient Background Glow */
-    .ambient-glow {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none; z-index: -1; overflow: hidden;
-    }
-    .glow-orb {
-      position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.15;
-      animation: floatOrb 15s ease-in-out infinite alternate;
-    }
-    .orb-1 { width: 300px; height: 300px; background: #3b82f6; top: -100px; left: -100px; }
-    .orb-2 { width: 400px; height: 400px; background: #8b5cf6; bottom: -150px; right: -100px; animation-delay: -5s; }
-    
-    @keyframes floatOrb {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(50px, 50px) scale(1.2); }
-    }
-
     /* Language Switcher */
     .lang-switcher {
       position: absolute; top: 20px; right: 20px;
-      background: rgba(255,255,255,0.05); border: 1px solid var(--border-light);
-      border-radius: 30px; display: flex; padding: 4px; backdrop-filter: blur(10px);
+      background: #141419; border: 1px solid var(--border-light);
+      border-radius: 30px; display: flex; padding: 4px;
       z-index: 10;
     }
     .btn-lang {
       background: transparent; border: none; color: var(--text-sub);
       border-radius: 20px; padding: 6px 14px; font-size: 0.85em; font-weight: 600;
-      cursor: pointer; transition: 0.3s;
+      cursor: pointer; transition: 0.2s;
     }
-    .btn-lang.active { background: #fff; color: #000; box-shadow: 0 2px 10px rgba(255,255,255,0.2); }
+    .btn-lang.active { background: #fff; color: #000; }
 
     /* Header & Live Clock */
-    .header { text-align: center; margin-top: 50px; margin-bottom: 30px; animation: fadeInDown 0.8s ease; width: 100%; max-width: 400px; }
+    .header { text-align: center; margin-top: 50px; margin-bottom: 24px; width: 100%; max-width: 400px; }
     
-    /* --- Epic Glowing Logo --- */
     .epic-logo {
       font-size: 2.8em;
       font-weight: 900;
@@ -78,123 +60,106 @@
       letter-spacing: 5px;
       margin-bottom: 25px;
       display: inline-block;
-      animation: pulsateLogo 2.5s ease-in-out infinite alternate;
-    }
-    @keyframes pulsateLogo {
-      0% {
-        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #3b82f6, 0 0 35px #3b82f6, 0 0 50px #8b5cf6;
-        transform: scale(0.98);
-      }
-      50% {
-        text-shadow: 0 0 5px #fff, 0 0 12px #fff, 0 0 25px #10b981, 0 0 45px #10b981, 0 0 70px #3b82f6;
-      }
-      100% {
-        text-shadow: 0 0 5px #fff, 0 0 15px #fff, 0 0 30px #ec4899, 0 0 60px #ec4899, 0 0 90px #f43f5e, 0 0 120px #f43f5e;
-        transform: scale(1.03);
-      }
+      text-shadow: 0 0 10px rgba(59,130,246,0.6), 0 0 20px rgba(59,130,246,0.4), 0 0 40px rgba(139,92,246,0.6);
     }
     
     .clock-container {
-      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      background: var(--card-bg);
       border: 1px solid var(--border-light); border-radius: 24px; padding: 20px;
-      backdrop-filter: blur(10px); display: inline-block; width: 100%;
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.05), 0 10px 30px rgba(0,0,0,0.5);
+      display: inline-block; width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .greeting { font-size: 1.1em; color: var(--neon-in); font-weight: 500; margin-bottom: 5px; }
-    .time-display { font-size: 2.8em; font-weight: 700; letter-spacing: 2px; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.3); font-variant-numeric: tabular-nums; line-height: 1; }
-    .date-display { font-size: 0.9em; color: var(--text-sub); margin-top: 5px; }
+    /* ปรับแต่ง Status Text ให้ดูเด่นขึ้น */
+    .greeting { 
+      font-size: 1.05em; color: var(--text-main); font-weight: 500; 
+      margin-bottom: 8px; padding: 4px 12px; border-radius: 12px;
+      display: inline-block; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .time-display { font-size: 3em; font-weight: 700; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.2); font-variant-numeric: tabular-nums; line-height: 1; }
+    .date-display { font-size: 0.9em; color: var(--text-sub); margin-top: 8px; }
 
     /* Menu Container */
     .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 16px; z-index: 1; }
 
-    /* Hero Cards (IN / OUT) */
-    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    /* --- 4 Main Grid Cards (จัดเรียงใหม่สวยงาม) --- */
+    .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     
-    .card {
+    .grid-card {
       background: var(--card-bg); border: 1px solid var(--border-light);
       border-radius: 24px; text-decoration: none; position: relative; overflow: hidden;
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.02), 0 8px 20px rgba(0,0,0,0.4);
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 22px 10px; text-align: center;
     }
     
-    /* Click & Hover Effects */
-    .card:active { transform: scale(0.95); }
-    .card::before { content: ''; position: absolute; inset: 0; opacity: 0; transition: 0.4s; z-index: 0; }
+    .grid-card:active { transform: scale(0.95); }
+    .grid-card::before { content: ''; position: absolute; inset: 0; opacity: 0; transition: 0.3s; z-index: 0; }
     
-    /* Individual Themes */
-    .c-in:hover, .c-in:active { border-color: var(--neon-in); box-shadow: 0 10px 30px rgba(16,185,129,0.2); }
-    .c-in::before { background: radial-gradient(circle at top, rgba(16,185,129,0.15), transparent 70%); }
-    
-    .c-out:hover, .c-out:active { border-color: var(--neon-out); box-shadow: 0 10px 30px rgba(244,63,94,0.2); }
-    .c-out::before { background: radial-gradient(circle at top, rgba(244,63,94,0.15), transparent 70%); }
-
+    .c-in:hover, .c-in:active { border-color: var(--neon-in); box-shadow: 0 5px 20px rgba(16,185,129,0.15); }
+    .c-out:hover, .c-out:active { border-color: var(--neon-out); box-shadow: 0 5px 20px rgba(244,63,94,0.15); }
     .c-leave:hover, .c-leave:active { border-color: var(--neon-leave); box-shadow: 0 5px 20px rgba(139,92,246,0.15); }
     .c-time:hover, .c-time:active { border-color: var(--neon-time); box-shadow: 0 5px 20px rgba(59,130,246,0.15); }
 
-    .hero-item { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; text-align: center; gap: 12px; }
-    .hero-item .icon-box {
-      width: 54px; height: 54px; border-radius: 18px; display: flex; align-items: center; justify-content: center;
-      transition: 0.4s; position: relative; z-index: 1;
+    .grid-card .icon-box {
+      width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      transition: 0.3s; position: relative; z-index: 1; margin-bottom: 12px;
     }
+    
     .c-in .icon-box { background: rgba(16,185,129,0.1); color: var(--neon-in); }
     .c-out .icon-box { background: rgba(244,63,94,0.1); color: var(--neon-out); }
-    .card:hover .icon-box { transform: scale(1.1) translateY(-3px); }
-    
-    .hero-item .m-title { font-size: 1.2em; font-weight: 600; color: #fff; position: relative; z-index: 1; }
-    .hero-item .m-desc { font-size: 0.8em; color: var(--text-sub); position: relative; z-index: 1; }
-
-    /* List Cards (Secondary Menus) */
-    .list-item { display: flex; align-items: center; padding: 18px 20px; gap: 16px; }
-    .list-item .icon-box { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
     .c-leave .icon-box { background: rgba(139,92,246,0.1); color: var(--neon-leave); }
     .c-time .icon-box { background: rgba(59,130,246,0.1); color: var(--neon-time); }
+    
+    .grid-card .m-title { font-size: 1.1em; font-weight: 600; color: #fff; position: relative; z-index: 1; line-height: 1.2; }
+    .grid-card .m-desc { font-size: 0.75em; color: var(--text-sub); position: relative; z-index: 1; margin-top: 4px; }
+
+    /* List Cards (Secondary Menus) */
+    .list-item { display: flex; align-items: center; padding: 16px 20px; gap: 16px; background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 20px; text-decoration: none; transition: 0.2s; }
+    .list-item .icon-box { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
     .c-gray .icon-box { background: rgba(255,255,255,0.05); color: #cbd5e1; }
     .c-holi .icon-box { background: rgba(236,72,153,0.1); color: var(--neon-holiday); }
     
     .list-item .text-group { flex: 1; position: relative; z-index: 1; }
-    .list-item .m-title { font-size: 1.05em; font-weight: 500; color: #fff; margin-bottom: 2px; }
+    .list-item .m-title { font-size: 1em; font-weight: 500; color: #fff; margin-bottom: 2px; }
     .list-item .m-desc { font-size: 0.8em; color: var(--text-sub); }
-    .list-item .arrow { color: var(--text-sub); transition: 0.3s; position: relative; z-index: 1; }
+    .list-item .arrow { color: var(--text-sub); transition: 0.2s; position: relative; z-index: 1; }
+    .list-item:active { transform: scale(0.98); }
     .list-item:hover .arrow { transform: translateX(5px); color: #fff; }
     .list-item:hover { border-color: var(--border-hover); }
-    .list-item:hover::before { opacity: 1; }
 
     /* SVG Icons */
     svg { width: 24px; height: 24px; stroke-width: 1.8; }
 
     /* Section Divider */
-    .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); margin: 10px 0; }
+    .divider { width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 8px 0; }
 
     /* Modals */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
-    .modal-box { background: #111115; width: 100%; max-width: 360px; padding: 30px 25px; border-radius: 28px; text-align: center; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px rgba(0,0,0,0.5); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+    .modal-box { background: #111115; width: 100%; max-width: 360px; padding: 30px 25px; border-radius: 28px; text-align: center; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
     
     .modal-title { font-size: 1.25em; font-weight: 600; margin-bottom: 6px; color: #fff; }
     .modal-desc { font-size: 0.85em; color: var(--text-sub); margin-bottom: 24px; line-height: 1.4; }
     
-    .input-field { width: 100%; padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); color: white; font-size: 1em; text-align: center; margin-bottom: 16px; outline: none; transition: 0.3s; }
-    .input-field:focus { border-color: var(--neon-time); box-shadow: 0 0 15px rgba(59,130,246,0.2); }
+    .input-field { width: 100%; padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); color: white; font-size: 1em; text-align: center; margin-bottom: 16px; outline: none; transition: 0.2s; }
+    .input-field:focus { border-color: var(--neon-time); }
 
-    .btn { width: 100%; padding: 16px; border-radius: 16px; border: none; font-size: 1em; font-weight: 600; cursor: pointer; transition: 0.3s; margin-bottom: 12px; }
+    .btn { width: 100%; padding: 16px; border-radius: 16px; border: none; font-size: 1em; font-weight: 600; cursor: pointer; transition: 0.2s; margin-bottom: 12px; }
     .btn:active { transform: scale(0.96); }
     .btn-primary { background: #fff; color: #000; }
-    .btn-primary:hover { background: #e2e8f0; }
-    .btn-outline { background: transparent; color: var(--text-sub); }
-    .btn-outline:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .btn-outline { background: transparent; color: var(--text-sub); border: 1px solid rgba(255,255,255,0.1); }
     
     /* Leave Buttons Grid */
     .leave-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-    .btn-leave { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #e2e8f0; padding: 14px 10px; border-radius: 16px; font-size: 0.9em; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .btn-leave { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 14px 10px; border-radius: 16px; font-size: 0.9em; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px; }
     .btn-leave span { font-size: 1.5em; }
-    .btn-leave:hover, .btn-leave:active { background: rgba(139,92,246,0.15); border-color: var(--neon-leave); color: #fff; transform: translateY(-2px); }
+    .btn-leave:active { background: rgba(139,92,246,0.15); border-color: var(--neon-leave); color: #fff; }
     .btn-leave.full { grid-column: span 2; flex-direction: row; justify-content: center; gap: 10px; }
     .btn-leave.full span { font-size: 1.2em; }
 
     /* Warning Banner */
-    .alert-banner { display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 14px; border-radius: 16px; margin-top: 16px; font-size: 0.9em; font-weight: 500; animation: shake 0.5s; }
-    @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+    .alert-banner { display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 14px; border-radius: 16px; margin-top: 16px; font-size: 0.9em; font-weight: 500; }
 
     /* Result Box */
     .result-box { display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; margin-top: 16px; border: 1px solid rgba(255,255,255,0.05); }
@@ -207,16 +172,9 @@
     .api-warning { display: none; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fcd34d; border-radius: 16px; padding: 12px 20px; width: 100%; max-width: 400px; margin-bottom: 20px; font-size: 0.85em; text-align: center; }
     .api-warning a { color: #fff; text-decoration: underline; }
 
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
-
-  <!-- Ambient Background -->
-  <div class="ambient-glow">
-    <div class="glow-orb orb-1"></div>
-    <div class="glow-orb orb-2"></div>
-  </div>
 
   <!-- Language Switcher -->
   <div class="lang-switcher">
@@ -233,7 +191,7 @@
   <div class="header">
     <div class="epic-logo">88 DESIGNS</div>
     <div class="clock-container">
-      <div class="greeting" id="greetingText">อรุณสวัสดิ์ ☀️</div>
+      <div class="greeting" id="greetingText">สถานะ: โหลดข้อมูล...</div>
       <div class="time-display" id="liveTime">00:00:00</div>
       <div class="date-display" id="liveDate">กำลังโหลดวันที่...</div>
     </div>
@@ -241,9 +199,10 @@
 
   <div class="container">
     
-    <!-- Hero Actions (IN / OUT) -->
-    <div class="hero-grid">
-      <a href="scan.html?type=in" class="card hero-item c-in">
+    <!-- --- 4 Main Actions Grid --- -->
+    <div class="main-grid">
+      <!-- 1. เข้างาน -->
+      <a href="scan.html?type=in" class="grid-card c-in">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"></path></svg></div>
         <div>
           <div class="m-title" id="t-menu-in">เข้างาน</div>
@@ -251,37 +210,37 @@
         </div>
       </a>
 
-      <a href="scan.html?type=out" class="card hero-item c-out">
+      <!-- 2. ออกงาน -->
+      <a href="scan.html?type=out" class="grid-card c-out">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"></path></svg></div>
         <div>
           <div class="m-title" id="t-menu-out">ออกงาน</div>
           <div class="m-desc" id="t-desc-out">บันทึกเลิกงาน</div>
         </div>
       </a>
+
+      <!-- 3. แจ้งลา -->
+      <a href="#" onclick="openModal('leaveSelectModal')" class="grid-card c-leave">
+        <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path></svg></div>
+        <div>
+          <div class="m-title" id="t-menu-leave">แจ้งลา</div>
+          <div class="m-desc" id="t-desc-leave">ลาป่วย, ลากิจ, ฯลฯ</div>
+        </div>
+      </a>
+
+      <!-- 4. เช็คเวลา -->
+      <a href="#" onclick="openModal('checkTimeModal')" class="grid-card c-time">
+        <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+        <div>
+          <div class="m-title" id="t-menu-check">เช็คเวลา</div>
+          <div class="m-desc" id="t-desc-check">ดูสาย และ OT</div>
+        </div>
+      </a>
     </div>
-
-    <!-- Secondary Actions -->
-    <a href="#" onclick="openModal('leaveSelectModal')" class="card list-item c-leave">
-      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path></svg></div>
-      <div class="text-group">
-        <div class="m-title" id="t-menu-leave">แจ้งลา / ลาครึ่งวัน</div>
-        <div class="m-desc" id="t-desc-leave">ป่วย, กิจ, พักร้อน, แฮงค์</div>
-      </div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
-
-    <a href="#" onclick="openModal('checkTimeModal')" class="card list-item c-time">
-      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-      <div class="text-group">
-        <div class="m-title" id="t-menu-check">เช็คเวลาทำงาน</div>
-        <div class="m-desc" id="t-desc-check">ตรวจสอบการมาสาย และ OT</div>
-      </div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
 
     <div class="divider"></div>
 
-    <!-- Management & Settings -->
+    <!-- --- Secondary List Actions --- -->
     <a href="#" onclick="openModal('holidayModal')" class="card list-item c-holi">
       <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 11.25h.008v.008H12v-.008z"></path></svg></div>
       <div class="text-group">
@@ -300,7 +259,7 @@
       <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
     </a>
     
-    <a href="#" onclick="openModal('passwordModal')" class="card list-item c-gray" style="margin-top:-8px;">
+    <a href="#" onclick="openModal('passwordModal')" class="card list-item c-gray">
       <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
       <div class="text-group">
         <div class="m-title" id="t-menu-cfg">ตั้งค่าพิกัด GPS</div>
@@ -421,7 +380,7 @@
   </div>
 
   <script>
-    // --- Safe Storage Helpers (ป้องกัน Error ใน iframe) ---
+    // --- Safe Storage Helpers ---
     function safeGetStorage(key, defaultVal) {
       try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
     }
@@ -429,7 +388,7 @@
       try { localStorage.setItem(key, val); } catch(e) {}
     }
 
-    // --- Live Clock & Greeting Logic ---
+    // --- Live Clock & Status Logic ---
     function updateClock() {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
@@ -441,32 +400,55 @@
       document.getElementById('liveDate').innerText = now.toLocaleDateString(currentLang === 'th' ? 'th-TH' : 'en-US', options);
 
       const hour = now.getHours();
-      let greeting = "สวัสดี 🌟";
+      let greeting = "";
+      
+      // ลอจิกตรวจสอบสถานะตามช่วงเวลา (ตรงตามที่คุณรีเควสเป๊ะๆ)
       if(currentLang === 'th') {
-        if(hour >= 5 && hour < 12) greeting = "อรุณสวัสดิ์ ☀️";
-        else if(hour >= 12 && hour < 17) greeting = "สวัสดีตอนบ่าย ☕";
-        else if(hour >= 17 && hour < 22) greeting = "สวัสดีตอนเย็น 🌆";
-        else greeting = "ราตรีสวัสดิ์ 🌙";
+        if(hour >= 6 && hour < 9) greeting = "สถานะ: เข้างานปกติ 🟢";
+        else if(hour >= 9 && hour < 12) greeting = "สถานะ: เข้างานสาย 🔴";
+        else if(hour >= 12 && hour < 18) greeting = "สถานะ: ยังไม่ถึงเวลาเลิกงาน ⏳";
+        else greeting = "สถานะ: ถึงเวลาเลิกงาน 🏠";
       } else if(currentLang === 'en') {
-        if(hour >= 5 && hour < 12) greeting = "Good Morning ☀️";
-        else if(hour >= 12 && hour < 17) greeting = "Good Afternoon ☕";
-        else if(hour >= 17 && hour < 22) greeting = "Good Evening 🌆";
-        else greeting = "Good Night 🌙";
+        if(hour >= 6 && hour < 9) greeting = "Status: Normal In 🟢";
+        else if(hour >= 9 && hour < 12) greeting = "Status: Late In 🔴";
+        else if(hour >= 12 && hour < 18) greeting = "Status: Working Hours ⏳";
+        else greeting = "Status: Time to Leave 🏠";
       } else {
-         greeting = "မင်္ဂလာပါ 🌟"; // Basic Myanmar greeting
+        // Myanmar
+        if(hour >= 6 && hour < 9) greeting = "အခြေအနေ: ပုံမှန်ဝင် 🟢";
+        else if(hour >= 9 && hour < 12) greeting = "အခြေအနေ: နောက်ကျဝင် 🔴";
+        else if(hour >= 12 && hour < 18) greeting = "အခြေအနေ: အလုပ်ချိန် ⏳";
+        else greeting = "အခြေအနေ: အလုပ်ဆင်းချိန် 🏠";
       }
-      document.getElementById('greetingText').innerText = greeting;
+      
+      const greetEl = document.getElementById('greetingText');
+      if (greetEl) {
+        greetEl.innerText = greeting;
+        // เปลี่ยนสีตัวหนังสืออิงตามสถานะเพื่อให้ดูง่าย
+        if (greeting.includes('ปกติ') || greeting.includes('Normal') || greeting.includes('ပုံမှန်')) {
+          greetEl.style.color = 'var(--neon-in)';
+          greetEl.style.borderColor = 'rgba(16,185,129,0.3)';
+        } else if (greeting.includes('สาย') || greeting.includes('Late') || greeting.includes('နောက်ကျ')) {
+          greetEl.style.color = 'var(--neon-out)';
+          greetEl.style.borderColor = 'rgba(244,63,94,0.3)';
+        } else if (greeting.includes('ยังไม่ถึง') || greeting.includes('Working') || greeting.includes('အလုပ်ချိန်')) {
+          greetEl.style.color = 'var(--neon-holiday)';
+          greetEl.style.borderColor = 'rgba(236,72,153,0.3)';
+        } else {
+          greetEl.style.color = 'var(--neon-time)';
+          greetEl.style.borderColor = 'rgba(59,130,246,0.3)';
+        }
+      }
     }
     setInterval(updateClock, 1000);
-    
 
     // --- Dictionary 3 ภาษา ---
     const dict = {
       th: {
         "t-menu-in": "เข้างาน", "t-desc-in": "สแกนใบหน้า",
         "t-menu-out": "ออกงาน", "t-desc-out": "บันทึกเลิกงาน",
-        "t-menu-leave": "แจ้งลา / ลาครึ่งวัน", "t-desc-leave": "ป่วย, กิจ, พักร้อน, แฮงค์",
-        "t-menu-check": "เช็คเวลาทำงาน", "t-desc-check": "ตรวจสอบการมาสาย และ OT",
+        "t-menu-leave": "แจ้งลา", "t-desc-leave": "ลาป่วย, ลากิจ, ฯลฯ",
+        "t-menu-check": "เช็คเวลา", "t-desc-check": "ดูสาย และ OT",
         "t-menu-cal": "ปฏิทินวันหยุด 2026", "t-desc-cal": "ตรวจสอบสิทธิ์วันหยุด",
         "t-menu-reg": "ลงทะเบียนพนักงาน", "t-desc-reg": "บันทึกใบหน้าเข้าระบบ",
         "t-menu-cfg": "ตั้งค่าพิกัด GPS", "t-desc-cfg": "ระบบหลังบ้าน (Admin)",
@@ -474,7 +456,7 @@
         "t-l-title": "เลือกประเภทการลา", "t-l-desc": "กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา",
         "t-l-sick": "<span>🤧</span> ลาป่วย", "t-l-personal": "<span>💼</span> ลากิจ", 
         "t-l-halfm": "<span>🌅</span> ครึ่งวันเช้า", "t-l-halfa": "<span>🌇</span> ครึ่งวันบ่าย", 
-        "t-l-annual": "<span>🏖️</span> ลาพักร้อน", "t-l-hang": "<span>🍻</span> ลาแฮงค์ (พิเศษ)",
+        "t-l-annual": "<span>🏖️</span> ลาพักร้อน", "t-l-hang": "<span>🍻</span> ลาแฮงค์",
         
         "t-ls-desc": "พิมพ์ชื่อ-นามสกุล ให้ตรงกับที่ลงทะเบียนไว้",
         "t-c-title": "เช็คเวลาทำงาน", "t-c-desc": "ตรวจสอบ OT และเวลามาสายสะสม",
@@ -485,8 +467,8 @@
       en: {
         "t-menu-in": "Check In", "t-desc-in": "Face scan",
         "t-menu-out": "Check Out", "t-desc-out": "End shift",
-        "t-menu-leave": "Leave Request", "t-desc-leave": "Sick, Personal, Half-day",
-        "t-menu-check": "Check Time", "t-desc-check": "Late & OT records",
+        "t-menu-leave": "Leave", "t-desc-leave": "Sick, Personal",
+        "t-menu-check": "Check Time", "t-desc-check": "Late & OT",
         "t-menu-cal": "Holiday 2026", "t-desc-cal": "View company holidays",
         "t-menu-reg": "Register Staff", "t-desc-reg": "Enroll face data",
         "t-menu-cfg": "GPS Settings", "t-desc-cfg": "Admin Dashboard",
@@ -505,7 +487,7 @@
       mm: {
         "t-menu-in": "အလုပ်ဝင်", "t-desc-in": "မျက်နှာဖတ်ရန်",
         "t-menu-out": "အလုပ်ဆင်း", "t-desc-out": "အလုပ်ဆင်းရန်",
-        "t-menu-leave": "ခွင့်တိုင်", "t-desc-leave": "နေမကောင်း, တစ်ဝက်ခွင့်",
+        "t-menu-leave": "ခွင့်တိုင်", "t-desc-leave": "နေမကောင်း, ခွင့်",
         "t-menu-check": "အချိန်စစ်", "t-desc-check": "OT နှင့် နောက်ကျ",
         "t-menu-cal": "အားလပ်ရက် 2026", "t-desc-cal": "ရုံးပိတ်ရက်များ",
         "t-menu-reg": "စာရင်းသွင်းရန်", "t-desc-reg": "မျက်နှာစာရင်းသွင်းပါ",
@@ -531,7 +513,6 @@
         currentLang = lang;
         safeSetStorage('appLang', lang);
         
-        // Update Button active states safely
         document.querySelectorAll('.btn-lang').forEach(btn => {
           if(btn.innerText.toLowerCase() === lang.toLowerCase()) {
             btn.classList.add('active');
@@ -567,7 +548,6 @@
     }
 
     window.onload = () => {
-      // Trigger setLang safely
       setLang(currentLang);
       updateClock();
       
