@@ -421,6 +421,14 @@
   </div>
 
   <script>
+    // --- Safe Storage Helpers (ป้องกัน Error ใน iframe) ---
+    function safeGetStorage(key, defaultVal) {
+      try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
+    }
+    function safeSetStorage(key, val) {
+      try { localStorage.setItem(key, val); } catch(e) {}
+    }
+
     // --- Live Clock & Greeting Logic ---
     function updateClock() {
       const now = new Date();
@@ -450,7 +458,7 @@
       document.getElementById('greetingText').innerText = greeting;
     }
     setInterval(updateClock, 1000);
-    updateClock();
+    
 
     // --- Dictionary 3 ภาษา ---
     const dict = {
@@ -516,12 +524,12 @@
       }
     };
 
-    let currentLang = localStorage.getItem('appLang') || 'th';
+    let currentLang = safeGetStorage('appLang', 'th');
     
     function setLang(lang) {
       try {
         currentLang = lang;
-        localStorage.setItem('appLang', lang);
+        safeSetStorage('appLang', lang);
         
         // Update Button active states safely
         document.querySelectorAll('.btn-lang').forEach(btn => {
@@ -559,10 +567,12 @@
     }
 
     window.onload = () => {
-      // Trigger setLang safely to initialize the text elements without breaking
+      // Trigger setLang safely
       setLang(currentLang);
+      updateClock();
       
-      if (!localStorage.getItem('gasApiUrl') && typeof GAS_API_URL === 'undefined') {
+      const savedApi = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
+      if (!savedApi) {
         document.getElementById('apiWarning').style.display = 'block';
       }
     };
@@ -598,7 +608,7 @@
       const name = document.getElementById('leaveName').value.trim();
       if (!name) return alert('กรุณาระบุชื่อพนักงาน');
 
-      const apiUrl = localStorage.getItem('gasApiUrl') || (typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
+      const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
       const btn = document.getElementById('btnSubmitLeave');
       btn.disabled = true; btn.innerText = '⏳...';
 
@@ -616,7 +626,7 @@
     async function fetchTime() {
       const name = document.getElementById('checkName').value.trim();
       if (!name) return;
-      const apiUrl = localStorage.getItem('gasApiUrl') || (typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
+      const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
       
       const btn = document.getElementById('btnCheckTime');
       btn.disabled = true; btn.innerText = '⏳...';
