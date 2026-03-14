@@ -491,7 +491,7 @@
     </div>
   </div>
 
-  <!-- Modal: เช็คเวลา -->
+  <!-- Modal: เช็คเวลา (พนักงาน) -->
   <div id="checkTimeModal" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-title" id="t-c-title">เช็คเวลาทำงาน</div>
@@ -993,7 +993,6 @@
     }
 
     // --- AI Assistant Logic ---
-    // 🛑 นำ API Key ที่ได้จากเว็บ Google AI Studio มาใส่ในเครื่องหมายคำพูดด้านล่างนี้ 🛑
     const apiKey = "AIzaSyDMku1GakADynMV3d-xupmM-Y2y_eY2TZ8"; 
 
     document.getElementById('aiInput').addEventListener('keypress', function (e) {
@@ -1010,8 +1009,8 @@
       const loadingId = appendAiMessage('กำลังคิด...', 'ai', true);
       
       try {
-        // แก้ไข: เปลี่ยนชื่อโมเดลเป็น gemini-1.5-flash สำหรับผู้ใช้งานทั่วไป
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        // อัปเดตเพื่อรองรับระบบพรีวิว (gemini-2.5-flash-preview-09-2025)
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
         const payload = {
           contents: [{ parts: [{ text: text }] }],
           systemInstruction: { parts: [{ text: "คุณคือ AI Assistant ของบริษัท 88 Designs ทำหน้าที่ตอบคำถามพนักงานแบบสั้นๆ เป็นมิตร มีอารมณ์ขัน และสุภาพ" }] }
