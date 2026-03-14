@@ -190,6 +190,15 @@
     .api-warning { display: none; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fcd34d; border-radius: 16px; padding: 12px 20px; width: 100%; max-width: 400px; margin-bottom: 20px; font-size: 0.85em; text-align: center; }
     .api-warning a { color: #fff; text-decoration: underline; }
 
+    /* อนิเมชันกระดิ่งสั่นสำหรับตอนแจ้งเตือนสาย */
+    @keyframes shake {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(-15deg); }
+      50% { transform: rotate(15deg); }
+      75% { transform: rotate(-15deg); }
+      100% { transform: rotate(0deg); }
+    }
+
   </style>
 </head>
 <body>
@@ -217,7 +226,8 @@
     
     <!-- --- 4 Main Actions Grid --- -->
     <div class="main-grid">
-      <a href="scan.html?type=in" class="grid-card c-in">
+      <!-- แก้ไขปุ่มเข้างาน ให้วิ่งผ่านฟังก์ชันตรวจเช็คเวลาก่อน -->
+      <a href="#" onclick="checkLateAndScan(event)" class="grid-card c-in">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"></path></svg></div>
         <div>
           <div class="m-title" id="t-menu-in">เข้างาน</div>
@@ -289,6 +299,22 @@
       </div>
       <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
     </a>
+  </div>
+
+  <!-- Modal: แจ้งเตือนมาสาย (ดักก่อนสแกนเข้างาน) -->
+  <div id="lateScanModal" class="modal-overlay">
+    <div class="modal-box" style="border-color: var(--neon-out); box-shadow: 0 0 50px rgba(225,29,72,0.3);">
+      <div style="font-size: 4.5em; margin-bottom: 5px; animation: shake 0.5s ease-in-out infinite alternate;">⏰</div>
+      <div class="modal-title" id="t-late-scan-title" style="color: var(--neon-out); font-size: 1.8em; line-height: 1.3; margin-bottom: 15px; text-shadow: 0 0 15px rgba(225,29,72,0.5);">
+        คุณมาสาย!<br>โปรดปรับปรุงตัว
+      </div>
+      <div class="modal-desc" id="t-late-scan-desc" style="font-size: 1em; color: var(--text-main);">
+        เวลาเข้างานปกติคือไม่เกิน 09:00 น.
+      </div>
+      <button class="btn btn-primary" id="t-late-scan-btn" style="background: linear-gradient(135deg, #e11d48, #be123c); color: #fff; font-size: 1.2em; padding: 18px; box-shadow: 0 4px 15px rgba(225,29,72,0.4); margin-top: 10px; text-shadow: none;" onclick="proceedToScan()">
+        ตกลง (สแกนเข้างาน)
+      </button>
+    </div>
   </div>
 
   <!-- Modal: เลือกประเภทการลา -->
@@ -492,7 +518,12 @@
         "t-r-late": "มาสายสะสม:", "t-r-ot": "ทำ OT สะสม:", "t-warn-msg": "เดือนนี้คุณมาสายเกิน 30 นาทีแล้ว!",
         "btn-cancel": "ยกเลิก", "btn-close": "ปิดหน้าต่าง", "btn-submit-l": "ยืนยันการลา", "btn-search": "ค้นหาข้อมูล", "btn-confirm": "ยืนยัน",
         "placeholder-name": "ชื่อ-นามสกุล...", "pwd-desc": "กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน",
-        "t-menu-cal-title": "🗓️ ปฏิทินวันหยุด 2026"
+        "t-menu-cal-title": "🗓️ ปฏิทินวันหยุด 2026",
+        
+        // คำแปลสำหรับ ป๊อปอัพมาสาย
+        "t-late-scan-title": "คุณมาสาย!<br>โปรดปรับปรุงตัว",
+        "t-late-scan-desc": "เวลาเข้างานปกติคือไม่เกิน 09:00 น.",
+        "t-late-scan-btn": "ตกลง (สแกนเข้างาน)"
       },
       en: {
         "t-menu-in": "Check In", "t-desc-in": "Face scan",
@@ -515,7 +546,11 @@
         "t-r-late": "Total Late:", "t-r-ot": "Total OT:", "t-warn-msg": "Warning! Late >30 mins this cycle!",
         "btn-cancel": "Cancel", "btn-close": "Close", "btn-submit-l": "Submit", "btn-search": "Search", "btn-confirm": "Confirm",
         "placeholder-name": "Full Name...", "pwd-desc": "Enter admin password to access",
-        "t-menu-cal-title": "🗓️ Holiday Calendar 2026"
+        "t-menu-cal-title": "🗓️ Holiday Calendar 2026",
+        
+        "t-late-scan-title": "You are LATE!<br>Please improve",
+        "t-late-scan-desc": "Standard check-in time is before 09:00",
+        "t-late-scan-btn": "OK (Proceed)"
       },
       mm: {
         "t-menu-in": "အလုပ်ဝင်", "t-desc-in": "မျက်နှာဖတ်ရန်",
@@ -538,7 +573,11 @@
         "t-r-late": "နောက်ကျစုစုပေါင်း:", "t-r-ot": "OT စုစုပေါင်း:", "t-warn-msg": "သတိပေးချက်! ယခုလ မိနစ် ၃၀ ကျော်နောက်ကျနေပါသည်!",
         "btn-cancel": "ပယ်ဖျက်", "btn-close": "ပိတ်မည်", "btn-submit-l": "အတည်ပြုပါ", "btn-search": "ရှာဖွေမည်", "btn-confirm": "အတည်ပြု",
         "placeholder-name": "အမည်...", "pwd-desc": "စကားဝှက်ထည့်ပါ",
-        "t-menu-cal-title": "🗓️ အားလပ်ရက် 2026"
+        "t-menu-cal-title": "🗓️ အားလပ်ရက် 2026",
+        
+        "t-late-scan-title": "သင် နောက်ကျနေပါသည်!<br>ကျေးဇူးပြု၍ ပြုပြင်ပါ",
+        "t-late-scan-desc": "ပုံမှန် အလုပ်ဝင်ချိန်သည် 09:00 ဖြစ်သည်",
+        "t-late-scan-btn": "အတည်ပြုပါ"
       }
     };
 
@@ -576,6 +615,7 @@
         setTxt('btnCheckTime', d['btn-search']);
         setTxt('btnAdminSearch', d['btn-search']);
         setTxt('t-btn-confirm-pwd', d['btn-confirm']);
+        setTxt('t-late-scan-btn', d['t-late-scan-btn']);
         
         setPlc('leaveName', d['placeholder-name']);
         setPlc('checkName', d['placeholder-name']);
@@ -595,6 +635,26 @@
 
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    // --- ตรวจสอบการมาสาย (ก่อนเข้าหน้าสแกน) ---
+    function checkLateAndScan(e) {
+      e.preventDefault();
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+
+      // ถือว่ามาสายตั้งแต่เวลา 09:01 น. เป็นต้นไป (เช็คถึงก่อน 17:00 เพื่อไม่ให้ไปชนกับสแกนกะอื่นถ้ามี)
+      if ((hours > 9 || (hours === 9 && minutes > 0)) && hours < 17) {
+        openModal('lateScanModal');
+      } else {
+        proceedToScan(); // ถ้าไม่สาย ให้ข้ามไปสแกนได้เลย
+      }
+    }
+
+    // ฟังก์ชันไปหน้าสแกน (ทำงานเมื่อกดปุ่ม "ตกลง" ในป๊อปอัพมาสาย)
+    function proceedToScan() {
+      window.location.href = 'scan.html?type=in';
+    }
 
     // --- Admin Authentication Flow ---
     let adminActionTarget = '';
