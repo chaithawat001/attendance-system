@@ -8,21 +8,18 @@
   <script src="js/api-config.js"></script>
   <style>
     :root {
-      /* Pure Black Theme - Optimized for Speed */
       --bg-base: #050505;
       --card-bg: #141419;
       --border-light: rgba(255, 255, 255, 0.08);
       --border-hover: rgba(255, 255, 255, 0.2);
-      
       --text-main: #ffffff;
       --text-sub: #9ca3af;
-      
-      /* Neon Accents */
       --neon-in: #10b981;
       --neon-out: #f43f5e;
       --neon-leave: #8b5cf6;
       --neon-time: #3b82f6;
       --neon-holiday: #ec4899;
+      --neon-admin: #f59e0b;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -35,7 +32,6 @@
       position: relative; overflow-x: hidden;
     }
 
-    /* Language Switcher */
     .lang-switcher {
       position: absolute; top: 20px; right: 20px;
       background: #141419; border: 1px solid var(--border-light);
@@ -49,27 +45,18 @@
     }
     .btn-lang.active { background: #fff; color: #000; }
 
-    /* Header & Live Clock */
     .header { text-align: center; margin-top: 50px; margin-bottom: 24px; width: 100%; max-width: 400px; }
     
     .epic-logo {
-      font-size: 2.8em;
-      font-weight: 900;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 5px;
-      margin-bottom: 25px;
-      display: inline-block;
+      font-size: 2.8em; font-weight: 900; color: #ffffff; text-transform: uppercase;
+      letter-spacing: 5px; margin-bottom: 25px; display: inline-block;
       text-shadow: 0 0 10px rgba(59,130,246,0.6), 0 0 20px rgba(59,130,246,0.4), 0 0 40px rgba(139,92,246,0.6);
     }
     
     .clock-container {
-      background: var(--card-bg);
-      border: 1px solid var(--border-light); border-radius: 24px; padding: 20px;
-      display: inline-block; width: 100%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 24px; padding: 20px;
+      display: inline-block; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    /* ปรับแต่ง Status Text ให้ดูเด่นขึ้น */
     .greeting { 
       font-size: 1.05em; color: var(--text-main); font-weight: 500; 
       margin-bottom: 8px; padding: 4px 12px; border-radius: 12px;
@@ -79,19 +66,14 @@
     .time-display { font-size: 3em; font-weight: 700; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.2); font-variant-numeric: tabular-nums; line-height: 1; }
     .date-display { font-size: 0.9em; color: var(--text-sub); margin-top: 8px; }
 
-    /* Menu Container */
     .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 16px; z-index: 1; }
 
-    /* --- 4 Main Grid Cards (จัดเรียงใหม่สวยงาม) --- */
     .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     
     .grid-card {
-      background: var(--card-bg); border: 1px solid var(--border-light);
-      border-radius: 24px; text-decoration: none; position: relative; overflow: hidden;
-      transition: all 0.2s ease-in-out;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 22px 10px; text-align: center;
+      background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 24px; text-decoration: none; position: relative; overflow: hidden;
+      transition: all 0.2s ease-in-out; box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 22px 10px; text-align: center;
     }
     
     .grid-card:active { transform: scale(0.95); }
@@ -115,11 +97,11 @@
     .grid-card .m-title { font-size: 1.1em; font-weight: 600; color: #fff; position: relative; z-index: 1; line-height: 1.2; }
     .grid-card .m-desc { font-size: 0.75em; color: var(--text-sub); position: relative; z-index: 1; margin-top: 4px; }
 
-    /* List Cards (Secondary Menus) */
     .list-item { display: flex; align-items: center; padding: 16px 20px; gap: 16px; background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 20px; text-decoration: none; transition: 0.2s; }
     .list-item .icon-box { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
     .c-gray .icon-box { background: rgba(255,255,255,0.05); color: #cbd5e1; }
     .c-holi .icon-box { background: rgba(236,72,153,0.1); color: var(--neon-holiday); }
+    .c-admin .icon-box { background: rgba(245,158,11,0.1); color: var(--neon-admin); }
     
     .list-item .text-group { flex: 1; position: relative; z-index: 1; }
     .list-item .m-title { font-size: 1em; font-weight: 500; color: #fff; margin-bottom: 2px; }
@@ -129,10 +111,7 @@
     .list-item:hover .arrow { transform: translateX(5px); color: #fff; }
     .list-item:hover { border-color: var(--border-hover); }
 
-    /* SVG Icons */
     svg { width: 24px; height: 24px; stroke-width: 1.8; }
-
-    /* Section Divider */
     .divider { width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 8px 0; }
 
     /* Modals */
@@ -150,7 +129,6 @@
     .btn-primary { background: #fff; color: #000; }
     .btn-outline { background: transparent; color: var(--text-sub); border: 1px solid rgba(255,255,255,0.1); }
     
-    /* Leave Buttons Grid */
     .leave-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
     .btn-leave { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 14px 10px; border-radius: 16px; font-size: 0.9em; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px; }
     .btn-leave span { font-size: 1.5em; }
@@ -158,17 +136,14 @@
     .btn-leave.full { grid-column: span 2; flex-direction: row; justify-content: center; gap: 10px; }
     .btn-leave.full span { font-size: 1.2em; }
 
-    /* Warning Banner */
     .alert-banner { display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 14px; border-radius: 16px; margin-top: 16px; font-size: 0.9em; font-weight: 500; }
 
-    /* Result Box */
     .result-box { display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; margin-top: 16px; border: 1px solid rgba(255,255,255,0.05); }
     .r-name { color: var(--neon-time); font-weight: 600; font-size: 1.2em; margin-bottom: 16px; }
     .r-stat { font-size: 0.95em; display: flex; justify-content: space-between; margin-bottom: 10px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 12px; }
     .r-stat:last-child { margin-bottom: 0; }
     .r-stat span:last-child { font-weight: 600; }
     
-    /* API Warning */
     .api-warning { display: none; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fcd34d; border-radius: 16px; padding: 12px 20px; width: 100%; max-width: 400px; margin-bottom: 20px; font-size: 0.85em; text-align: center; }
     .api-warning a { color: #fff; text-decoration: underline; }
 
@@ -176,7 +151,6 @@
 </head>
 <body>
 
-  <!-- Language Switcher -->
   <div class="lang-switcher">
     <button class="btn-lang active" onclick="setLang('th')">TH</button>
     <button class="btn-lang" onclick="setLang('en')">EN</button>
@@ -184,10 +158,9 @@
   </div>
 
   <div id="apiWarning" class="api-warning">
-    ⚠️ ยังไม่ได้ตั้งค่าระบบ — <a href="#" onclick="openModal('passwordModal')">ไปตั้งค่าก่อน</a>
+    ⚠️ ยังไม่ได้ตั้งค่าระบบ — <a href="#" onclick="openAdminAuth('config')">ไปตั้งค่าก่อน</a>
   </div>
 
-  <!-- Header & Live Clock -->
   <div class="header">
     <div class="epic-logo">88 DESIGNS</div>
     <div class="clock-container">
@@ -201,7 +174,6 @@
     
     <!-- --- 4 Main Actions Grid --- -->
     <div class="main-grid">
-      <!-- 1. เข้างาน -->
       <a href="scan.html?type=in" class="grid-card c-in">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"></path></svg></div>
         <div>
@@ -210,7 +182,6 @@
         </div>
       </a>
 
-      <!-- 2. ออกงาน -->
       <a href="scan.html?type=out" class="grid-card c-out">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"></path></svg></div>
         <div>
@@ -219,7 +190,6 @@
         </div>
       </a>
 
-      <!-- 3. แจ้งลา -->
       <a href="#" onclick="openModal('leaveSelectModal')" class="grid-card c-leave">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path></svg></div>
         <div>
@@ -228,7 +198,6 @@
         </div>
       </a>
 
-      <!-- 4. เช็คเวลา -->
       <a href="#" onclick="openModal('checkTimeModal')" class="grid-card c-time">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
         <div>
@@ -249,6 +218,16 @@
       </div>
       <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
     </a>
+    
+    <!-- เมนูใหม่สำหรับ Admin -->
+    <a href="#" onclick="openAdminAuth('viewData')" class="card list-item c-admin">
+      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
+      <div class="text-group">
+        <div class="m-title" id="t-menu-view">ดูข้อมูลพนักงาน</div>
+        <div class="m-desc" id="t-desc-view">เช็คเวลาเข้าออกแบบละเอียดรายวัน</div>
+      </div>
+      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+    </a>
 
     <a href="register.html" class="card list-item c-gray">
       <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.375 21c-2.331 0-4.512-.645-6.375-1.765z"></path></svg></div>
@@ -259,7 +238,7 @@
       <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
     </a>
     
-    <a href="#" onclick="openModal('passwordModal')" class="card list-item c-gray">
+    <a href="#" onclick="openAdminAuth('config')" class="card list-item c-gray" style="margin-top:-8px;">
       <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
       <div class="text-group">
         <div class="m-title" id="t-menu-cfg">ตั้งค่าพิกัด GPS</div>
@@ -299,7 +278,7 @@
     </div>
   </div>
 
-  <!-- Modal: เช็คเวลา -->
+  <!-- Modal: เช็คเวลา (พนักงาน) -->
   <div id="checkTimeModal" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-title" id="t-c-title" style="color:var(--neon-time);">เช็คเวลาทำงาน</div>
@@ -319,7 +298,6 @@
         </div>
       </div>
 
-      <!-- ป้ายแจ้งเตือนสายเกิน 30 นาที! -->
       <div id="lateWarning" class="alert-banner">
         ⚠️ <span id="t-warn-msg">เดือนนี้คุณมาสายเกิน 30 นาทีแล้ว!</span>
       </div>
@@ -328,15 +306,31 @@
     </div>
   </div>
 
-  <!-- Modal: Password -->
+  <!-- Modal: Password สำหรับ Admin -->
   <div id="passwordModal" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-title">ยืนยันสิทธิ์ Admin</div>
-      <div class="modal-desc">กรุณาใส่รหัสผ่านเพื่อตั้งค่าพิกัด GPS</div>
+      <div class="modal-desc" id="pwdDesc">กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน</div>
       <input type="password" id="adminPassword" class="input-field" placeholder="รหัสผ่าน...">
       <div id="pwdError" style="display:none; color:var(--neon-out); font-size:0.85em; margin-top:-10px; margin-bottom:15px;">รหัสผ่านไม่ถูกต้อง</div>
-      <button class="btn btn-primary" onclick="verifyPassword()">ยืนยัน</button>
-      <button class="btn btn-outline" onclick="closeModal('passwordModal')">ยกเลิก</button>
+      <button class="btn btn-primary" onclick="verifyPassword()" id="t-btn-confirm-pwd">ยืนยัน</button>
+      <button class="btn btn-outline" onclick="closeModal('passwordModal')" id="t-btn-cancel-pwd">ยกเลิก</button>
+    </div>
+  </div>
+
+  <!-- Modal: ดูข้อมูลเวลาพนักงาน (Admin Only) -->
+  <div id="adminViewModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 420px; padding: 25px 20px;">
+      <div class="modal-title" id="t-a-title" style="color:var(--neon-admin);">📋 ข้อมูลเวลา (Admin)</div>
+      <div class="modal-desc" id="t-a-desc">ตรวจสอบเวลาเข้า-ออกรายบุคคล</div>
+      <input type="text" id="adminSearchName" class="input-field" placeholder="ชื่อ-นามสกุล...">
+      <button class="btn btn-primary" onclick="fetchAdminData()" id="btnAdminSearch">ค้นหาข้อมูล</button>
+      
+      <div id="adminResultBox" style="display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 15px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.05); max-height: 45vh; overflow-y: auto;">
+        <!-- Data will be injected here -->
+      </div>
+
+      <button class="btn btn-outline" onclick="closeModal('adminViewModal')" id="t-btn-cancel4" style="margin-top: 15px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -375,12 +369,11 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-outline" onclick="closeModal('holidayModal')">ปิดหน้าต่าง</button>
+      <button class="btn btn-outline" onclick="closeModal('holidayModal')" id="t-btn-cancel5">ปิดหน้าต่าง</button>
     </div>
   </div>
 
   <script>
-    // --- Safe Storage Helpers ---
     function safeGetStorage(key, defaultVal) {
       try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
     }
@@ -388,7 +381,6 @@
       try { localStorage.setItem(key, val); } catch(e) {}
     }
 
-    // --- Live Clock & Status Logic ---
     function updateClock() {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
@@ -402,7 +394,6 @@
       const hour = now.getHours();
       let greeting = "";
       
-      // ลอจิกตรวจสอบสถานะตามช่วงเวลา (ตรงตามที่คุณรีเควสเป๊ะๆ)
       if(currentLang === 'th') {
         if(hour >= 6 && hour < 9) greeting = "สถานะ: เข้างานปกติ 🟢";
         else if(hour >= 9 && hour < 12) greeting = "สถานะ: เข้างานสาย 🔴";
@@ -414,7 +405,6 @@
         else if(hour >= 12 && hour < 18) greeting = "Status: Working Hours ⏳";
         else greeting = "Status: Time to Leave 🏠";
       } else {
-        // Myanmar
         if(hour >= 6 && hour < 9) greeting = "အခြေအနေ: ပုံမှန်ဝင် 🟢";
         else if(hour >= 9 && hour < 12) greeting = "အခြေအနေ: နောက်ကျဝင် 🔴";
         else if(hour >= 12 && hour < 18) greeting = "အခြေအနေ: အလုပ်ချိန် ⏳";
@@ -424,25 +414,19 @@
       const greetEl = document.getElementById('greetingText');
       if (greetEl) {
         greetEl.innerText = greeting;
-        // เปลี่ยนสีตัวหนังสืออิงตามสถานะเพื่อให้ดูง่าย
         if (greeting.includes('ปกติ') || greeting.includes('Normal') || greeting.includes('ပုံမှန်')) {
-          greetEl.style.color = 'var(--neon-in)';
-          greetEl.style.borderColor = 'rgba(16,185,129,0.3)';
+          greetEl.style.color = 'var(--neon-in)'; greetEl.style.borderColor = 'rgba(16,185,129,0.3)';
         } else if (greeting.includes('สาย') || greeting.includes('Late') || greeting.includes('နောက်ကျ')) {
-          greetEl.style.color = 'var(--neon-out)';
-          greetEl.style.borderColor = 'rgba(244,63,94,0.3)';
+          greetEl.style.color = 'var(--neon-out)'; greetEl.style.borderColor = 'rgba(244,63,94,0.3)';
         } else if (greeting.includes('ยังไม่ถึง') || greeting.includes('Working') || greeting.includes('အလုပ်ချိန်')) {
-          greetEl.style.color = 'var(--neon-holiday)';
-          greetEl.style.borderColor = 'rgba(236,72,153,0.3)';
+          greetEl.style.color = 'var(--neon-holiday)'; greetEl.style.borderColor = 'rgba(236,72,153,0.3)';
         } else {
-          greetEl.style.color = 'var(--neon-time)';
-          greetEl.style.borderColor = 'rgba(59,130,246,0.3)';
+          greetEl.style.color = 'var(--neon-time)'; greetEl.style.borderColor = 'rgba(59,130,246,0.3)';
         }
       }
     }
     setInterval(updateClock, 1000);
 
-    // --- Dictionary 3 ภาษา ---
     const dict = {
       th: {
         "t-menu-in": "เข้างาน", "t-desc-in": "สแกนใบหน้า",
@@ -452,6 +436,7 @@
         "t-menu-cal": "ปฏิทินวันหยุด 2026", "t-desc-cal": "ตรวจสอบสิทธิ์วันหยุด",
         "t-menu-reg": "ลงทะเบียนพนักงาน", "t-desc-reg": "บันทึกใบหน้าเข้าระบบ",
         "t-menu-cfg": "ตั้งค่าพิกัด GPS", "t-desc-cfg": "ระบบหลังบ้าน (Admin)",
+        "t-menu-view": "ดูข้อมูลพนักงาน", "t-desc-view": "เช็คเวลาเข้าออกแบบละเอียดรายวัน",
         
         "t-l-title": "เลือกประเภทการลา", "t-l-desc": "กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา",
         "t-l-sick": "<span>🤧</span> ลาป่วย", "t-l-personal": "<span>💼</span> ลากิจ", 
@@ -460,9 +445,10 @@
         
         "t-ls-desc": "พิมพ์ชื่อ-นามสกุล ให้ตรงกับที่ลงทะเบียนไว้",
         "t-c-title": "เช็คเวลาทำงาน", "t-c-desc": "ตรวจสอบ OT และเวลามาสายสะสม",
+        "t-a-title": "📋 ข้อมูลเวลา (Admin)", "t-a-desc": "ตรวจสอบเวลาเข้า-ออกรายบุคคล",
         "t-r-late": "มาสายสะสม:", "t-r-ot": "ทำ OT สะสม:", "t-warn-msg": "เดือนนี้คุณมาสายเกิน 30 นาทีแล้ว!",
-        "btn-cancel": "ยกเลิก", "btn-close": "ปิดหน้าต่าง", "btn-submit-l": "ยืนยันการลา", "btn-search": "ค้นหาข้อมูล",
-        "placeholder-name": "ชื่อ-นามสกุล..."
+        "btn-cancel": "ยกเลิก", "btn-close": "ปิดหน้าต่าง", "btn-submit-l": "ยืนยันการลา", "btn-search": "ค้นหาข้อมูล", "btn-confirm": "ยืนยัน",
+        "placeholder-name": "ชื่อ-นามสกุล...", "pwd-desc": "กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน"
       },
       en: {
         "t-menu-in": "Check In", "t-desc-in": "Face scan",
@@ -472,6 +458,7 @@
         "t-menu-cal": "Holiday 2026", "t-desc-cal": "View company holidays",
         "t-menu-reg": "Register Staff", "t-desc-reg": "Enroll face data",
         "t-menu-cfg": "GPS Settings", "t-desc-cfg": "Admin Dashboard",
+        "t-menu-view": "View Records", "t-desc-view": "Daily details for Admin",
         
         "t-l-title": "Select Leave Type", "t-l-desc": "Choose your reason for leave",
         "t-l-sick": "<span>🤧</span> Sick", "t-l-personal": "<span>💼</span> Personal", 
@@ -480,9 +467,10 @@
         
         "t-ls-desc": "Enter your registered full name",
         "t-c-title": "Work Time", "t-c-desc": "View your OT and Late minutes",
+        "t-a-title": "📋 Admin Records", "t-a-desc": "Check daily attendance details",
         "t-r-late": "Total Late:", "t-r-ot": "Total OT:", "t-warn-msg": "Warning! Late >30 mins this cycle!",
-        "btn-cancel": "Cancel", "btn-close": "Close", "btn-submit-l": "Submit", "btn-search": "Search",
-        "placeholder-name": "Full Name..."
+        "btn-cancel": "Cancel", "btn-close": "Close", "btn-submit-l": "Submit", "btn-search": "Search", "btn-confirm": "Confirm",
+        "placeholder-name": "Full Name...", "pwd-desc": "Enter admin password to access"
       },
       mm: {
         "t-menu-in": "အလုပ်ဝင်", "t-desc-in": "မျက်နှာဖတ်ရန်",
@@ -492,6 +480,7 @@
         "t-menu-cal": "အားလပ်ရက် 2026", "t-desc-cal": "ရုံးပိတ်ရက်များ",
         "t-menu-reg": "စာရင်းသွင်းရန်", "t-desc-reg": "မျက်နှာစာရင်းသွင်းပါ",
         "t-menu-cfg": "GPS နေရာ", "t-desc-cfg": "Admin သာလျှင်",
+        "t-menu-view": "မှတ်တမ်းကြည့်ရန်", "t-desc-view": "ဝန်ထမ်းမှတ်တမ်းကြည့်ရန်",
         
         "t-l-title": "ခွင့်အမျိုးအစား", "t-l-desc": "အကြောင်းပြချက်ရွေးပါ",
         "t-l-sick": "<span>🤧</span> ဖျားနာ", "t-l-personal": "<span>💼</span> ကိုယ်ရေးကိုယ်တာ", 
@@ -500,9 +489,10 @@
         
         "t-ls-desc": "သင်၏အမည်အပြည့်အစုံကိုထည့်ပါ",
         "t-c-title": "အချိန်စစ်", "t-c-desc": "OT နှင့် နောက်ကျအချိန်ကိုကြည့်ပါ",
+        "t-a-title": "📋 Admin မှတ်တမ်း", "t-a-desc": "နေ့စဉ်အချိန်ကြည့်ရန်",
         "t-r-late": "နောက်ကျစုစုပေါင်း:", "t-r-ot": "OT စုစုပေါင်း:", "t-warn-msg": "သတိပေးချက်! ယခုလ မိနစ် ၃၀ ကျော်နောက်ကျနေပါသည်!",
-        "btn-cancel": "ပယ်ဖျက်", "btn-close": "ပိတ်မည်", "btn-submit-l": "အတည်ပြုပါ", "btn-search": "ရှာဖွေမည်",
-        "placeholder-name": "အမည်..."
+        "btn-cancel": "ပယ်ဖျက်", "btn-close": "ပိတ်မည်", "btn-submit-l": "အတည်ပြုပါ", "btn-search": "ရှာဖွေမည်", "btn-confirm": "အတည်ပြု",
+        "placeholder-name": "အမည်...", "pwd-desc": "စကားဝှက်ထည့်ပါ"
       }
     };
 
@@ -514,11 +504,8 @@
         safeSetStorage('appLang', lang);
         
         document.querySelectorAll('.btn-lang').forEach(btn => {
-          if(btn.innerText.toLowerCase() === lang.toLowerCase()) {
-            btn.classList.add('active');
-          } else {
-            btn.classList.remove('active');
-          }
+          if(btn.innerText.toLowerCase() === lang.toLowerCase()) btn.classList.add('active');
+          else btn.classList.remove('active');
         });
 
         const d = dict[lang];
@@ -535,16 +522,21 @@
         setTxt('t-btn-cancel1', d['btn-cancel']);
         setTxt('t-btn-cancel2', d['btn-cancel']);
         setTxt('t-btn-cancel3', d['btn-close']);
+        setTxt('t-btn-cancel4', d['btn-close']);
+        setTxt('t-btn-cancel5', d['btn-close']);
+        setTxt('t-btn-cancel-pwd', d['btn-cancel']);
+        
         setTxt('btnSubmitLeave', d['btn-submit-l']);
         setTxt('btnCheckTime', d['btn-search']);
+        setTxt('btnAdminSearch', d['btn-search']);
+        setTxt('t-btn-confirm-pwd', d['btn-confirm']);
         
         setPlc('leaveName', d['placeholder-name']);
         setPlc('checkName', d['placeholder-name']);
+        setPlc('adminSearchName', d['placeholder-name']);
         
         if (typeof updateClock === 'function') updateClock(); 
-      } catch(err) {
-        console.error("SetLang Error: ", err);
-      }
+      } catch(err) { console.error("SetLang Error: ", err); }
     }
 
     window.onload = () => {
@@ -552,30 +544,46 @@
       updateClock();
       
       const savedApi = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
-      if (!savedApi) {
-        document.getElementById('apiWarning').style.display = 'block';
-      }
+      if (!savedApi) document.getElementById('apiWarning').style.display = 'block';
     };
 
-    // --- Modal Logic ---
-    let selectedLeave = '';
-    function openModal(id) { 
-      document.getElementById(id).style.display = 'flex'; 
-      if(id === 'passwordModal') {
-        document.getElementById('adminPassword').value = '';
-        document.getElementById('pwdError').style.display = 'none';
-      }
-    }
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-    // --- Admin Password ---
-    function verifyPassword() {
-      const pwd = document.getElementById('adminPassword').value;
-      if (pwd === '113322') window.location.href = 'config.html';
-      else document.getElementById('pwdError').style.display = 'block';
+    // --- Admin Authentication Flow ---
+    let adminActionTarget = '';
+    
+    function openAdminAuth(target) {
+      adminActionTarget = target;
+      document.getElementById('adminPassword').value = '';
+      document.getElementById('pwdError').style.display = 'none';
+      openModal('passwordModal');
+      setTimeout(() => document.getElementById('adminPassword').focus(), 100);
     }
 
+    function verifyPassword() {
+      const pwd = document.getElementById('adminPassword').value;
+      if (pwd === '113322') {
+        closeModal('passwordModal');
+        if (adminActionTarget === 'config') window.location.href = 'config.html';
+        else if (adminActionTarget === 'viewData') {
+          document.getElementById('adminSearchName').value = '';
+          document.getElementById('adminResultBox').style.display = 'none';
+          openModal('adminViewModal');
+          setTimeout(() => document.getElementById('adminSearchName').focus(), 100);
+        }
+      } else {
+        document.getElementById('pwdError').style.display = 'block';
+      }
+    }
+
+    // Capture enter key for password
+    document.getElementById('adminPassword').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') verifyPassword();
+    });
+
     // --- Leave ---
+    let selectedLeave = '';
     function proceedLeave(type) {
       selectedLeave = type;
       closeModal('leaveSelectModal');
@@ -602,7 +610,7 @@
       finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-submit-l']; }
     }
 
-    // --- Check Time ---
+    // --- Check Time (Employee) ---
     async function fetchTime() {
       const name = document.getElementById('checkName').value.trim();
       if (!name) return;
@@ -627,6 +635,61 @@
             document.getElementById('lateWarning').style.display = 'block';
           }
         } else { alert('❌ ' + data.message); }
+      } catch (e) { alert('❌ Error'); } 
+      finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-search']; }
+    }
+
+    // --- Admin Fetch Details ---
+    async function fetchAdminData() {
+      const name = document.getElementById('adminSearchName').value.trim();
+      if (!name) return;
+      const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
+      
+      const btn = document.getElementById('btnAdminSearch');
+      btn.disabled = true; btn.innerText = '⏳...';
+      const resultBox = document.getElementById('adminResultBox');
+      resultBox.style.display = 'none';
+      resultBox.innerHTML = '';
+
+      try {
+        const res = await fetch(apiUrl, { method: 'POST', body: JSON.stringify({ action: 'getEmployeeDetails', name: name }) });
+        const data = await res.json();
+        
+        if (data.success) {
+          let html = `<div style="color: var(--neon-admin); font-weight: 600; font-size: 1.15em; margin-bottom: 12px;">👤 ${name}</div>`;
+          
+          // --- เพิ่มกล่องแสดงวันลารวมอัตโนมัติ ---
+          html += `
+          <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; padding: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #cbd5e1; font-size: 0.9em;">วันลาสะสม (รอบนี้):</span>
+            <span style="color: var(--neon-admin); font-weight: 700; font-size: 1.1em;">${data.totalLeaves || 0} วัน</span>
+          </div>`;
+          
+          if (data.records && data.records.length > 0) {
+             let hasData = false;
+             data.records.forEach(r => {
+                if (r.time !== '-' && r.time !== '') {
+                    hasData = true;
+                    let typeColor = r.type === 'เข้างาน' ? 'var(--neon-in)' : (r.type === 'ออกงาน' ? 'var(--neon-out)' : 'var(--neon-holiday)');
+                    let stat = r.type === 'เข้างาน' ? r.statIn : r.statOut;
+                    
+                    html += `
+                    <div style="border-bottom: 1px solid rgba(255,255,255,0.05); padding: 12px 0; text-align: left;">
+                      <div style="font-weight: 600; font-size: 0.95em; color: #fff;">📅 ${r.date} <span style="color: ${typeColor}; font-size: 0.9em; font-weight: 600;">(${r.type})</span></div>
+                      <div style="font-size: 0.9em; color: var(--text-sub); margin-top: 6px;">เวลาบันทึก: <span style="color: #fff; font-weight: 600;">${r.time}</span></div>
+                      <div style="font-size: 0.9em; color: var(--text-sub); margin-top: 2px;">สถานะ: <span style="color: #cbd5e1;">${stat}</span></div>
+                    </div>`;
+                }
+             });
+             if(!hasData) html += `<div style="color: var(--text-sub); font-size: 0.9em;">ไม่พบประวัติการสแกนในรอบบัญชีปัจจุบัน</div>`;
+          } else {
+             html += `<div style="color: var(--text-sub); font-size: 0.9em;">ไม่พบข้อมูลในรอบบัญชีปัจจุบัน</div>`;
+          }
+          resultBox.innerHTML = html;
+          resultBox.style.display = 'block';
+        } else { 
+          alert('❌ ' + data.message); 
+        }
       } catch (e) { alert('❌ Error'); } 
       finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-search']; }
     }
