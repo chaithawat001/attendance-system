@@ -1038,7 +1038,7 @@
         let ttsLang = 'th-TH';
         if (langCode === 'en') ttsLang = 'en-US';
         else if (langCode === 'zh-CN') ttsLang = 'zh-CN';
-        else if (langCode === 'my') ttsLang = 'th-TH'; 
+        else if (langCode === 'my') ttsLang = 'my-MM'; // แก้ไขให้บังคับใช้สำเนียงพม่า (Myanmar)
 
         utterance.lang = ttsLang;
         utterance.rate = 0.9; 
