@@ -2,10 +2,16 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- PWA Meta Tags (ทำให้เว็บดูเหมือนแอปพลิเคชันมือถือของจริง) -->
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>ระบบบันทึกเวลาเข้า-ออกงาน | 88 Designs</title>
+  
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="js/api-config.js"></script>
+  
   <style>
     :root {
       /* Luxury Black & Gold Theme */
@@ -35,7 +41,6 @@
 
     body {
       background-color: var(--bg-base);
-      /* พื้นหลังสีดำ-ทอง ที่อัปโหลดมา */
       background-image: url('pngtree-black-gold-business-meeting-simple-image_37604.jpg');
       background-size: cover;
       background-position: center;
@@ -50,34 +55,26 @@
 
     /* ไล่สีดำทับบางๆ เพื่อให้ตัวหนังสืออ่านง่าย */
     body::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%);
-      z-index: 0;
-      pointer-events: none;
+      z-index: 0; pointer-events: none;
     }
 
     .lang-switcher {
       position: absolute; top: 20px; right: 20px;
       background: rgba(10, 10, 10, 0.8); border: 1px solid var(--border-light);
       border-radius: 30px; display: flex; padding: 4px;
-      z-index: 10;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
     .btn-lang {
       background: transparent; border: none; color: var(--gold-primary);
       border-radius: 20px; padding: 6px 14px; font-size: 0.85em; font-weight: 600;
       cursor: pointer; transition: 0.3s;
     }
-    .btn-lang.active { 
-      background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); 
-      color: #000; 
-    }
+    .btn-lang.active { background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: #000; }
 
     .header { text-align: center; margin-top: 50px; margin-bottom: 24px; width: 100%; max-width: 400px; position: relative; z-index: 1; }
     
-    /* ตัวหนังสือ 88 DESIGNS สีทองเรืองแสงแบบคงที่ */
     .epic-logo {
       font-size: 2.8em; font-weight: 900; color: #ffffff; text-transform: uppercase;
       letter-spacing: 6px; margin-bottom: 25px; display: inline-block;
@@ -92,15 +89,13 @@
     .greeting { 
       font-size: 1.05em; color: var(--gold-light); font-weight: 500; 
       margin-bottom: 8px; padding: 5px 14px; border-radius: 12px;
-      display: inline-block; background: rgba(212, 175, 55, 0.08);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      display: inline-block; background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.3);
     }
     .time-display { 
       font-size: 3.2em; font-weight: 700; letter-spacing: 2px; 
       background: linear-gradient(180deg, #ffffff 0%, var(--gold-primary) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(212, 175, 55, 0.2); 
-      font-variant-numeric: tabular-nums; line-height: 1; 
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.2); font-variant-numeric: tabular-nums; line-height: 1; 
     }
     .date-display { font-size: 0.9em; color: var(--gold-primary); margin-top: 8px; font-weight: 300; letter-spacing: 1px; }
 
@@ -125,8 +120,7 @@
 
     .grid-card .icon-box {
       width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
-      transition: 0.3s; position: relative; z-index: 1; margin-bottom: 12px;
-      border: 1px solid rgba(255,255,255,0.05);
+      transition: 0.3s; position: relative; z-index: 1; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05);
     }
     
     .c-in .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(0,0,0,0)); color: var(--neon-in); border-color: rgba(16,185,129,0.3); }
@@ -158,7 +152,7 @@
 
     /* Modals - Luxury Styling */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
-    .modal-box { background: #0a0a0c; width: 100%; max-width: 360px; padding: 30px 25px; border-radius: 28px; text-align: center; border: 1px solid var(--gold-primary); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(212,175,55,0.05); }
+    .modal-box { background: #0a0a0c; width: 100%; max-width: 360px; padding: 30px 25px; border-radius: 28px; text-align: center; border: 1px solid var(--gold-primary); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(212,175,55,0.05); position: relative; z-index: 101; }
     
     .modal-title { font-size: 1.25em; font-weight: 600; margin-bottom: 6px; color: var(--gold-light); letter-spacing: 0.5px; }
     .modal-desc { font-size: 0.85em; color: var(--text-sub); margin-bottom: 24px; line-height: 1.4; }
@@ -169,6 +163,7 @@
 
     .btn { width: 100%; padding: 16px; border-radius: 16px; border: none; font-size: 1em; font-weight: 600; cursor: pointer; transition: 0.3s; margin-bottom: 12px; letter-spacing: 0.5px; }
     .btn:active { transform: scale(0.96); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-primary { background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; box-shadow: 0 4px 15px rgba(212,175,55,0.3); }
     .btn-outline { background: transparent; color: var(--gold-primary); border: 1px solid rgba(212,175,55,0.5); }
     .btn-outline:hover { background: rgba(212,175,55,0.1); }
@@ -182,8 +177,8 @@
 
     .alert-banner { display: none; background: rgba(225, 29, 72, 0.15); border: 1px solid rgba(225, 29, 72, 0.4); color: #fda4af; padding: 14px; border-radius: 16px; margin-top: 16px; font-size: 0.9em; font-weight: 500; }
 
-    .result-box { display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; margin-top: 16px; border: 1px solid var(--border-light); }
-    .r-name { color: var(--gold-primary); font-weight: 600; font-size: 1.2em; margin-bottom: 16px; }
+    .result-box { display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; margin-top: 16px; border: 1px solid var(--border-light); text-align: left; }
+    .r-name { color: var(--gold-primary); font-weight: 600; font-size: 1.2em; margin-bottom: 16px; text-align: center;}
     .r-stat { font-size: 0.95em; display: flex; justify-content: space-between; margin-bottom: 10px; background: rgba(212,175,55,0.05); padding: 12px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.1); }
     .r-stat:last-child { margin-bottom: 0; }
     .r-stat span:last-child { font-weight: 600; }
@@ -244,9 +239,19 @@
     .trans-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); border-radius: 12px; padding: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; }
     .trans-btn.active { background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; border-color: transparent; }
 
+    /* --- ✨ สไตล์สำหรับ Toast Notification (ป๊อปอัพแจ้งเตือนแบบหรูหรา) ✨ --- */
+    .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 400px; }
+    .toast { background: rgba(12, 12, 12, 0.95); border: 1px solid var(--gold-primary); color: #fff; padding: 14px 24px; border-radius: 30px; font-size: 0.95em; box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(212,175,55,0.2); backdrop-filter: blur(10px); animation: toastFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 10px; font-weight: 500; }
+    .toast.error { border-color: var(--neon-out); box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(225,29,72,0.2); }
+    @keyframes toastFadeIn { from { opacity: 0; transform: translateY(-20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes toastFadeOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-20px) scale(0.9); } }
+
   </style>
 </head>
 <body>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
 
   <div class="lang-switcher">
     <button class="btn-lang active" onclick="setLang('th')">TH</button>
@@ -452,7 +457,6 @@
           <div class="org-card"><div class="name">ตัวเล็ก</div><div class="role">ช่างทั่วไป</div></div>
         </div>
       </div>
-      <button class="btn btn-outline" onclick="closeModal('orgChartModal')" id="t-btn-cancel6" style="margin-top: 5px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -470,8 +474,6 @@
         <button class="btn-leave full" onclick="proceedLeave('ลาพักร้อน')" id="t-l-annual"><span>🏖️</span> ลาพักร้อน</button>
         <button class="btn-leave full" onclick="proceedLeave('ลาแฮงค์')" id="t-l-hang"><span>🍻</span> ลาแฮงค์ (พิเศษ)</button>
       </div>
-
-      <button class="btn btn-outline" onclick="closeModal('leaveSelectModal')" id="t-btn-cancel1">ยกเลิก</button>
     </div>
   </div>
 
@@ -482,7 +484,6 @@
       <div class="modal-desc" id="t-ls-desc">พิมพ์ชื่อ-นามสกุล ให้ตรงกับที่ลงทะเบียนไว้</div>
       <input type="text" id="leaveName" class="input-field" placeholder="ชื่อ-นามสกุล...">
       <button class="btn btn-primary" onclick="submitLeave()" id="btnSubmitLeave">ยืนยันการลา</button>
-      <button class="btn btn-outline" onclick="closeModal('leaveSubmitModal')" id="t-btn-cancel2">ยกเลิก</button>
     </div>
   </div>
 
@@ -509,8 +510,6 @@
       <div id="lateWarning" class="alert-banner">
         ⚠️ <span id="t-warn-msg">เดือนนี้คุณมาสายเกิน 30 นาทีแล้ว!</span>
       </div>
-
-      <button class="btn btn-outline" onclick="closeModal('checkTimeModal')" id="t-btn-cancel3" style="margin-top: 15px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -522,7 +521,6 @@
       <input type="password" id="adminPassword" class="input-field" placeholder="รหัสผ่าน...">
       <div id="pwdError" style="display:none; color:var(--neon-out); font-size:0.85em; margin-top:-10px; margin-bottom:15px;">รหัสผ่านไม่ถูกต้อง</div>
       <button class="btn btn-primary" onclick="verifyPassword()" id="t-btn-confirm-pwd">ยืนยัน</button>
-      <button class="btn btn-outline" onclick="closeModal('passwordModal')" id="t-btn-cancel-pwd">ยกเลิก</button>
     </div>
   </div>
 
@@ -537,12 +535,48 @@
       <div id="adminResultBox" style="display: none; background: rgba(0,0,0,0.7); border-radius: 16px; padding: 15px; margin-top: 15px; border: 1px solid rgba(212,175,55,0.2); max-height: 45vh; overflow-y: auto;">
         <!-- Data will be injected here -->
       </div>
-
-      <button class="btn btn-outline" onclick="closeModal('adminViewModal')" id="t-btn-cancel4" style="margin-top: 15px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
-  <!-- Modal: เครื่องมือแปลภาษา (Translator API แบบไม่ใช้ Key) -->
+  <!-- Modal: Holiday Calendar -->
+  <div id="holidayModal" class="modal-overlay">
+    <div class="modal-box" style="padding: 25px 20px;">
+      <div class="modal-title" id="t-menu-cal-title">🗓️ ปฏิทินวันหยุด 2026</div>
+      <div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div>
+      
+      <div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 40vh; overflow-y:auto; text-align:left; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px;">
+        <h3 style="color: var(--gold-light); font-size: 1em; margin-bottom: 10px;">🏖️ สิทธิ์วันหยุดพักร้อน</h3>
+        <ul style="font-size: 0.85em; color: var(--text-sub); padding-left: 20px; line-height: 1.6; margin-bottom: 20px;">
+          <li>พนักงานผ่านโปร ได้สิทธิ์ <b>6 วัน/ปี</b></li>
+          <li>กรุณาแจ้งล่วงหน้า <b>3 วัน</b></li>
+        </ul>
+
+        <h3 style="color: var(--gold-primary); font-size: 1em; margin-bottom: 10px;">🇹🇭 วันหยุดนักขัตฤกษ์</h3>
+        <div style="font-size: 0.85em; color: #fff; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
+            <span style="color:var(--gold-primary); min-width:50px;">1 ม.ค.</span><span>วันขึ้นปีใหม่</span>
+          </div>
+          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
+            <span style="color:var(--gold-primary); min-width:50px;">3 มี.ค.</span><span>วันมาฆบูชา</span>
+          </div>
+          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
+            <span style="color:var(--gold-primary); min-width:50px;">6 เม.ย.</span><span>วันจักรี</span>
+          </div>
+          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
+            <span style="color:var(--gold-primary); min-width:50px;">13-15 เม.ย.</span><span>สงกรานต์</span>
+          </div>
+          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
+            <span style="color:var(--gold-primary); min-width:50px;">1 พ.ค.</span><span>วันแรงงาน</span>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <span style="color:var(--gold-primary); min-width:50px;">31 ธ.ค.</span><span>วันสิ้นปี</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: เครื่องมือแปลภาษา -->
   <div id="translatorModal" class="modal-overlay">
     <div class="modal-box" style="padding: 20px; max-width: 420px; display: flex; flex-direction: column;">
       <div class="modal-title" style="color: var(--gold-light); display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 5px;">
@@ -550,7 +584,6 @@
       </div>
       <div class="modal-desc" style="margin-bottom: 15px;">พิมพ์หรือพูด จะแปลให้อัตโนมัติ</div>
       
-      <!-- Input Text -->
       <div style="position: relative; margin-bottom: 15px;">
         <textarea id="transInput" class="trans-box" rows="3" placeholder="พิมพ์ข้อความ หรือกดไมค์เพื่อพูด..."></textarea>
         <button id="btnTransVoice" onclick="startTransVoice()" style="position: absolute; right: 10px; bottom: 20px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 40px; height: 40px; color: #fff; font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;">
@@ -558,7 +591,6 @@
         </button>
       </div>
 
-      <!-- Language Selector -->
       <div style="color: var(--text-sub); font-size: 0.85em; text-align: left; margin-bottom: 5px;">เลือกภาษาที่ต้องการแปล:</div>
       <div class="trans-btn-group">
         <button class="trans-btn active" onclick="setTargetLang('th', this)">🇹🇭 ไทย</button>
@@ -567,15 +599,12 @@
         <button class="trans-btn" onclick="setTargetLang('zh-CN', this)">🇨🇳 Chinese</button>
       </div>
 
-      <!-- Output Text -->
       <div style="position: relative; margin-top: 5px;">
         <textarea id="transOutput" class="trans-box" rows="3" placeholder="ผลลัพธ์คำแปลจะแสดงที่นี่..." readonly style="background: rgba(212,175,55,0.05); color: var(--gold-light); border-color: rgba(212,175,55,0.5);"></textarea>
         <button onclick="playTranslatedVoice()" style="position: absolute; right: 10px; bottom: 20px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; width: 40px; height: 40px; color: var(--gold-light); font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;">
           🔊
         </button>
       </div>
-
-      <button class="btn btn-outline" onclick="closeModal('translatorModal')" style="margin-top: 10px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -585,6 +614,32 @@
   </div>
 
   <script>
+    // --- 1. ระบบ Toast Notification (แจ้งเตือนแบบพรีเมียม) ---
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = type === 'error' ? `❌ ${message}` : message;
+      
+      container.appendChild(toast);
+      
+      // ให้หายไปเองเมื่อครบ 3.5 วินาที
+      setTimeout(() => {
+        toast.style.animation = 'toastFadeOut 0.4s ease forwards';
+        setTimeout(() => toast.remove(), 400);
+      }, 3500);
+    }
+
+    // --- 2. กดด้านนอก (พื้นที่ดำ) เพื่อปิดหน้าต่าง (Modal) ---
+    window.addEventListener('click', function(e) {
+      if (e.target.classList.contains('modal-overlay')) {
+        // ห้ามกดปิดเองเฉพาะหน้าแจ้งเตือนมาสาย (บังคับให้กดปุ่มตกลงเท่านั้น)
+        if(e.target.id !== 'lateScanModal') {
+          closeModal(e.target.id);
+        }
+      }
+    });
+
     function safeGetStorage(key, defaultVal) {
       try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
     }
@@ -751,14 +806,7 @@
         const setTxt = (id, txt) => { let e = document.getElementById(id); if(e) e.innerText = txt; }
         const setPlc = (id, txt) => { let e = document.getElementById(id); if(e) e.placeholder = txt; }
 
-        setTxt('t-btn-cancel1', d['btn-cancel']);
-        setTxt('t-btn-cancel2', d['btn-cancel']);
-        setTxt('t-btn-cancel3', d['btn-close']);
-        setTxt('t-btn-cancel4', d['btn-close']);
-        setTxt('t-btn-cancel5', d['btn-close']);
-        setTxt('t-btn-cancel6', d['btn-close']);
-        setTxt('t-btn-cancel-pwd', d['btn-cancel']);
-        
+        // อัปเดตข้อความใน UI
         setTxt('btnSubmitLeave', d['btn-submit-l']);
         setTxt('btnCheckTime', d['btn-search']);
         setTxt('btnAdminSearch', d['btn-search']);
@@ -781,7 +829,6 @@
       if (!savedApi) {
         document.getElementById('apiWarning').style.display = 'block';
       } else {
-        // ดึงข้อความประกาศ Broadcast มาแสดง
         fetch(savedApi + '?action=getConfig')
           .then(r => r.json())
           .then(config => {
@@ -793,13 +840,12 @@
           .catch(e => console.log('Cannot fetch broadcast'));
       }
 
-      // เปิดระบบจับการพิมพ์อัตโนมัติสำหรับการแปลภาษา
       const transInput = document.getElementById('transInput');
       if(transInput) {
         transInput.addEventListener('input', function() {
           clearTimeout(translateTimeout);
           translateTimeout = setTimeout(() => {
-            doTranslate(false); // พิมพ์เสร็จ รอ 0.8 วิ แล้วแปลเลย (ไม่ต้องอ่านออกเสียง)
+            doTranslate(false); 
           }, 800);
         });
       }
@@ -808,7 +854,6 @@
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-    // --- ตรวจสอบการมาสาย (ก่อนเข้าหน้าสแกน) ---
     function checkLateAndScan(e) {
       e.preventDefault();
       const now = new Date();
@@ -826,9 +871,7 @@
       window.location.href = 'scan.html?type=in';
     }
 
-    // --- Admin Authentication Flow ---
     let adminActionTarget = '';
-    
     function openAdminAuth(target) {
       adminActionTarget = target;
       document.getElementById('adminPassword').value = '';
@@ -857,7 +900,6 @@
         if (e.key === 'Enter') verifyPassword();
     });
 
-    // --- Leave ---
     let selectedLeave = '';
     function proceedLeave(type) {
       selectedLeave = type;
@@ -869,30 +911,39 @@
 
     async function submitLeave() {
       const name = document.getElementById('leaveName').value.trim();
-      if (!name) return alert('กรุณาระบุชื่อพนักงาน');
+      if (!name) return showToast('กรุณาระบุชื่อพนักงาน', 'error');
 
       const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
       const btn = document.getElementById('btnSubmitLeave');
+      
+      // ป้องกันกดเบิ้ล
+      if(btn.disabled) return;
       btn.disabled = true; btn.innerText = '⏳...';
 
       try {
         const res = await fetch(apiUrl, { method: 'POST', body: JSON.stringify({ action: 'logAttendance', name: name, type: selectedLeave, lat: '-', lng: '-' }) });
         await res.json();
-        alert('✅ บันทึกการลาเรียบร้อย');
+        
+        // ใช้ Toast แจ้งเตือนความสำเร็จแทน Alert
+        showToast('✅ บันทึกการลาเรียบร้อยแล้ว', 'success');
         closeModal('leaveSubmitModal');
         document.getElementById('leaveName').value = '';
-      } catch (e) { alert('❌ Error: ' + e.message); } 
-      finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-submit-l']; }
+      } catch (e) { 
+        showToast(e.message, 'error'); 
+      } finally { 
+        btn.disabled = false; btn.innerText = dict[currentLang]['btn-submit-l']; 
+      }
     }
 
-    // --- Check Time (Employee) ---
     async function fetchTime() {
       const name = document.getElementById('checkName').value.trim();
       if (!name) return;
       const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
       
       const btn = document.getElementById('btnCheckTime');
+      if(btn.disabled) return;
       btn.disabled = true; btn.innerText = '⏳...';
+      
       document.getElementById('resultBox').style.display = 'none';
       document.getElementById('lateWarning').style.display = 'none';
 
@@ -909,19 +960,25 @@
           if (data.totalLateMins !== undefined && data.totalLateMins > 30) {
             document.getElementById('lateWarning').style.display = 'block';
           }
-        } else { alert('❌ ' + data.message); }
-      } catch (e) { alert('❌ Error'); } 
-      finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-search']; }
+        } else { 
+          showToast(data.message, 'error'); 
+        }
+      } catch (e) { 
+        showToast('ระบบเครือข่ายมีปัญหา', 'error'); 
+      } finally { 
+        btn.disabled = false; btn.innerText = dict[currentLang]['btn-search']; 
+      }
     }
 
-    // --- Admin Fetch Details ---
     async function fetchAdminData() {
       const name = document.getElementById('adminSearchName').value.trim();
       if (!name) return;
       const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
       
       const btn = document.getElementById('btnAdminSearch');
+      if(btn.disabled) return;
       btn.disabled = true; btn.innerText = '⏳...';
+      
       const resultBox = document.getElementById('adminResultBox');
       resultBox.style.display = 'none';
       resultBox.innerHTML = '';
@@ -931,7 +988,7 @@
         const data = await res.json();
         
         if (data.success) {
-          let html = `<div style="color: var(--gold-primary); font-weight: 600; font-size: 1.15em; margin-bottom: 12px;">👤 ${name}</div>`;
+          let html = `<div style="color: var(--gold-primary); font-weight: 600; font-size: 1.15em; margin-bottom: 12px; text-align: center;">👤 ${name}</div>`;
           
           html += `
           <div style="background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
@@ -955,33 +1012,29 @@
                     </div>`;
                 }
              });
-             if(!hasData) html += `<div style="color: var(--text-sub); font-size: 0.9em;">ไม่พบประวัติการสแกนในรอบบัญชีปัจจุบัน</div>`;
+             if(!hasData) html += `<div style="color: var(--text-sub); font-size: 0.9em; text-align:center;">ไม่พบประวัติการสแกนในรอบบัญชีปัจจุบัน</div>`;
           } else {
-             html += `<div style="color: var(--text-sub); font-size: 0.9em;">ไม่พบข้อมูลในรอบบัญชีปัจจุบัน</div>`;
+             html += `<div style="color: var(--text-sub); font-size: 0.9em; text-align:center;">ไม่พบข้อมูลในรอบบัญชีปัจจุบัน</div>`;
           }
           resultBox.innerHTML = html;
           resultBox.style.display = 'block';
         } else { 
-          alert('❌ ' + data.message); 
+          showToast(data.message, 'error'); 
         }
-      } catch (e) { alert('❌ Error'); } 
-      finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-search']; }
+      } catch (e) { 
+        showToast('ระบบเครือข่ายมีปัญหา', 'error'); 
+      } finally { 
+        btn.disabled = false; btn.innerText = dict[currentLang]['btn-search']; 
+      }
     }
 
-    // ==========================================
-    // --- ระบบแปลภาษาฟรี 100% (Auto-Translate) ---
-    // ==========================================
     let targetLangCode = 'th'; 
     let translateTimeout = null;
 
     function setTargetLang(lang, btnElement) {
       targetLangCode = lang;
-      
-      // อัปเดตสีปุ่ม
       document.querySelectorAll('.trans-btn').forEach(b => b.classList.remove('active'));
       btnElement.classList.add('active');
-      
-      // แปลอัตโนมัติทันทีที่เปลี่ยนภาษา
       doTranslate(false); 
     }
 
@@ -998,7 +1051,6 @@
       outputEl.value = "กำลังแปล...";
 
       try {
-        // เรียกใช้ Google Translate API ฟรี
         const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLangCode}&dt=t&q=${encodeURIComponent(text)}`;
         const res = await fetch(url);
         const data = await res.json();
@@ -1011,11 +1063,7 @@
         }
         
         outputEl.value = translatedText;
-        
-        // อ่านออกเสียงอัตโนมัติ *เฉพาะ* กรณีที่แปลมาจากการพูด (Voice) เท่านั้น เพื่อไม่ให้กวนใจเวลาพิมพ์
-        if (fromVoice) {
-          speakTranslatedText(translatedText, targetLangCode);
-        }
+        if (fromVoice) speakTranslatedText(translatedText, targetLangCode);
         
       } catch(e) {
         outputEl.value = "เกิดข้อผิดพลาดในการแปล กรุณาลองใหม่ครับ";
@@ -1029,7 +1077,6 @@
       }
     }
 
-    // --- Text-to-Speech (อ่านออกเสียง) ---
     function speakTranslatedText(text, langCode) {
       if ('speechSynthesis' in window) {
         speechSynthesis.cancel(); 
@@ -1038,7 +1085,7 @@
         let ttsLang = 'th-TH';
         if (langCode === 'en') ttsLang = 'en-US';
         else if (langCode === 'zh-CN') ttsLang = 'zh-CN';
-        else if (langCode === 'my') ttsLang = 'my-MM'; // แก้ไขให้บังคับใช้สำเนียงพม่า (Myanmar)
+        else if (langCode === 'my') ttsLang = 'my-MM'; 
 
         utterance.lang = ttsLang;
         utterance.rate = 0.9; 
@@ -1046,7 +1093,6 @@
       }
     }
 
-    // --- Web Speech API (Voice Recognition / พูดเพื่อแปล) ---
     let transRecognition;
     if ('webkitSpeechRecognition' in window) {
       transRecognition = new webkitSpeechRecognition();
@@ -1063,8 +1109,6 @@
       transRecognition.onresult = function(event) {
         const transcript = event.results[0][0].transcript;
         document.getElementById('transInput').value = transcript;
-        
-        // เมื่อพูดเสร็จ ให้แปลอัตโนมัติ และ ส่งเสียงอ่าน (fromVoice = true)
         doTranslate(true); 
       };
       
@@ -1084,7 +1128,7 @@
         transRecognition.lang = currentLang === 'th' ? 'th-TH' : (currentLang === 'en' ? 'en-US' : 'my-MM');
         try { transRecognition.start(); } catch(e) {}
       } else {
-        alert("เบราว์เซอร์ของคุณไม่รองรับระบบสั่งงานด้วยเสียง (แนะนำให้ใช้ Google Chrome หรือ Safari)");
+        showToast("เบราว์เซอร์ไม่รองรับระบบสั่งงานด้วยเสียง", "error");
       }
     }
   </script>
