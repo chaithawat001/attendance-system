@@ -1010,7 +1010,8 @@
       const loadingId = appendAiMessage('กำลังคิด...', 'ai', true);
       
       try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+        // แก้ไข: เปลี่ยนชื่อโมเดลเป็น gemini-1.5-flash สำหรับผู้ใช้งานทั่วไป
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
         const payload = {
           contents: [{ parts: [{ text: text }] }],
           systemInstruction: { parts: [{ text: "คุณคือ AI Assistant ของบริษัท 88 Designs ทำหน้าที่ตอบคำถามพนักงานแบบสั้นๆ เป็นมิตร มีอารมณ์ขัน และสุภาพ" }] }
@@ -1021,8 +1022,15 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
+        
         const data = await res.json();
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "ขออภัยครับ ไม่สามารถเชื่อมต่อ AI ได้";
+        
+        // ดักจับ Error จาก Google เพื่อให้รู้ว่าพังเพราะอะไร
+        if (data.error) {
+           throw new Error(data.error.message);
+        }
+
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "ขออภัยครับ ไม่สามารถตอบคำถามได้ในขณะนี้";
         
         updateAiMessage(loadingId, reply);
         speakText(reply); // เล่นเสียงอัตโนมัติ
