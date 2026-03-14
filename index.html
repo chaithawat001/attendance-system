@@ -315,7 +315,7 @@
 
     <!-- --- Secondary List Actions --- -->
 
-    <!-- เมนูผังองค์กร (เพิ่มใหม่) -->
+    <!-- เมนูผังองค์กร -->
     <a href="#" onclick="openModal('orgChartModal')" class="card list-item c-org">
       <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>
       <div class="text-group">
@@ -938,8 +938,63 @@
       finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-search']; }
     }
 
+    // --- Admin Fetch Details ---
+    async function fetchAdminData() {
+      const name = document.getElementById('adminSearchName').value.trim();
+      if (!name) return;
+      const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
+      
+      const btn = document.getElementById('btnAdminSearch');
+      btn.disabled = true; btn.innerText = '⏳...';
+      const resultBox = document.getElementById('adminResultBox');
+      resultBox.style.display = 'none';
+      resultBox.innerHTML = '';
+
+      try {
+        const res = await fetch(apiUrl, { method: 'POST', body: JSON.stringify({ action: 'getEmployeeDetails', name: name }) });
+        const data = await res.json();
+        
+        if (data.success) {
+          let html = `<div style="color: var(--gold-primary); font-weight: 600; font-size: 1.15em; margin-bottom: 12px;">👤 ${name}</div>`;
+          
+          html += `
+          <div style="background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #d1d5db; font-size: 0.9em;">วันลาสะสม (รอบนี้):</span>
+            <span style="color: var(--gold-primary); font-weight: 700; font-size: 1.1em;">${data.totalLeaves || 0} วัน</span>
+          </div>`;
+          
+          if (data.records && data.records.length > 0) {
+             let hasData = false;
+             data.records.forEach(r => {
+                if (r.time !== '-' && r.time !== '') {
+                    hasData = true;
+                    let typeColor = r.type === 'เข้างาน' ? 'var(--neon-in)' : (r.type === 'ออกงาน' ? 'var(--neon-out)' : 'var(--gold-primary)');
+                    let stat = r.type === 'เข้างาน' ? r.statIn : r.statOut;
+                    
+                    html += `
+                    <div style="border-bottom: 1px solid rgba(255,255,255,0.05); padding: 12px 0; text-align: left;">
+                      <div style="font-weight: 600; font-size: 0.95em; color: #fff;">📅 ${r.date} <span style="color: ${typeColor}; font-size: 0.9em; font-weight: 600;">(${r.type})</span></div>
+                      <div style="font-size: 0.9em; color: var(--text-sub); margin-top: 6px;">เวลาบันทึก: <span style="color: #fff; font-weight: 600;">${r.time}</span></div>
+                      <div style="font-size: 0.9em; color: var(--text-sub); margin-top: 2px;">สถานะ: <span style="color: #cbd5e1;">${stat}</span></div>
+                    </div>`;
+                }
+             });
+             if(!hasData) html += `<div style="color: var(--text-sub); font-size: 0.9em;">ไม่พบประวัติการสแกนในรอบบัญชีปัจจุบัน</div>`;
+          } else {
+             html += `<div style="color: var(--text-sub); font-size: 0.9em;">ไม่พบข้อมูลในรอบบัญชีปัจจุบัน</div>`;
+          }
+          resultBox.innerHTML = html;
+          resultBox.style.display = 'block';
+        } else { 
+          alert('❌ ' + data.message); 
+        }
+      } catch (e) { alert('❌ Error'); } 
+      finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-search']; }
+    }
+
     // --- AI Assistant Logic ---
-    const apiKey = ""; // API Key จาก Environment
+    // 🛑 นำ API Key ที่ได้จากเว็บ Google AI Studio มาใส่ในเครื่องหมายคำพูดด้านล่างนี้ 🛑
+    const apiKey = "AIzaSyDMku1GakADynMV3d-xupmM-Y2y_eY2TZ8"; 
 
     document.getElementById('aiInput').addEventListener('keypress', function (e) {
       if (e.key === 'Enter') sendAiMessage();
