@@ -227,6 +227,10 @@
 
   <script>
     // --- Helper Functions ---
+    function safeGetStorage(key, defaultVal) {
+      try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
+    }
+
     function showToast(message, type = 'success') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
@@ -255,7 +259,9 @@
     if (scanType === 'เข้างาน') hTitle.classList.add('in');
     else hTitle.classList.add('out');
 
-    const apiUrl = localStorage.getItem('gasApiUrl');
+    // แก้ไข: ดึง API URL อย่างปลอดภัย (รองรับ api-config.js)
+    const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
+    
     let knownFaces = [];
     let isProcessing = false;
     let currentLat = '-';
