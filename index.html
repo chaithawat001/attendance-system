@@ -138,7 +138,8 @@
     .c-holi .icon-box { background: linear-gradient(135deg, rgba(245,158,11,0.15), transparent); color: var(--neon-holiday); border-color: rgba(245,158,11,0.3); }
     .c-org .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), transparent); color: var(--neon-in); border-color: rgba(16,185,129,0.3); }
     .c-admin .icon-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), transparent); color: var(--neon-admin); border-color: rgba(212,175,55,0.3); }
-    
+    .c-info .icon-box { background: linear-gradient(135deg, rgba(56,189,248,0.15), transparent); color: #38bdf8; border-color: rgba(56,189,248,0.3); } /* สีฟ้าครามสำหรับคู่มือ */
+
     .list-item .text-group { flex: 1; position: relative; z-index: 1; }
     .list-item .m-title { font-size: 1em; font-weight: 500; color: #fff; margin-bottom: 3px; letter-spacing: 0.5px; }
     .list-item .m-desc { font-size: 0.8em; color: var(--text-sub); }
@@ -319,6 +320,16 @@
 
     <!-- --- Secondary List Actions --- -->
 
+    <!-- เมนูคู่มือการใช้งาน (เพิ่มใหม่) -->
+    <a href="#" onclick="openModal('tutorialModal')" class="card list-item c-info">
+      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+      <div class="text-group">
+        <div class="m-title" id="t-menu-tutor">คู่มือการใช้งาน</div>
+        <div class="m-desc" id="t-desc-tutor">สาธิตวิธีใช้ระบบต่างๆ</div>
+      </div>
+      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+    </a>
+
     <a href="#" onclick="openModal('orgChartModal')" class="card list-item c-org">
       <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>
       <div class="text-group">
@@ -363,6 +374,39 @@
       </div>
       <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
     </a>
+  </div>
+
+  <!-- Modal: คู่มือการใช้งาน (Tutorial/Demo) -->
+  <div id="tutorialModal" class="modal-overlay">
+    <div class="modal-box" style="padding: 25px 20px; max-width: 400px;">
+      <div class="modal-title" id="t-tutor-title" style="color: #38bdf8;">📖 คู่มือการใช้งาน</div>
+      <div class="modal-desc" id="t-tutor-desc" style="margin-bottom: 15px;">เรียนรู้วิธีใช้งานระบบ 88 Designs</div>
+      
+      <div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 50vh; overflow-y:auto; text-align:left; border: 1px solid rgba(56,189,248,0.2); margin-bottom: 15px;">
+        
+        <h3 id="t-tutor-s1-t" style="color: var(--neon-in); font-size: 1em; margin-bottom: 8px;">📷 1. การสแกนเข้า-ออกงาน</h3>
+        <p id="t-tutor-s1-d" style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;">
+          กดปุ่ม <b>"เข้างาน"</b> หรือ <b>"ออกงาน"</b> ระบบจะเปิดกล้องเพื่อสแกนใบหน้า ให้มองกล้องจนกว่าจะขึ้นกรอบและแจ้งว่าบันทึกสำเร็จ (ระบบจะดึงพิกัด GPS อัตโนมัติ)
+        </p>
+
+        <h3 id="t-tutor-s2-t" style="color: var(--neon-leave); font-size: 1em; margin-bottom: 8px;">📝 2. การแจ้งลา</h3>
+        <p id="t-tutor-s2-d" style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;">
+          กด <b>"แจ้งลา"</b> -> เลือกประเภทการลา -> พิมพ์ชื่อ-นามสกุลของคุณให้ถูกต้อง แล้วกดยืนยัน
+        </p>
+
+        <h3 id="t-tutor-s3-t" style="color: var(--neon-time); font-size: 1em; margin-bottom: 8px;">⏰ 3. เช็คเวลาทำงาน</h3>
+        <p id="t-tutor-s3-d" style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;">
+          ตรวจสอบเวลามาสายสะสม และชั่วโมง OT ของรอบบัญชีปัจจุบัน เพียงพิมพ์ชื่อของคุณแล้วกดค้นหา
+        </p>
+
+        <h3 id="t-tutor-s4-t" style="color: var(--gold-light); font-size: 1em; margin-bottom: 8px;">🤖 4. ผู้ช่วย AI & แปลภาษา</h3>
+        <p id="t-tutor-s4-d" style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 5px;">
+          - <b>ปุ่ม 🌐 (มุมขวาล่าง)</b>: ระบบแปลภาษาฟรี พิมพ์หรือพูดก็แปลให้ทันที พร้อมออกเสียง
+        </p>
+
+      </div>
+      <button class="btn btn-outline" onclick="closeModal('tutorialModal')" id="t-btn-cancel7">ปิดหน้าต่าง</button>
+    </div>
   </div>
 
   <!-- Modal: แจ้งเตือนมาสาย -->
@@ -457,6 +501,7 @@
           <div class="org-card"><div class="name">ตัวเล็ก</div><div class="role">ช่างทั่วไป</div></div>
         </div>
       </div>
+      <button class="btn btn-outline" onclick="closeModal('orgChartModal')" id="t-btn-cancel6" style="margin-top: 5px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -474,6 +519,7 @@
         <button class="btn-leave full" onclick="proceedLeave('ลาพักร้อน')" id="t-l-annual"><span>🏖️</span> ลาพักร้อน</button>
         <button class="btn-leave full" onclick="proceedLeave('ลาแฮงค์')" id="t-l-hang"><span>🍻</span> ลาแฮงค์ (พิเศษ)</button>
       </div>
+      <button class="btn btn-outline" onclick="closeModal('leaveSelectModal')" id="t-btn-cancel1">ยกเลิก</button>
     </div>
   </div>
 
@@ -484,6 +530,7 @@
       <div class="modal-desc" id="t-ls-desc">พิมพ์ชื่อ-นามสกุล ให้ตรงกับที่ลงทะเบียนไว้</div>
       <input type="text" id="leaveName" class="input-field" placeholder="ชื่อ-นามสกุล...">
       <button class="btn btn-primary" onclick="submitLeave()" id="btnSubmitLeave">ยืนยันการลา</button>
+      <button class="btn btn-outline" onclick="closeModal('leaveSubmitModal')" id="t-btn-cancel2">ยกเลิก</button>
     </div>
   </div>
 
@@ -510,6 +557,7 @@
       <div id="lateWarning" class="alert-banner">
         ⚠️ <span id="t-warn-msg">เดือนนี้คุณมาสายเกิน 30 นาทีแล้ว!</span>
       </div>
+      <button class="btn btn-outline" onclick="closeModal('checkTimeModal')" id="t-btn-cancel3" style="margin-top: 15px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -521,6 +569,7 @@
       <input type="password" id="adminPassword" class="input-field" placeholder="รหัสผ่าน...">
       <div id="pwdError" style="display:none; color:var(--neon-out); font-size:0.85em; margin-top:-10px; margin-bottom:15px;">รหัสผ่านไม่ถูกต้อง</div>
       <button class="btn btn-primary" onclick="verifyPassword()" id="t-btn-confirm-pwd">ยืนยัน</button>
+      <button class="btn btn-outline" onclick="closeModal('passwordModal')" id="t-btn-cancel-pwd">ยกเลิก</button>
     </div>
   </div>
 
@@ -535,44 +584,7 @@
       <div id="adminResultBox" style="display: none; background: rgba(0,0,0,0.7); border-radius: 16px; padding: 15px; margin-top: 15px; border: 1px solid rgba(212,175,55,0.2); max-height: 45vh; overflow-y: auto;">
         <!-- Data will be injected here -->
       </div>
-    </div>
-  </div>
-
-  <!-- Modal: Holiday Calendar -->
-  <div id="holidayModal" class="modal-overlay">
-    <div class="modal-box" style="padding: 25px 20px;">
-      <div class="modal-title" id="t-menu-cal-title">🗓️ ปฏิทินวันหยุด 2026</div>
-      <div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div>
-      
-      <div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 40vh; overflow-y:auto; text-align:left; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px;">
-        <h3 style="color: var(--gold-light); font-size: 1em; margin-bottom: 10px;">🏖️ สิทธิ์วันหยุดพักร้อน</h3>
-        <ul style="font-size: 0.85em; color: var(--text-sub); padding-left: 20px; line-height: 1.6; margin-bottom: 20px;">
-          <li>พนักงานผ่านโปร ได้สิทธิ์ <b>6 วัน/ปี</b></li>
-          <li>กรุณาแจ้งล่วงหน้า <b>3 วัน</b></li>
-        </ul>
-
-        <h3 style="color: var(--gold-primary); font-size: 1em; margin-bottom: 10px;">🇹🇭 วันหยุดนักขัตฤกษ์</h3>
-        <div style="font-size: 0.85em; color: #fff; display: flex; flex-direction: column; gap: 8px;">
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">1 ม.ค.</span><span>วันขึ้นปีใหม่</span>
-          </div>
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">3 มี.ค.</span><span>วันมาฆบูชา</span>
-          </div>
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">6 เม.ย.</span><span>วันจักรี</span>
-          </div>
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">13-15 เม.ย.</span><span>สงกรานต์</span>
-          </div>
-          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-            <span style="color:var(--gold-primary); min-width:50px;">1 พ.ค.</span><span>วันแรงงาน</span>
-          </div>
-          <div style="display:flex; gap:10px;">
-            <span style="color:var(--gold-primary); min-width:50px;">31 ธ.ค.</span><span>วันสิ้นปี</span>
-          </div>
-        </div>
-      </div>
+      <button class="btn btn-outline" onclick="closeModal('adminViewModal')" id="t-btn-cancel4" style="margin-top: 15px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -623,7 +635,6 @@
       
       container.appendChild(toast);
       
-      // ให้หายไปเองเมื่อครบ 3.5 วินาที
       setTimeout(() => {
         toast.style.animation = 'toastFadeOut 0.4s ease forwards';
         setTimeout(() => toast.remove(), 400);
@@ -633,7 +644,6 @@
     // --- 2. กดด้านนอก (พื้นที่ดำ) เพื่อปิดหน้าต่าง (Modal) ---
     window.addEventListener('click', function(e) {
       if (e.target.classList.contains('modal-overlay')) {
-        // ห้ามกดปิดเองเฉพาะหน้าแจ้งเตือนมาสาย (บังคับให้กดปุ่มตกลงเท่านั้น)
         if(e.target.id !== 'lateScanModal') {
           closeModal(e.target.id);
         }
@@ -699,12 +709,23 @@
         "t-menu-out": "ออกงาน", "t-desc-out": "บันทึกเลิกงาน",
         "t-menu-leave": "แจ้งลา", "t-desc-leave": "ลาป่วย, ลากิจ, ฯลฯ",
         "t-menu-check": "เช็คเวลา", "t-desc-check": "ดูสาย และ OT",
+        "t-menu-tutor": "คู่มือการใช้งาน", "t-desc-tutor": "สาธิตวิธีใช้ระบบต่างๆ",
         "t-menu-org": "ผังองค์กร", "t-desc-org": "โครงสร้างและตำแหน่งพนักงาน",
         "t-menu-cal": "ปฏิทินวันหยุด 2026", "t-desc-cal": "ตรวจสอบสิทธิ์วันหยุด",
         "t-menu-reg": "ลงทะเบียนพนักงาน", "t-desc-reg": "บันทึกใบหน้าเข้าระบบ",
         "t-menu-cfg": "ตั้งค่าพิกัด GPS", "t-desc-cfg": "ระบบหลังบ้าน (Admin)",
         "t-menu-view": "ดูข้อมูลพนักงาน", "t-desc-view": "เช็คเวลาเข้าออกแบบละเอียดรายวัน",
         
+        "t-tutor-title": "📖 คู่มือการใช้งาน", "t-tutor-desc": "เรียนรู้วิธีใช้งานระบบ 88 Designs",
+        "t-tutor-s1-t": "📷 1. การสแกนเข้า-ออกงาน",
+        "t-tutor-s1-d": "กดปุ่ม <b>\"เข้างาน\"</b> หรือ <b>\"ออกงาน\"</b> ระบบจะเปิดกล้องเพื่อสแกนใบหน้า ให้มองกล้องจนกว่าจะขึ้นกรอบและแจ้งว่าบันทึกสำเร็จ (ระบบจะดึงพิกัด GPS อัตโนมัติ)",
+        "t-tutor-s2-t": "📝 2. การแจ้งลา",
+        "t-tutor-s2-d": "กด <b>\"แจ้งลา\"</b> -> เลือกประเภทการลา -> พิมพ์ชื่อ-นามสกุลของคุณให้ถูกต้อง แล้วกดยืนยัน",
+        "t-tutor-s3-t": "⏰ 3. เช็คเวลาทำงาน",
+        "t-tutor-s3-d": "ตรวจสอบเวลามาสายสะสม และชั่วโมง OT ของรอบบัญชีปัจจุบัน เพียงพิมพ์ชื่อของคุณแล้วกดค้นหา",
+        "t-tutor-s4-t": "🌐 4. เครื่องมือแปลภาษา",
+        "t-tutor-s4-d": "- <b>ปุ่ม 🌐 (มุมขวาล่าง)</b>: ระบบแปลภาษาฟรี พิมพ์หรือพูดก็แปลให้ทันที พร้อมออกเสียง",
+
         "t-l-title": "เลือกประเภทการลา", "t-l-desc": "กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา",
         "t-l-sick": "<span>🤧</span> ลาป่วย", "t-l-personal": "<span>💼</span> ลากิจ", 
         "t-l-halfm": "<span>🌅</span> ครึ่งวันเช้า", "t-l-halfa": "<span>🌇</span> ครึ่งวันบ่าย", 
@@ -728,12 +749,23 @@
         "t-menu-out": "Check Out", "t-desc-out": "End shift",
         "t-menu-leave": "Leave", "t-desc-leave": "Sick, Personal",
         "t-menu-check": "Check Time", "t-desc-check": "Late & OT",
+        "t-menu-tutor": "How to Use", "t-desc-tutor": "App demonstration",
         "t-menu-org": "Org Chart", "t-desc-org": "Company structure",
         "t-menu-cal": "Holiday 2026", "t-desc-cal": "View company holidays",
         "t-menu-reg": "Register Staff", "t-desc-reg": "Enroll face data",
         "t-menu-cfg": "GPS Settings", "t-desc-cfg": "Admin Dashboard",
         "t-menu-view": "View Records", "t-desc-view": "Daily details for Admin",
         
+        "t-tutor-title": "📖 User Guide", "t-tutor-desc": "Learn how to use 88 Designs app",
+        "t-tutor-s1-t": "📷 1. Check-in / Check-out",
+        "t-tutor-s1-d": "Tap <b>'Check In'</b> or <b>'Check Out'</b>. Look at the camera until it scans your face and shows success. GPS is recorded automatically.",
+        "t-tutor-s2-t": "📝 2. Leave Request",
+        "t-tutor-s2-d": "Tap <b>'Leave'</b>, select the leave type, enter your full name, and submit.",
+        "t-tutor-s3-t": "⏰ 3. Check Time",
+        "t-tutor-s3-d": "Check your accumulated late minutes and OT for the current period.",
+        "t-tutor-s4-t": "🌐 4. Translator",
+        "t-tutor-s4-d": "- <b>🌐 (Bottom Right)</b>: Free translator. Type or speak to translate instantly.",
+
         "t-l-title": "Select Leave Type", "t-l-desc": "Choose your reason for leave",
         "t-l-sick": "<span>🤧</span> Sick", "t-l-personal": "<span>💼</span> Personal", 
         "t-l-halfm": "<span>🌅</span> Half (AM)", "t-l-halfa": "<span>🌇</span> Half (PM)", 
@@ -757,12 +789,23 @@
         "t-menu-out": "အလုပ်ဆင်း", "t-desc-out": "အလုပ်ဆင်းရန်",
         "t-menu-leave": "ခွင့်တိုင်", "t-desc-leave": "နေမကောင်း, ခွင့်",
         "t-menu-check": "အချိန်စစ်", "t-desc-check": "OT နှင့် နောက်ကျ",
+        "t-menu-tutor": "အသုံးပြုနည်း", "t-desc-tutor": "အက်ပ် သရုပ်ပြ",
         "t-menu-org": "ဖွဲ့စည်းပုံ", "t-desc-org": "ကုမ္ပဏီဖွဲ့စည်းပုံ",
         "t-menu-cal": "အားလပ်ရက် 2026", "t-desc-cal": "ရုံးပိတ်ရက်များ",
         "t-menu-reg": "စာရင်းသွင်းရန်", "t-desc-reg": "မျက်နှာစာရင်းသွင်းပါ",
         "t-menu-cfg": "GPS နေရာ", "t-desc-cfg": "Admin သာလျှင်",
         "t-menu-view": "မှတ်တမ်းကြည့်ရန်", "t-desc-view": "ဝန်ထမ်းမှတ်တမ်းကြည့်ရန်",
         
+        "t-tutor-title": "📖 အသုံးပြုသူလမ်းညွှန်", "t-tutor-desc": "88 Designs အက်ပ် အသုံးပြုနည်းကို လေ့လာပါ",
+        "t-tutor-s1-t": "📷 1. အလုပ်ဝင် / အလုပ်ဆင်း",
+        "t-tutor-s1-d": "<b>'အလုပ်ဝင်'</b> သို့မဟုတ် <b>'အလုပ်ဆင်း'</b> ကိုနှိပ်ပါ။ အောင်မြင်ကြောင်းပြသသည်အထိ ကင်မရာကိုကြည့်ပါ။ GPS ကို အလိုအလျောက် မှတ်တမ်းတင်ပါမည်။",
+        "t-tutor-s2-t": "📝 2. ခွင့်တိုင်ရန်",
+        "t-tutor-s2-d": "<b>'ခွင့်တိုင်'</b> ကိုနှိပ်ပါ၊ ခွင့်အမျိုးအစားကို ရွေးချယ်ပါ၊ သင့်အမည်အပြည့်အစုံကို ထည့်သွင်းပြီး အတည်ပြုပါ။",
+        "t-tutor-s3-t": "⏰ 3. အချိန်စစ်ရန်",
+        "t-tutor-s3-d": "ယခုကာလအတွက် သင်၏ နောက်ကျမိနစ်နှင့် OT ကို စစ်ဆေးပါ။",
+        "t-tutor-s4-t": "🌐 4. ဘာသာပြန်",
+        "t-tutor-s4-d": "- <b>🌐 (ညာဘက်အောက်)</b>: အခမဲ့ ဘာသာပြန်။ ချက်ချင်းဘာသာပြန်ရန် စာရိုက်ပါ သို့မဟုတ် ပြောပါ။",
+
         "t-l-title": "ခွင့်အမျိုးအစား", "t-l-desc": "အကြောင်းပြချက်ရွေးပါ",
         "t-l-sick": "<span>🤧</span> ဖျားနာ", "t-l-personal": "<span>💼</span> ကိုယ်ရေးကိုယ်တာ", 
         "t-l-halfm": "<span>🌅</span> မနက်ပိုင်း", "t-l-halfa": "<span>🌇</span> ညနေပိုင်း", 
@@ -812,6 +855,7 @@
         setTxt('btnAdminSearch', d['btn-search']);
         setTxt('t-btn-confirm-pwd', d['btn-confirm']);
         setTxt('t-late-scan-btn', d['t-late-scan-btn']);
+        setTxt('t-btn-cancel7', d['btn-close']); // ปุ่มปิดของคู่มือ
         
         setPlc('leaveName', d['placeholder-name']);
         setPlc('checkName', d['placeholder-name']);
@@ -916,7 +960,6 @@
       const apiUrl = safeGetStorage('gasApiUrl', typeof GAS_API_URL !== 'undefined' ? GAS_API_URL : '');
       const btn = document.getElementById('btnSubmitLeave');
       
-      // ป้องกันกดเบิ้ล
       if(btn.disabled) return;
       btn.disabled = true; btn.innerText = '⏳...';
 
@@ -924,7 +967,6 @@
         const res = await fetch(apiUrl, { method: 'POST', body: JSON.stringify({ action: 'logAttendance', name: name, type: selectedLeave, lat: '-', lng: '-' }) });
         await res.json();
         
-        // ใช้ Toast แจ้งเตือนความสำเร็จแทน Alert
         showToast('✅ บันทึกการลาเรียบร้อยแล้ว', 'success');
         closeModal('leaveSubmitModal');
         document.getElementById('leaveName').value = '';
