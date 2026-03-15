@@ -231,22 +231,22 @@
     
     .org-container::-webkit-scrollbar { width: 6px; }
     .org-container::-webkit-scrollbar-track { background: transparent; }
-    .org-container::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 10px; }
-
-    /* สไตล์เฉพาะส่วนแปลภาษา */
-    .trans-box { width: 100%; padding: 15px; border-radius: 16px; border: 1px solid rgba(212,175,55,0.3); background: rgba(0,0,0,0.6); color: white; font-size: 1.1em; outline: none; resize: none; margin-bottom: 10px; font-family: 'Sarabun'; }
-    .trans-box:focus { border-color: var(--gold-primary); }
-    .trans-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
-    .trans-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); border-radius: 12px; padding: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-    .trans-btn.active { background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; border-color: transparent; }
-
-    /* --- ✨ สไตล์สำหรับ Toast Notification (ป๊อปอัพแจ้งเตือนแบบหรูหรา) ✨ --- */
-    .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 400px; }
-    .toast { background: rgba(12, 12, 12, 0.95); border: 1px solid var(--gold-primary); color: #fff; padding: 14px 24px; border-radius: 30px; font-size: 0.95em; box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(212,175,55,0.2); backdrop-filter: blur(10px); animation: toastFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 10px; font-weight: 500; }
-    .toast.error { border-color: var(--neon-out); box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(225,29,72,0.2); }
+    .toast.success { border-color: var(--neon-in); box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(16,185,129,0.2); }
     @keyframes toastFadeIn { from { opacity: 0; transform: translateY(-20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes toastFadeOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-20px) scale(0.9); } }
 
+    /* สไตล์สำหรับลายน้ำผู้จัดทำ */
+    .developer-watermark {
+      text-align: center;
+      font-size: 0.75em;
+      color: rgba(212, 175, 55, 0.5); /* สีทองแบบโปร่งใสเล็กน้อย */
+      margin-top: 40px;
+      padding-bottom: 10px;
+      letter-spacing: 0.5px;
+      width: 100%;
+      z-index: 10;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
@@ -623,6 +623,12 @@
   <!-- Floating Action Button for Translator -->
   <div class="fab-ai" onclick="openModal('translatorModal')">
     🌐
+  </div>
+
+  <!-- ลายน้ำผู้จัดทำ -->
+  <div class="developer-watermark">
+    Developed by MR.CHAITHAWAT PUMKOOM<br>
+    <span style="font-size: 0.85em; opacity: 0.8;">(Software Developer & Programmer)</span>
   </div>
 
   <script>
