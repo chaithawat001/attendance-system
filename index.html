@@ -117,6 +117,8 @@
     @keyframes toastFadeIn { from { opacity: 0; transform: translateY(-20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes toastFadeOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-20px) scale(0.9); } }
 
+    @keyframes pulse-btn { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(212,175,55,0.4); } 50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(212,175,55,0.8); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(212,175,55,0.4); } }
+
     /* Watermark */
     .developer-watermark { text-align: center; font-size: 0.75em; color: rgba(212, 175, 55, 0.5); margin-top: 40px; padding-bottom: 20px; line-height: 1.4; width: 100%; z-index: 10; }
   </style>
@@ -206,7 +208,24 @@
     <span style="font-size: 0.85em; opacity: 0.8;">(Software Developer & Programmer)</span>
   </div>
 
-  <!-- All Modals Here (Tutorial, OrgChart, Leave, Time, Admin, Translator, Late) -->
+  <!-- --- ⚠️ หน้าต่างบังคับรับทราบประกาศ (Force Modal) --- -->
+  <div id="forceBroadcastModal" class="modal-overlay" style="z-index: 9999; background: rgba(0,0,0,0.95);">
+    <div class="modal-box" style="border-color: var(--gold-primary); box-shadow: 0 0 50px rgba(212,175,55,0.3); max-width: 400px; padding: 35px 25px;">
+      <div style="font-size: 3.5em; margin-bottom: 10px; animation: pulse-btn 2s infinite;">📢</div>
+      <div class="modal-title" style="color: var(--gold-light); font-size: 1.4em; margin-bottom: 15px;">ประกาศสำคัญ</div>
+      
+      <!-- ข้อความประกาศ -->
+      <div id="forceBroadcastText" style="color: #fff; font-size: 1.05em; line-height: 1.6; margin-bottom: 25px; text-align: left; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; max-height: 40vh; overflow-y: auto; border: 1px solid rgba(212,175,55,0.2);">
+      </div>
+      
+      <!-- ปุ่มรับทราบ (กดแล้วถึงจะเข้าแอปได้) -->
+      <button class="btn btn-primary" style="font-size: 1.1em; padding: 16px; animation: pulse-btn 2s infinite;" onclick="acknowledgeBroadcast()">
+        🔊 รับทราบ (ฟังประกาศ)
+      </button>
+    </div>
+  </div>
+
+  <!-- All Modals Here -->
   <div id="tutorialModal" class="modal-overlay"><div class="modal-box" style="padding: 25px 20px; max-width: 400px;"><div class="modal-title" style="color: #38bdf8;">📖 คู่มือการใช้งาน</div><div class="modal-desc" style="margin-bottom: 15px;">เรียนรู้วิธีใช้งานระบบ 88 Designs</div><div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 50vh; overflow-y:auto; text-align:left; border: 1px solid rgba(56,189,248,0.2); margin-bottom: 15px;"><h3 style="color: var(--neon-in); font-size: 1em; margin-bottom: 8px;">📷 1. การสแกนเข้า-ออกงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;">กดปุ่ม <b>"เข้างาน"</b> หรือ <b>"ออกงาน"</b> ระบบจะเปิดกล้องเพื่อสแกนใบหน้า ให้มองกล้องจนกว่าจะขึ้นกรอบและแจ้งว่าบันทึกสำเร็จ (ระบบจะดึงพิกัด GPS อัตโนมัติ)</p><h3 style="color: var(--neon-leave); font-size: 1em; margin-bottom: 8px;">📝 2. การแจ้งลา</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;">กด <b>"แจ้งลา"</b> -> เลือกประเภทการลา -> พิมพ์ชื่อ-นามสกุลของคุณให้ถูกต้อง แล้วกดยืนยัน</p><h3 style="color: var(--neon-time); font-size: 1em; margin-bottom: 8px;">⏰ 3. เช็คเวลาทำงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;">ตรวจสอบเวลามาสายสะสม และชั่วโมง OT ของรอบบัญชีปัจจุบัน เพียงพิมพ์ชื่อของคุณแล้วกดค้นหา</p><h3 style="color: var(--gold-light); font-size: 1em; margin-bottom: 8px;">🤖 4. ผู้ช่วย AI & แปลภาษา</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 5px;">- <b>ปุ่ม 🌐 (มุมขวาล่าง)</b>: ระบบแปลภาษาฟรี พิมพ์หรือพูดก็แปลให้ทันที พร้อมออกเสียง</p></div><button class="btn btn-outline" onclick="closeModal('tutorialModal')">ปิดหน้าต่าง</button></div></div>
   <div id="lateScanModal" class="modal-overlay"><div class="modal-box" style="border-color: var(--neon-out); box-shadow: 0 0 50px rgba(225,29,72,0.3);"><div style="font-size: 4.5em; margin-bottom: 5px;">⏰</div><div class="modal-title" style="color: var(--neon-out); font-size: 1.8em; line-height: 1.3; margin-bottom: 15px; text-shadow: 0 0 15px rgba(225,29,72,0.5);">คุณมาสาย!<br>โปรดปรับปรุงตัว</div><div class="modal-desc" style="font-size: 1em; color: var(--text-main);">เวลาเข้างานปกติคือไม่เกิน 09:00 น.</div><button class="btn btn-primary" style="background: linear-gradient(135deg, #e11d48, #be123c); color: #fff; font-size: 1.2em; padding: 18px; box-shadow: 0 4px 15px rgba(225,29,72,0.4); margin-top: 10px;" onclick="proceedToScan()">ตกลง (สแกนเข้างาน)</button></div></div>
   <div id="orgChartModal" class="modal-overlay"><div class="modal-box" style="max-width: 450px; padding: 25px 15px;"><div class="modal-title" style="color:var(--gold-light);">🏢 ผังองค์กร (Organization Chart)</div><div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div><div class="org-container"><div class="org-row"><div class="org-card level-1"><div class="name">คุณแนค</div><div class="role">Owner (เจ้าของกิจการ)</div></div></div><div class="org-arrow">↓</div><div class="org-row"><div class="org-card level-2"><div class="name">ต้อม</div><div class="role">ผู้จัดการร้าน</div></div><div class="org-card level-2"><div class="name">กอล์ฟ</div><div class="role">ผู้จัดการร้าน</div></div></div><div class="org-arrow">↓</div><div class="org-row"><div class="org-card"><div class="name">ภูมิ</div><div class="role">กราฟฟิคดีไซน์</div></div><div class="org-card"><div class="name">ซิน</div><div class="role">นักการบัญชี</div></div></div><div class="org-arrow">↓</div><div class="org-row"><div class="org-card"><div class="name">โจ้</div><div class="role">หัวหน้าช่าง</div></div><div class="org-card"><div class="name">มีน</div><div class="role">หัวหน้าช่าง</div></div></div><div class="org-arrow">↓</div><div class="org-row"><div class="org-card"><div class="name">ก๊อต</div><div class="role">ผู้ช่วยหัวหน้าช่าง</div></div><div class="org-card"><div class="name">โกเย</div><div class="role">ช่างไฟ</div></div></div><div class="org-arrow">↓</div><div class="org-row grid"><div class="org-card"><div class="name">อาว</div><div class="role">ช่างทั่วไป</div></div><div class="org-card"><div class="name">อู</div><div class="role">ช่างทั่วไป</div></div><div class="org-card"><div class="name">แจ็ค</div><div class="role">ช่างทั่วไป</div></div><div class="org-card"><div class="name">ตัวเล็ก</div><div class="role">ช่างทั่วไป</div></div></div></div><button class="btn btn-outline" onclick="closeModal('orgChartModal')">ปิดหน้าต่าง</button></div></div>
@@ -235,8 +254,11 @@
       }, 3500);
     }
 
+    // แก้ไขห้ามกดปิดหน้าต่าง ForceBroadcast จากการคลิกด้านนอก
     window.addEventListener('click', function(e) {
-      if (e.target.classList.contains('modal-overlay') && e.target.id !== 'lateScanModal') closeModal(e.target.id);
+      if (e.target.classList.contains('modal-overlay') && e.target.id !== 'lateScanModal' && e.target.id !== 'forceBroadcastModal') {
+          closeModal(e.target.id);
+      }
     });
 
     function updateClock() {
@@ -252,6 +274,8 @@
     setInterval(updateClock, 1000);
 
     let currentLang = 'th';
+    let globalBroadcastText = '';
+
     function setLang(lang) {
       currentLang = lang;
       document.querySelectorAll('.btn-lang').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase() === lang.toLowerCase()));
@@ -260,48 +284,48 @@
     window.onload = () => {
       updateClock();
       const apiUrl = HARDCODED_API_URL || localStorage.getItem('gasApiUrl');
+      
       if (apiUrl) {
         fetch(apiUrl + '?action=getConfig').then(r => r.json()).then(config => {
-          if (config.broadcastMsg) {
+          if (config.broadcastMsg && config.broadcastMsg.trim() !== '') {
+            globalBroadcastText = config.broadcastMsg;
+            
+            // แสดงประกาศในแบนเนอร์ปกติ
             document.getElementById('broadcastText').innerHTML = config.broadcastMsg.replace(/\n/g, '<br>');
             document.getElementById('broadcastBanner').style.display = 'block';
-
-            // --- เริ่ม: ระบบอ่านประกาศอัตโนมัติ ---
-            const titleEl = document.querySelector('#broadcastBanner div:first-child');
-            const btnReplay = document.getElementById('btnReplayAudio');
             
-            // ทำให้ปุ่มลำโพงกดได้
+            const btnReplay = document.getElementById('btnReplayAudio');
             btnReplay.style.display = 'inline-block';
             btnReplay.onclick = () => speakTranslatedText(config.broadcastMsg, currentLang);
 
-            // เช็คว่าเคยอ่านไปแล้วหรือยังใน Session นี้
-            if (!sessionStorage.getItem('broadcastRead')) {
-              // แจ้งผู้ใช้ว่ามีประกาศและให้แตะเพื่อฟัง
-              showToast('📢 มีประกาศใหม่! แตะหน้าจอ 1 ครั้งเพื่อฟังเสียง', 'success');
-
-              const playAutoBroadcast = () => {
-                if (!speechSynthesis.speaking) {
-                  speakTranslatedText(config.broadcastMsg, currentLang);
-                  sessionStorage.setItem('broadcastRead', 'true');
-                }
-                // เอา Event ออกหลังแตะแล้ว
-                document.removeEventListener('click', playAutoBroadcast);
-                document.removeEventListener('touchstart', playAutoBroadcast);
-              };
-
-              // ลองพยายามอ่านเอง (บางเบราว์เซอร์ยอมให้อ่านถ้าเปิดผ่าน Home Screen)
-              setTimeout(() => {
-                if (!sessionStorage.getItem('broadcastRead')) {
-                  speakTranslatedText(config.broadcastMsg, currentLang);
-                  sessionStorage.setItem('broadcastRead', 'true');
-                }
-              }, 1500);
-
-              // ดักการแตะเพื่อบังคับอ่าน (แก้ Browser Block Autoplay)
-              document.addEventListener('click', playAutoBroadcast);
-              document.addEventListener('touchstart', playAutoBroadcast);
+            // --- ตรวจสอบการรับทราบประกาศรายวัน (ตัดรอบ 09:00 น.) ---
+            let showModal = true;
+            const lastAckStr = localStorage.getItem('broadcastAcknowledgeTime');
+            
+            if (lastAckStr) {
+              const lastAckTime = parseInt(lastAckStr, 10);
+              const now = new Date();
+              
+              // คำนวณจุดตัดรอบ (09:00 น. ของวันนี้)
+              const shiftStart = new Date(now);
+              shiftStart.setHours(9, 0, 0, 0); 
+              
+              // ถ้าเวลาตอนนี้ยังไม่ถึง 9 โมงเช้า ให้ถือว่ายังเป็นรอบของเมื่อวาน
+              if (now.getHours() < 9) {
+                shiftStart.setDate(shiftStart.getDate() - 1); 
+              }
+              
+              // ถ้าเวลากดรับทราบ ล่าสุด มากกว่าหรือเท่ากับ เวลาตัดรอบ แสดงว่าฟังไปแล้ว
+              if (lastAckTime >= shiftStart.getTime()) {
+                showModal = false; 
+              }
             }
-            // --- จบ: ระบบอ่านประกาศอัตโนมัติ ---
+
+            if (showModal) {
+              // เอาข้อความมาแสดงในหน้าต่างบังคับ
+              document.getElementById('forceBroadcastText').innerHTML = config.broadcastMsg.replace(/\n/g, '<br>');
+              document.getElementById('forceBroadcastModal').style.display = 'flex';
+            }
           }
         }).catch(e => console.log('Cannot fetch broadcast'));
       }
@@ -314,6 +338,19 @@
         });
       }
     };
+
+    // --- ฟังก์ชันเมื่อพนักงานกด "รับทราบ (ฟังประกาศ)" ---
+    function acknowledgeBroadcast() {
+        // เล่นเสียงทันที
+        speakTranslatedText(globalBroadcastText, currentLang);
+        
+        // บันทึกสถานะและเวลาที่กดรับทราบ (ใช้ localStorage เพื่อจำข้ามวัน)
+        localStorage.setItem('broadcastAcknowledgeTime', new Date().getTime().toString());
+        
+        // ปิดหน้าต่างให้พนักงานใช้งานแอปได้เลย (ระหว่างที่เสียงยังอ่านอยู่)
+        document.getElementById('forceBroadcastModal').style.display = 'none';
+        showToast('ขอบคุณที่รับทราบประกาศครับ', 'success');
+    }
 
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
@@ -425,7 +462,9 @@
 
     function speakTranslatedText(text, langCode) {
       if ('speechSynthesis' in window) {
-        speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text);
+        speechSynthesis.cancel(); 
+        const cleanText = text.replace(/[*#]/g, ''); // ลบตัวอักษรพิเศษก่อนอ่าน
+        const u = new SpeechSynthesisUtterance(cleanText);
         u.lang = langCode === 'en' ? 'en-US' : langCode === 'zh-CN' ? 'zh-CN' : langCode === 'my' ? 'my-MM' : 'th-TH';
         u.rate = 0.9; speechSynthesis.speak(u);
       }
