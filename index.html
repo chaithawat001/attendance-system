@@ -51,7 +51,7 @@
     .c-org .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), transparent); color: var(--neon-in); border-color: rgba(16,185,129,0.3); }
     .c-admin .icon-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), transparent); color: var(--neon-admin); border-color: rgba(212,175,55,0.3); }
     .c-info .icon-box { background: linear-gradient(135deg, rgba(56,189,248,0.15), transparent); color: #38bdf8; border-color: rgba(56,189,248,0.3); }
-    .c-port .icon-box { background: linear-gradient(135deg, rgba(236,72,153,0.15), transparent); color: #ec4899; border-color: rgba(236,72,153,0.3); }
+    .c-trans .icon-box { background: linear-gradient(135deg, rgba(168,85,247,0.15), transparent); color: #a855f7; border-color: rgba(168,85,247,0.3); }
     
     .list-item .text-group { flex: 1; }
     .list-item .m-title { font-size: 1em; font-weight: 500; color: #fff; margin-bottom: 3px; }
@@ -79,16 +79,18 @@
     .result-box { display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; margin-top: 16px; border: 1px solid var(--border-light); text-align: left; }
     .r-stat { font-size: 0.95em; display: flex; justify-content: space-between; margin-bottom: 10px; background: rgba(212,175,55,0.05); padding: 12px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.1); }
     
-    /* Portfolio Grid */
-    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-    .gallery-item { width: 100%; aspect-ratio: 1; border-radius: 12px; object-fit: cover; border: 1px solid rgba(212,175,55,0.3); background: #000; }
-
     .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; width: 90%; max-width: 400px; pointer-events: none;}
     .toast { background: rgba(12, 12, 12, 0.95); border: 1px solid var(--gold-primary); color: #fff; padding: 14px 24px; border-radius: 30px; font-size: 0.95em; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: flex; align-items: center; gap: 10px; font-weight: 500; animation: toastFadeIn 0.4s ease; }
     @keyframes toastFadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes toastFadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
+    @keyframes pulse-btn { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(212,175,55,0.4); } 50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(212,175,55,0.8); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(212,175,55,0.4); } }
 
     .developer-watermark { text-align: center; font-size: 0.75em; color: rgba(212, 175, 55, 0.5); margin-top: 40px; padding-bottom: 20px; width: 100%; }
+
+    /* Translator Specific Styles */
+    .trans-btn-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
+    .trans-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); border-radius: 12px; padding: 10px 4px; font-weight: 600; cursor: pointer; font-size: 0.85em; transition: 0.3s; }
+    .trans-btn.active { background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; border-color: transparent; }
   </style>
 </head>
 <body>
@@ -112,7 +114,10 @@
 
   <div class="container">
     <div id="broadcastBanner" class="broadcast-banner">
-      <div style="font-weight: 700; color: var(--gold-light); margin-bottom: 4px; font-size: 0.9em;">📢 <span id="t-broadcast-title">ประกาศจากผู้บริหาร</span></div>
+      <div style="font-weight: 700; color: var(--gold-light); margin-bottom: 4px; font-size: 0.9em; display: flex; justify-content: space-between; align-items: center;">
+        <div>📢 <span id="t-broadcast-title">ประกาศจากผู้บริหาร</span></div>
+        <span id="btnReplayAudio" style="font-size: 1.3em; cursor: pointer; display: none;">🔊</span>
+      </div>
       <div id="broadcastText" style="color: #fff; font-size: 0.95em; line-height: 1.5;"></div>
     </div>
 
@@ -136,10 +141,10 @@
     </div>
     <div class="divider"></div>
 
-    <!-- เมนูผลงาน (Portfolio) -->
-    <a href="#" onclick="openPortfolioModal()" class="card list-item c-port">
-      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
-      <div class="text-group"><div class="m-title" id="t-menu-port">ผลงานทั้งหมด</div><div class="m-desc" id="t-desc-port">ดูแกลเลอรีรูปภาพผลงาน</div></div>
+    <!-- เมนูแปลภาษา (Translator) -->
+    <a href="#" onclick="openModal('translatorModal')" class="card list-item c-trans">
+      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg></div>
+      <div class="text-group"><div class="m-title" id="t-menu-trans">แปลภาษาอัจฉริยะ</div><div class="m-desc" id="t-desc-trans">พูดและแปลอัตโนมัติ (6 ภาษา)</div></div>
       <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
     </a>
 
@@ -175,10 +180,20 @@
     <span style="font-size: 0.85em; opacity: 0.8;">(Software Developer & Programmer)</span>
   </div>
 
+  <!-- ⚠️ หน้าต่างบังคับรับทราบประกาศ (Force Modal) -->
+  <div id="forceBroadcastModal" class="modal-overlay" style="z-index: 9999; background: rgba(0,0,0,0.95);">
+    <div class="modal-box" style="border-color: var(--gold-primary); box-shadow: 0 0 50px rgba(212,175,55,0.3); max-width: 400px; padding: 35px 25px;">
+      <div style="font-size: 3.5em; margin-bottom: 10px; animation: pulse-btn 2s infinite;">📢</div>
+      <div class="modal-title" style="color: var(--gold-light); font-size: 1.4em; margin-bottom: 15px;" id="t-force-title">ประกาศสำคัญ</div>
+      <div id="forceBroadcastText" style="color: #fff; font-size: 1.05em; line-height: 1.6; margin-bottom: 25px; text-align: left; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; max-height: 40vh; overflow-y: auto; border: 1px solid rgba(212,175,55,0.2);"></div>
+      <button class="btn btn-primary" style="font-size: 1.1em; padding: 16px; animation: pulse-btn 2s infinite;" onclick="acknowledgeBroadcast()" id="btn-ack-broadcast">🔊 รับทราบ (ฟังประกาศ)</button>
+    </div>
+  </div>
+
   <!-- Modals -->
   <div id="tutorialModal" class="modal-overlay"><div class="modal-box" style="padding: 25px 20px; max-width: 400px;"><div class="modal-title" style="color: #38bdf8;" id="t-tutor-title">📖 คู่มือการใช้งาน</div><div class="modal-desc" style="margin-bottom: 15px;" id="t-tutor-desc">เรียนรู้วิธีใช้งานระบบ 88 Designs</div><div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 50vh; overflow-y:auto; text-align:left; border: 1px solid rgba(56,189,248,0.2); margin-bottom: 15px;"><h3 style="color: var(--neon-in); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s1-t">📷 1. การสแกนเข้า-ออกงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s1-d">กดปุ่ม "เข้างาน" หรือ "ออกงาน" ระบบจะสแกนใบหน้าและดึงพิกัด GPS อัตโนมัติ</p><h3 style="color: var(--neon-leave); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s2-t">📝 2. การแจ้งลา</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s2-d">กด "แจ้งลา" -> เลือกประเภทการลา -> พิมพ์ชื่อ-นามสกุลของคุณให้ถูกต้อง</p><h3 style="color: var(--neon-time); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s3-t">⏰ 3. เช็คเวลาทำงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s3-d">ตรวจสอบเวลามาสายและ OT พิมพ์ชื่อของคุณแล้วกดค้นหา</p></div><button class="btn btn-outline" onclick="closeModal('tutorialModal')" id="btn-close-tutor">ปิดหน้าต่าง</button></div></div>
   
-  <div id="orgChartModal" class="modal-overlay"><div class="modal-box" style="max-width: 450px; padding: 25px 15px;"><div class="modal-title" style="color:var(--gold-light);" id="t-org-title">🏢 ผังองค์กร (Organization Chart)</div><div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div><div class="org-container" style="background: rgba(0,0,0,0.6); border-radius: 16px; padding: 15px 10px; max-height: 50vh; overflow-y: auto; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px; text-align: center;"><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(0,0,0,0.5)); border: 1px solid var(--gold-primary); box-shadow: 0 0 15px rgba(212,175,55,0.2); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: var(--gold-light); font-size: 1.1em; font-weight: 700;">คุณแนค</div><div style="color: var(--gold-primary); font-size: 0.75em;">Owner (เจ้าของกิจการ)</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">ต้อม</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">กอล์ฟ</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ภูมิ</div><div style="color: var(--text-sub); font-size: 0.75em;">กราฟฟิคดีไซน์</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ซิน</div><div style="color: var(--text-sub); font-size: 0.75em;">นักการบัญชี</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โจ้</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">มีน</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ก๊อต</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้ช่วยหัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โกเย</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างไฟ</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อาว</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อู</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">แจ็ค</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ตัวเล็ก</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div></div></div><button class="btn btn-outline" onclick="closeModal('orgChartModal')" id="btn-close-org">ปิดหน้าต่าง</button></div></div>
+  <div id="orgChartModal" class="modal-overlay"><div class="modal-box" style="max-width: 450px; padding: 25px 15px;"><div class="modal-title" style="color:var(--gold-light);" id="t-org-title">🏢 ผังองค์กร (Organization Chart)</div><div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div><div class="org-container" style="background: rgba(0,0,0,0.6); border-radius: 16px; padding: 15px 10px; max-height: 50vh; overflow-y: auto; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px; text-align: center;"><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(0,0,0,0.5)); border: 1px solid var(--gold-primary); box-shadow: 0 0 15px rgba(212,175,55,0.2); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: var(--gold-light); font-size: 1.1em; font-weight: 700;">คุณแนค</div><div style="color: var(--gold-primary); font-size: 0.75em;">Owner (เจ้ากิจการ)</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">ต้อม</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">กอล์ฟ</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ภูมิ</div><div style="color: var(--text-sub); font-size: 0.75em;">กราฟฟิคดีไซน์</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ซิน</div><div style="color: var(--text-sub); font-size: 0.75em;">นักการบัญชี</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โจ้</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">มีน</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ก๊อต</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้ช่วยหัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โกเย</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างไฟ</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อาว</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อู</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">แจ็ค</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ตัวเล็ก</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div></div></div><button class="btn btn-outline" onclick="closeModal('orgChartModal')" id="btn-close-org">ปิดหน้าต่าง</button></div></div>
   
   <div id="leaveSelectModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="t-l-title">เลือกประเภทการลา</div><div class="modal-desc" id="t-l-desc">กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา</div><div class="leave-grid"><button class="btn-leave" onclick="proceedLeave('ลาป่วย')" id="t-l-sick"><span>🤧</span> ลาป่วย</button><button class="btn-leave" onclick="proceedLeave('ลากิจ')" id="t-l-personal"><span>💼</span> ลากิจ</button><button class="btn-leave" onclick="proceedLeave('ลาครึ่งวันเช้า')" id="t-l-halfm"><span>🌅</span> ครึ่งวันเช้า</button><button class="btn-leave" onclick="proceedLeave('ลาครึ่งวันบ่าย')" id="t-l-halfa"><span>🌇</span> ครึ่งวันบ่าย</button><button class="btn-leave full" onclick="proceedLeave('ลาพักร้อน')" id="t-l-annual"><span>🏖️</span> ลาพักร้อน</button></div><button class="btn btn-outline" onclick="closeModal('leaveSelectModal')" id="btn-cancel-leave">ยกเลิก</button></div></div>
   
@@ -190,17 +205,38 @@
   
   <div id="adminViewModal" class="modal-overlay"><div class="modal-box" style="max-width: 420px; padding: 25px 20px;"><div class="modal-title" id="t-a-title">📋 ข้อมูลเวลา (Admin)</div><div class="modal-desc" id="t-a-desc">ตรวจสอบเวลาเข้า-ออกรายบุคคล</div><input type="text" id="adminSearchName" class="input-field" placeholder="ชื่อ-นามสกุล..."><button class="btn btn-primary" onclick="fetchAdminData()" id="btn-search-admin">ค้นหาข้อมูล</button><div id="adminResultBox" style="display: none; background: rgba(0,0,0,0.7); border-radius: 16px; padding: 15px; margin-top: 15px; border: 1px solid rgba(212,175,55,0.2); max-height: 45vh; overflow-y: auto;"></div><button class="btn btn-outline" onclick="closeModal('adminViewModal')" style="margin-top: 15px;" id="btn-close-admin">ปิดหน้าต่าง</button></div></div>
 
-  <!-- 🌟 Modal ผลงานทั้งหมด (Portfolio) -->
-  <div id="portfolioModal" class="modal-overlay"><div class="modal-box" style="max-width: 500px; padding: 25px 20px;"><div class="modal-title" id="t-p-title">🖼️ ผลงานทั้งหมด</div><div class="modal-desc" id="t-p-desc">รวมผลงานของ 88 Designs</div>
-    <div id="portfolioGallery" class="gallery-grid">
-      <!-- รูปภาพจะถูกโหลดมาใส่ที่นี่ -->
+  <!-- 🌟 Modal แปลภาษาอัจฉริยะ (Translator) -->
+  <div id="translatorModal" class="modal-overlay">
+    <div class="modal-box" style="padding: 25px 20px; max-width: 420px;">
+      <div class="modal-title" id="t-trans-title">🌐 แปลภาษา & เสียงอ่าน</div>
+      <div class="modal-desc" id="t-trans-desc" style="margin-bottom: 15px;">พิมพ์หรือกดไมค์เพื่อพูด (รองรับ 6 ภาษา)</div>
+      
+      <!-- Input Text/Voice -->
+      <div style="position: relative; margin-bottom: 15px;">
+        <textarea id="transInput" class="input-field" style="margin-bottom: 0; padding-right: 50px; resize: none;" rows="3" placeholder="พิมพ์ข้อความ หรือกดไมค์เพื่อพูด..."></textarea>
+        <button id="btnTransVoice" onclick="startTransVoice()" style="position: absolute; right: 10px; bottom: 10px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; width: 40px; height: 40px; color: var(--gold-light); font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">🎤</button>
+      </div>
+
+      <!-- Language Selectors -->
+      <div style="color: var(--text-sub); font-size: 0.85em; text-align: left; margin-bottom: 8px;" id="t-trans-choose">เลือกภาษาที่ต้องการแปล:</div>
+      <div class="trans-btn-group">
+        <button class="trans-btn active" onclick="setTargetLang('th', this)">🇹🇭 ไทย</button>
+        <button class="trans-btn" onclick="setTargetLang('en', this)">🇬🇧 Eng</button>
+        <button class="trans-btn" onclick="setTargetLang('my', this)">🇲🇲 พม่า</button>
+        <button class="trans-btn" onclick="setTargetLang('zh-CN', this)">🇨🇳 จีน</button>
+        <button class="trans-btn" onclick="setTargetLang('ko', this)">🇰🇷 เกาหลี</button>
+        <button class="trans-btn" onclick="setTargetLang('mnw', this)">🚩 มอญ</button>
+      </div>
+
+      <!-- Output Text/Voice -->
+      <div style="position: relative; margin-top: 10px;">
+        <textarea id="transOutput" class="input-field" style="margin-bottom: 0; background: rgba(212,175,55,0.05); color: var(--gold-light); border-color: rgba(212,175,55,0.5); padding-right: 50px; resize: none;" rows="3" placeholder="ผลลัพธ์คำแปลจะแสดงที่นี่..." readonly></textarea>
+        <button onclick="playTranslatedVoice()" style="position: absolute; right: 10px; bottom: 10px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; width: 40px; height: 40px; color: var(--gold-light); font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">🔊</button>
+      </div>
+
+      <button class="btn btn-outline" onclick="closeModal('translatorModal')" style="margin-top: 15px;" id="btn-close-trans">ปิดหน้าต่าง</button>
     </div>
-    <div id="portfolioLoading" style="color: var(--gold-primary); display:none; margin-bottom:15px;">กำลังโหลดรูปภาพ...</div>
-    
-    <input type="file" id="portfolioFileInput" accept="image/*" style="display: none;" onchange="handlePortfolioUpload(this)">
-    <button class="btn" style="background: rgba(255,255,255,0.05); color: var(--gold-light); border: 1px solid rgba(212,175,55,0.3); margin-bottom: 10px;" onclick="openAdminAuth('uploadPortfolio')" id="btn-upload-port">➕ สำหรับแอดมิน (อัปโหลดรูป)</button>
-    <button class="btn btn-outline" onclick="closeModal('portfolioModal')" id="btn-close-port">ปิดหน้าต่าง</button>
-  </div></div>
+  </div>
 
   <script>
     // API หลัก (สามารถแก้ไขตรงนี้ได้เลย)
@@ -213,7 +249,7 @@
         "t-menu-out": "ออกงาน", "t-desc-out": "บันทึกเลิกงาน",
         "t-menu-leave": "แจ้งลา", "t-desc-leave": "ลาป่วย, ลากิจ, ฯลฯ",
         "t-menu-check": "เช็คเวลา", "t-desc-check": "ดูสาย และ OT",
-        "t-menu-port": "ผลงานทั้งหมด", "t-desc-port": "ดูแกลเลอรีรูปภาพผลงาน",
+        "t-menu-trans": "แปลภาษาอัจฉริยะ", "t-desc-trans": "พูดและแปลอัตโนมัติ (6 ภาษา)",
         "t-menu-tutor": "คู่มือการใช้งาน", "t-desc-tutor": "สาธิตวิธีใช้ระบบต่างๆ",
         "t-menu-org": "ผังองค์กร", "t-desc-org": "โครงสร้างและตำแหน่งพนักงาน",
         "t-menu-view": "ดูข้อมูลพนักงาน", "t-desc-view": "เช็คเวลาเข้าออกแบบละเอียดรายวัน",
@@ -233,11 +269,13 @@
         "t-r-late": "มาสายสะสม:", "t-r-ot": "ทำ OT สะสม:",
         "t-pwd-title": "ยืนยันสิทธิ์ Admin", "t-pwd-desc": "กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน",
         "t-a-title": "📋 ข้อมูลเวลา (Admin)", "t-a-desc": "ตรวจสอบเวลาเข้า-ออกรายบุคคล",
-        "t-p-title": "🖼️ ผลงานทั้งหมด", "t-p-desc": "รวมผลงานของ 88 Designs",
+        "t-trans-title": "🌐 แปลภาษา & เสียงอ่าน", "t-trans-desc": "พิมพ์หรือพูดเพื่อแปล (รองรับ 6 ภาษา)",
+        "t-trans-choose": "เลือกภาษาที่ต้องการแปล:",
+        "t-force-title": "ประกาศสำคัญ", "btn-ack-broadcast": "🔊 รับทราบ (ฟังประกาศ)",
         "btn-close-tutor": "ปิดหน้าต่าง", "btn-close-org": "ปิดหน้าต่าง", "btn-cancel-leave": "ยกเลิก", "btn-cancel-leave2": "ยกเลิก",
         "btn-submit-l": "ยืนยันการลา", "btn-search-time": "ค้นหาข้อมูล", "btn-close-time": "ปิดหน้าต่าง",
         "btn-confirm-pwd": "ยืนยัน", "btn-cancel-pwd": "ยกเลิก", "btn-search-admin": "ค้นหาข้อมูล", "btn-close-admin": "ปิดหน้าต่าง",
-        "btn-upload-port": "➕ สำหรับแอดมิน (อัปโหลดรูป)", "btn-close-port": "ปิดหน้าต่าง",
+        "btn-close-trans": "ปิดหน้าต่าง",
         "placeholder-name": "ชื่อ-นามสกุล..."
       },
       en: {
@@ -245,7 +283,7 @@
         "t-menu-out": "Check Out", "t-desc-out": "End shift",
         "t-menu-leave": "Leave", "t-desc-leave": "Sick, Personal",
         "t-menu-check": "Check Time", "t-desc-check": "Late & OT",
-        "t-menu-port": "Portfolios", "t-desc-port": "View image gallery",
+        "t-menu-trans": "Auto Translator", "t-desc-trans": "Voice & Text (6 Langs)",
         "t-menu-tutor": "How to Use", "t-desc-tutor": "App demonstration",
         "t-menu-org": "Org Chart", "t-desc-org": "Company structure",
         "t-menu-view": "View Records", "t-desc-view": "Daily details for Admin",
@@ -265,11 +303,13 @@
         "t-r-late": "Total Late:", "t-r-ot": "Total OT:",
         "t-pwd-title": "Admin Auth", "t-pwd-desc": "Enter admin password",
         "t-a-title": "📋 Admin Records", "t-a-desc": "Check daily attendance",
-        "t-p-title": "🖼️ Portfolios", "t-p-desc": "88 Designs Gallery",
+        "t-trans-title": "🌐 Translator & Voice", "t-trans-desc": "Type or speak to translate",
+        "t-trans-choose": "Select target language:",
+        "t-force-title": "Important Announcement", "btn-ack-broadcast": "🔊 Acknowledge",
         "btn-close-tutor": "Close", "btn-close-org": "Close", "btn-cancel-leave": "Cancel", "btn-cancel-leave2": "Cancel",
         "btn-submit-l": "Submit", "btn-search-time": "Search", "btn-close-time": "Close",
         "btn-confirm-pwd": "Confirm", "btn-cancel-pwd": "Cancel", "btn-search-admin": "Search", "btn-close-admin": "Close",
-        "btn-upload-port": "➕ Admin (Upload Image)", "btn-close-port": "Close",
+        "btn-close-trans": "Close",
         "placeholder-name": "Full Name..."
       },
       mm: {
@@ -277,7 +317,7 @@
         "t-menu-out": "အလုပ်ဆင်း", "t-desc-out": "အလုပ်ဆင်းရန်",
         "t-menu-leave": "ခွင့်တိုင်", "t-desc-leave": "နေမကောင်း, ခွင့်",
         "t-menu-check": "အချိန်စစ်", "t-desc-check": "OT နှင့် နောက်ကျ",
-        "t-menu-port": "လုပ်ငန်းများ", "t-desc-port": "ဓာတ်ပုံများကိုကြည့်ရန်",
+        "t-menu-trans": "ဘာသာပြန်", "t-desc-trans": "အသံနှင့် စာသား (၆ ဘာသာ)",
         "t-menu-tutor": "အသုံးပြုနည်း", "t-desc-tutor": "အက်ပ် သရုပ်ပြ",
         "t-menu-org": "ဖွဲ့စည်းပုံ", "t-desc-org": "ကုမ္ပဏီဖွဲ့စည်းပုံ",
         "t-menu-view": "မှတ်တမ်းကြည့်ရန်", "t-desc-view": "ဝန်ထမ်းမှတ်တမ်းကြည့်ရန်",
@@ -297,16 +337,19 @@
         "t-r-late": "နောက်ကျ:", "t-r-ot": "OT စုစုပေါင်း:",
         "t-pwd-title": "Admin အတည်ပြုရန်", "t-pwd-desc": "စကားဝှက်ထည့်ပါ",
         "t-a-title": "📋 Admin မှတ်တမ်း", "t-a-desc": "နေ့စဉ်အချိန်ကြည့်ရန်",
-        "t-p-title": "🖼️ လုပ်ငန်းများ", "t-p-desc": "ဓာတ်ပုံများကိုကြည့်ရန်",
+        "t-trans-title": "🌐 ဘာသာပြန်", "t-trans-desc": "စာရိုက်ပါ သို့မဟုတ် ပြောပါ",
+        "t-trans-choose": "ဘာသာစကားကိုရွေးပါ:",
+        "t-force-title": "အရေးကြီးသောကြေငြာချက်", "btn-ack-broadcast": "🔊 နားလည်ပါပြီ",
         "btn-close-tutor": "ပိတ်မည်", "btn-close-org": "ပိတ်မည်", "btn-cancel-leave": "ပယ်ဖျက်", "btn-cancel-leave2": "ပယ်ဖျက်",
         "btn-submit-l": "အတည်ပြုပါ", "btn-search-time": "ရှာဖွေမည်", "btn-close-time": "ပိတ်မည်",
         "btn-confirm-pwd": "အတည်ပြု", "btn-cancel-pwd": "ပယ်ဖျက်", "btn-search-admin": "ရှာဖွေမည်", "btn-close-admin": "ပိတ်မည်",
-        "btn-upload-port": "➕ Admin (ဓာတ်ပုံတင်ရန်)", "btn-close-port": "ပိတ်မည်",
+        "btn-close-trans": "ပိတ်မည်",
         "placeholder-name": "အမည်..."
       }
     };
 
     let currentLang = localStorage.getItem('appLang') || 'th';
+    let globalBroadcastText = '';
 
     function setLang(lang) {
       currentLang = lang;
@@ -316,21 +359,19 @@
       const d = dict[lang];
       if(!d) return;
 
-      // อัปเดตข้อความทั่วไป
       for (let id in d) {
         if(id.startsWith('placeholder-')) continue;
         let el = document.getElementById(id);
         if (el) el.innerHTML = d[id];
       }
 
-      // อัปเดต placeholder
       const inputs = ['leaveName', 'checkName', 'adminSearchName'];
       inputs.forEach(id => {
          let el = document.getElementById(id);
          if(el) el.placeholder = d['placeholder-name'];
       });
 
-      updateClock(); // อัปเดตคำทักทายให้ตรงภาษา
+      updateClock(); 
     }
 
     function showToast(message, type = 'success') {
@@ -346,7 +387,9 @@
     }
 
     window.addEventListener('click', function(e) {
-      if (e.target.classList.contains('modal-overlay')) closeModal(e.target.id);
+      if (e.target.classList.contains('modal-overlay') && e.target.id !== 'forceBroadcastModal') {
+          closeModal(e.target.id);
+      }
     });
 
     function updateClock() {
@@ -376,16 +419,57 @@
       const apiUrl = HARDCODED_API_URL;
       if (apiUrl) {
         fetch(apiUrl + '?action=getConfig').then(r => r.json()).then(config => {
-          if (config.broadcastMsg) {
+          if (config.broadcastMsg && config.broadcastMsg.trim() !== '') {
+            globalBroadcastText = config.broadcastMsg;
             document.getElementById('broadcastText').innerHTML = config.broadcastMsg.replace(/\n/g, '<br>');
             document.getElementById('broadcastBanner').style.display = 'block';
+
+            const btnReplay = document.getElementById('btnReplayAudio');
+            if(btnReplay) {
+                btnReplay.style.display = 'inline-block';
+                btnReplay.onclick = () => speakTranslatedText(config.broadcastMsg, currentLang);
+            }
+
+            // --- ตรวจสอบการรับทราบประกาศรายวัน (ตัดรอบ 09:00 น.) ---
+            let showModal = true;
+            const lastAckStr = localStorage.getItem('broadcastAcknowledgeTime');
+            
+            if (lastAckStr) {
+              const lastAckTime = parseInt(lastAckStr, 10);
+              const now = new Date();
+              const shiftStart = new Date(now);
+              shiftStart.setHours(9, 0, 0, 0); 
+              if (now.getHours() < 9) shiftStart.setDate(shiftStart.getDate() - 1); 
+              if (lastAckTime >= shiftStart.getTime()) showModal = false; 
+            }
+
+            if (showModal) {
+              document.getElementById('forceBroadcastText').innerHTML = config.broadcastMsg.replace(/\n/g, '<br>');
+              document.getElementById('forceBroadcastModal').style.display = 'flex';
+            }
           }
         }).catch(e => console.log('Cannot fetch broadcast'));
+      }
+
+      // ระบบหน่วงเวลาแปลภาษาเมื่อพิมพ์
+      const transInput = document.getElementById('transInput');
+      if(transInput) {
+        transInput.addEventListener('input', function() {
+          clearTimeout(translateTimeout);
+          translateTimeout = setTimeout(() => doTranslate(false), 800);
+        });
       }
     };
 
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    function acknowledgeBroadcast() {
+        speakTranslatedText(globalBroadcastText, currentLang);
+        localStorage.setItem('broadcastAcknowledgeTime', new Date().getTime().toString());
+        document.getElementById('forceBroadcastModal').style.display = 'none';
+        showToast(currentLang === 'th' ? 'รับทราบประกาศเรียบร้อย' : 'Announcement Acknowledged', 'success');
+    }
 
     let adminActionTarget = '';
     function openAdminAuth(target) {
@@ -403,10 +487,6 @@
           document.getElementById('adminSearchName').value = ''; 
           document.getElementById('adminResultBox').style.display = 'none'; 
           openModal('adminViewModal'); 
-        }
-        else if (adminActionTarget === 'uploadPortfolio') {
-          // ถ้ารหัสผ่านถูก ให้เปิดหน้าต่างเลือกไฟล์อัปโหลด
-          document.getElementById('portfolioFileInput').click();
         }
       } else { document.getElementById('pwdError').style.display = 'block'; }
     }
@@ -470,99 +550,102 @@
     }
 
     // ==========================================
-    // 🌟 ฟังก์ชันจัดการผลงาน (Portfolio)
+    // 🌟 ฟังก์ชันแปลภาษาอัจฉริยะ (Voice & Text)
     // ==========================================
-    async function openPortfolioModal() {
-      openModal('portfolioModal');
-      const gallery = document.getElementById('portfolioGallery');
-      const loading = document.getElementById('portfolioLoading');
-      
-      gallery.innerHTML = '';
-      loading.style.display = 'block';
+    let targetLangCode = 'th'; 
+    let translateTimeout = null;
+    
+    function setTargetLang(lang, btnElement) {
+      targetLangCode = lang; 
+      // สลับสีปุ่มที่ถูกเลือก
+      const btns = btnElement.parentElement.querySelectorAll('.trans-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+      doTranslate(false); 
+    }
 
+    async function doTranslate(fromVoice = false) {
+      const text = document.getElementById('transInput').value.trim(); 
+      const outputEl = document.getElementById('transOutput');
+      if (!text) { outputEl.value = ""; return; } 
+      
+      outputEl.value = "กำลังแปล...";
       try {
-        const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'getPortfolios' }) });
-        const data = await res.json();
+        // ใช้ API แปลภาษาของ Google (ฟรี ไม่ต้องใช้ API Key)
+        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLangCode}&dt=t&q=${encodeURIComponent(text)}`);
+        const data = await res.json(); 
+        let tText = "";
+        if (data && data[0]) data[0].forEach(part => { if (part[0]) tText += part[0]; });
+        outputEl.value = tText; 
         
-        loading.style.display = 'none';
-        
-        if(data.success && data.images.length > 0) {
-           data.images.forEach(url => {
-             const img = document.createElement('img');
-             img.src = url;
-             img.className = 'gallery-item';
-             // กดปุ๊บดูรูปใหญ่ (ย้ายไปลิงก์ Google Drive โดยตรง)
-             img.onclick = () => window.open(url, '_blank');
-             gallery.appendChild(img);
-           });
-        } else {
-           gallery.innerHTML = '<div style="grid-column: span 2; color: var(--text-sub); font-size: 0.9em; padding: 20px;">ยังไม่มีผลงานในระบบ</div>';
-        }
-      } catch (e) {
-        loading.innerText = 'โหลดข้อมูลล้มเหลว';
+        if (fromVoice) speakTranslatedText(tText, targetLangCode);
+      } catch(e) { 
+        outputEl.value = "เกิดข้อผิดพลาดในการแปลเครือข่ายขัดข้อง"; 
       }
     }
 
-    function handlePortfolioUpload(input) {
-      if (!input.files || !input.files[0]) return;
-      const file = input.files[0];
-      const btn = document.getElementById('btn-upload-port');
+    function playTranslatedVoice() {
+      const text = document.getElementById('transOutput').value;
+      if (text && !text.includes("กำลังแปล")) speakTranslatedText(text, targetLangCode);
+    }
+
+    function speakTranslatedText(text, langCode) {
+      if ('speechSynthesis' in window) {
+        speechSynthesis.cancel(); 
+        const cleanText = text.replace(/[*#]/g, ''); 
+        const u = new SpeechSynthesisUtterance(cleanText);
+        
+        // กำหนดเสียงตามภาษา (ถ้าระบบไม่มีภาษามอญ จะใช้เสียงภาษาไทยหรือเสียงระบบแทนอัตโนมัติ)
+        const voiceMap = { 
+            'th': 'th-TH', 
+            'en': 'en-US', 
+            'my': 'my-MM', 
+            'zh-CN': 'zh-CN', 
+            'ko': 'ko-KR', 
+            'mnw': 'th-TH' // ภาษามอญอาจไม่มีเสียง TTS มาตรฐาน จึงใช้ fallback เป็นไทยชั่วคราว
+        }; 
+        u.lang = voiceMap[langCode] || 'th-TH';
+        u.rate = 0.9; // ปรับความเร็วในการพูดให้ฟังชัดขึ้น
+        speechSynthesis.speak(u);
+      } else {
+        showToast("เบราว์เซอร์ของคุณไม่รองรับเสียงอ่าน", "error");
+      }
+    }
+
+    // ระบบรับเสียงพูด (Speech Recognition)
+    let transRecognition;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+    if (SpeechRecognition) {
+      transRecognition = new SpeechRecognition(); 
+      transRecognition.continuous = false; 
+      transRecognition.interimResults = false;
+      transRecognition.lang = 'th-TH'; // กำหนดให้รับเสียงต้นทางเป็นภาษาไทย
       
-      // จำกัดไฟล์ไม่เกิน 10MB เพื่อป้องกันค้าง
-      if(file.size > 10 * 1024 * 1024) {
-         showToast("ไฟล์รูปภาพใหญ่เกินไป (สูงสุด 10MB)", "error");
-         return;
-      }
+      transRecognition.onstart = function() { 
+        document.getElementById('btnTransVoice').style.background = 'var(--neon-out)'; 
+        document.getElementById('btnTransVoice').style.borderColor = 'var(--neon-out)'; 
+        document.getElementById('transInput').placeholder = "กำลังฟังเสียงของคุณ..."; 
+      };
+      
+      transRecognition.onresult = function(event) { 
+        document.getElementById('transInput').value = event.results[0][0].transcript; 
+        doTranslate(true); // แปลทันทีหลังจากพูดเสร็จและให้อ่านออกเสียง
+      };
+      
+      transRecognition.onerror = transRecognition.onend = function() { 
+        document.getElementById('btnTransVoice').style.background = 'rgba(212,175,55,0.2)'; 
+        document.getElementById('btnTransVoice').style.borderColor = 'rgba(212,175,55,0.5)'; 
+        document.getElementById('transInput').placeholder = "พิมพ์ข้อความ หรือกดไมค์เพื่อพูด..."; 
+      };
+    }
 
-      btn.disabled = true;
-      btn.innerText = '⏳ กำลังเตรียมรูปภาพ...';
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = new Image();
-        img.onload = async function() {
-          // บีบอัดรูปด้วย Canvas ก่อนส่ง (เพื่อลดภาระเซิร์ฟเวอร์และเน็ต)
-          const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 800; // ย่อความกว้างเหลือ 800px
-          let scaleSize = 1;
-          if(img.width > MAX_WIDTH) scaleSize = MAX_WIDTH / img.width;
-          
-          canvas.width = img.width * scaleSize;
-          canvas.height = img.height * scaleSize;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          
-          const base64Data = canvas.toDataURL('image/jpeg', 0.7); // คุณภาพ 70%
-          
-          btn.innerText = '☁️ กำลังอัปโหลดขึ้นเซิร์ฟเวอร์...';
-          
-          try {
-            const res = await fetch(HARDCODED_API_URL, { 
-               method: 'POST', 
-               body: JSON.stringify({ 
-                  action: 'uploadPortfolio', 
-                  filename: file.name, 
-                  imageB64: base64Data 
-               }) 
-            });
-            const result = await res.json();
-            if(result.success) {
-               showToast('✅ อัปโหลดรูปภาพสำเร็จ!', 'success');
-               openPortfolioModal(); // โหลดรูปใหม่มาแสดง
-            } else {
-               showToast(result.message, 'error');
-            }
-          } catch(err) {
-            showToast('อัปโหลดล้มเหลว ตรวจสอบอินเทอร์เน็ต', 'error');
-          } finally {
-            btn.disabled = false;
-            btn.innerText = dict[currentLang]['btn-upload-port'];
-            input.value = ''; // รีเซ็ตค่า Input
-          }
-        }
-        img.src = e.target.result;
+    function startTransVoice() {
+      if (transRecognition) { 
+        try { transRecognition.start(); } catch(e) {} 
+      } else {
+        showToast("เบราว์เซอร์ไม่รองรับไมโครโฟน (กรุณาใช้ Chrome/Safari)", "error");
       }
-      reader.readAsDataURL(file);
     }
   </script>
 </body>
