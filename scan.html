@@ -7,172 +7,60 @@
   <title>สแกนใบหน้า | 88 Designs</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- โหลดไลบรารี face-api.js -->
   <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 
   <style>
-    :root {
-      --bg-base: #000000;
-      --card-bg: rgba(12, 12, 12, 0.85); 
-      --gold-primary: #d4af37;
-      --gold-light: #fef08a;
-      --gold-dark: #b45309;
-      --text-main: #ffffff;
-      --text-sub: #d1d5db;
-      --neon-in: #10b981;
-      --neon-out: #e11d48;
-    }
-
+    :root { --bg-base: #000000; --card-bg: rgba(12, 12, 12, 0.85); --gold-primary: #d4af37; --gold-light: #fef08a; --gold-dark: #b45309; --text-main: #ffffff; --text-sub: #d1d5db; --neon-in: #10b981; --neon-out: #e11d48; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; }
-
-    body {
-      background-color: var(--bg-base);
-      background-image: url('pngtree-black-gold-business-meeting-simple-image_37604.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      color: var(--text-main);
-      display: flex; flex-direction: column; align-items: center;
-      min-height: 100vh; padding: 20px;
-      overflow: hidden;
-    }
-
-    /* ฉากกั้นสีดำไล่ระดับ */
-    body::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.95) 100%);
-      z-index: 0; pointer-events: none;
-    }
-
-    .container {
-      width: 100%; max-width: 450px; z-index: 1; display: flex; flex-direction: column; height: 100vh;
-    }
-
-    /* Header Bar */
-    .top-bar {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px; padding-top: 10px;
-    }
+    body { background-color: var(--bg-base); background-image: url('pngtree-black-gold-business-meeting-simple-image_37604.jpg'); background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat; color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; overflow: hidden; }
+    body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.95) 100%); z-index: 0; pointer-events: none; }
     
-    .back-btn {
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(212,175,55,0.3);
-      color: var(--gold-light); text-decoration: none; padding: 10px 20px;
-      border-radius: 20px; font-weight: 600; font-size: 0.95em;
-      transition: 0.3s; display: flex; align-items: center; gap: 8px;
-      backdrop-filter: blur(5px);
-    }
-    .back-btn:active { transform: scale(0.95); }
-
-    .page-title {
-      font-size: 1.4em; font-weight: 700; color: #fff; text-transform: uppercase;
-      letter-spacing: 2px; text-shadow: 0 0 10px var(--gold-primary);
-    }
+    .container { width: 100%; max-width: 450px; z-index: 1; display: flex; flex-direction: column; height: 100vh; }
+    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-top: 10px; }
+    .back-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); text-decoration: none; padding: 10px 20px; border-radius: 20px; font-weight: 600; font-size: 0.95em; transition: 0.3s; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); }
+    .page-title { font-size: 1.4em; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--gold-primary); }
     .page-title.in { color: var(--neon-in); text-shadow: 0 0 10px var(--neon-in); }
     .page-title.out { color: var(--neon-out); text-shadow: 0 0 10px var(--neon-out); }
 
-    /* Scanner UI */
-    .scanner-wrapper {
-      position: relative; width: 100%; aspect-ratio: 3/4; 
-      background: #000; border-radius: 30px; overflow: hidden;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 0 2px rgba(212,175,55,0.3);
-      margin-bottom: 25px;
-    }
+    .scanner-wrapper { position: relative; width: 100%; aspect-ratio: 3/4; background: #000; border-radius: 30px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 0 2px rgba(212,175,55,0.3); margin-bottom: 25px; }
+    video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; }
 
-    video {
-      width: 100%; height: 100%; object-fit: cover;
-      transform: scaleX(-1); /* สลับซ้ายขวาให้เหมือนกระจก */
-    }
-
-    canvas {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5;
-    }
-
-    /* กรอบโฟกัสใบหน้า (Corners) */
-    .focus-frame {
-      position: absolute; top: 10%; left: 10%; width: 80%; height: 80%;
-      z-index: 10; pointer-events: none;
-    }
-    .focus-frame::before, .focus-frame::after,
-    .focus-frame .corner::before, .focus-frame .corner::after {
-      content: ''; position: absolute; background: var(--gold-primary);
-      box-shadow: 0 0 10px var(--gold-primary);
-    }
-    /* Top Left */
+    .focus-frame { position: absolute; top: 10%; left: 10%; width: 80%; height: 80%; z-index: 10; pointer-events: none; }
+    .focus-frame::before, .focus-frame::after, .focus-frame .corner::before, .focus-frame .corner::after { content: ''; position: absolute; background: var(--gold-primary); box-shadow: 0 0 10px var(--gold-primary); }
     .focus-frame::before { top: 0; left: 0; width: 40px; height: 4px; border-radius: 4px; }
     .focus-frame::after { top: 0; left: 0; width: 4px; height: 40px; border-radius: 4px; }
-    /* Top Right */
     .focus-frame .corner.tr::before { top: 0; right: 0; width: 40px; height: 4px; border-radius: 4px; }
     .focus-frame .corner.tr::after { top: 0; right: 0; width: 4px; height: 40px; border-radius: 4px; }
-    /* Bottom Left */
     .focus-frame .corner.bl::before { bottom: 0; left: 0; width: 40px; height: 4px; border-radius: 4px; }
     .focus-frame .corner.bl::after { bottom: 0; left: 0; width: 4px; height: 40px; border-radius: 4px; }
-    /* Bottom Right */
     .focus-frame .corner.br::before { bottom: 0; right: 0; width: 40px; height: 4px; border-radius: 4px; }
     .focus-frame .corner.br::after { bottom: 0; right: 0; width: 4px; height: 40px; border-radius: 4px; }
 
-    /* เส้นเลเซอร์สแกน */
-    .laser-line {
-      position: absolute; width: 100%; height: 3px; background: var(--gold-light);
-      box-shadow: 0 0 15px var(--gold-light), 0 0 30px var(--gold-primary);
-      z-index: 11; opacity: 0;
-      animation: scanLaser 2.5s infinite linear;
-    }
+    .laser-line { position: absolute; width: 100%; height: 3px; background: var(--gold-light); box-shadow: 0 0 15px var(--gold-light), 0 0 30px var(--gold-primary); z-index: 11; opacity: 0; animation: scanLaser 2.5s infinite linear; }
+    @keyframes scanLaser { 0% { top: 10%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 90%; opacity: 0; } }
 
-    @keyframes scanLaser {
-      0% { top: 10%; opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { top: 90%; opacity: 0; }
-    }
-
-    /* Status Card */
-    .status-card {
-      background: var(--card-bg); border: 1px solid rgba(212,175,55,0.2);
-      border-radius: 20px; padding: 20px; text-align: center;
-      backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    
-    .status-icon {
-      font-size: 2.5em; margin-bottom: 10px; animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(0.95); opacity: 0.8; }
-      50% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(0.95); opacity: 0.8; }
-    }
-
+    .status-card { background: var(--card-bg); border: 1px solid rgba(212,175,55,0.2); border-radius: 20px; padding: 20px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .status-icon { font-size: 2.5em; margin-bottom: 10px; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
     .status-text { font-size: 1.1em; font-weight: 600; color: var(--gold-light); }
     .sub-text { font-size: 0.85em; color: var(--text-sub); margin-top: 5px; }
+    .gps-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 12px; font-size: 0.8em; color: #cbd5e1; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1); }
 
-    .gps-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 12px;
-      font-size: 0.8em; color: #cbd5e1; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    /* Toast Notification */
     .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 400px; }
-    .toast { background: rgba(12, 12, 12, 0.95); border: 1px solid var(--gold-primary); color: #fff; padding: 14px 24px; border-radius: 30px; font-size: 0.95em; box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(212,175,55,0.2); backdrop-filter: blur(10px); animation: toastFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 10px; font-weight: 500; }
+    .toast { background: rgba(12, 12, 12, 0.95); border: 1px solid var(--gold-primary); color: #fff; padding: 14px 24px; border-radius: 30px; font-size: 0.95em; box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(212,175,55,0.2); backdrop-filter: blur(10px); animation: toastFadeIn 0.4s ease; display: flex; align-items: center; gap: 10px; font-weight: 500; }
     .toast.error { border-color: var(--neon-out); box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(225,29,72,0.2); }
-    .toast.success { border-color: var(--neon-in); box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(16,185,129,0.2); }
     @keyframes toastFadeIn { from { opacity: 0; transform: translateY(-20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes toastFadeOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-20px) scale(0.9); } }
 
-    /* Fullscreen Overlay for Success */
-    .overlay-success {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000;
-      display: none; flex-direction: column; align-items: center; justify-content: center;
-      backdrop-filter: blur(10px);
-    }
+    .overlay-success { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
     .overlay-success .icon { font-size: 5em; margin-bottom: 20px; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .overlay-success h2 { color: var(--gold-primary); font-size: 1.8em; margin-bottom: 10px; text-shadow: 0 0 20px var(--gold-dark); }
     .overlay-success p { color: #fff; font-size: 1.1em; margin-bottom: 30px; text-align: center; white-space: pre-line; }
-    .btn-return { background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; border: none; padding: 15px 30px; border-radius: 20px; font-size: 1em; font-weight: bold; cursor: pointer; text-decoration: none; }
     
     @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
+    .developer-watermark { text-align: center; font-size: 0.75em; color: rgba(212, 175, 55, 0.5); margin-top: auto; padding-top: 20px; padding-bottom: 10px; line-height: 1.4; width: 100%; z-index: 10; }
   </style>
 </head>
 <body>
@@ -180,41 +68,29 @@
   <div id="toastContainer" class="toast-container"></div>
 
   <div class="container">
-    
     <div class="top-bar">
-      <a href="index.html" class="back-btn">
-        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-        กลับ
-      </a>
+      <a href="index.html" class="back-btn"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>กลับ</a>
       <div class="page-title" id="headerTitle">สแกนใบหน้า</div>
-      <div style="width: 80px;"></div> <!-- Spacer for flex alignment -->
+      <div style="width: 80px;"></div>
     </div>
 
-    <!-- Scanner Area -->
     <div class="scanner-wrapper">
       <video id="video" autoplay muted playsinline></video>
       <canvas id="canvas"></canvas>
-      
-      <!-- Frame UI -->
-      <div class="focus-frame" id="focusFrame" style="display:none;">
-        <div class="corner tr"></div>
-        <div class="corner bl"></div>
-        <div class="corner br"></div>
-      </div>
+      <div class="focus-frame" id="focusFrame" style="display:none;"><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div></div>
       <div class="laser-line" id="laserLine" style="display:none;"></div>
     </div>
 
-    <!-- Status Area -->
     <div class="status-card">
       <div class="status-icon" id="statusIcon">⏳</div>
       <div class="status-text" id="statusText">กำลังโหลดระบบ...</div>
       <div class="sub-text" id="subText">กรุณารอสักครู่</div>
-      
-      <div class="gps-badge" id="gpsBadge">
-        📍 <span>กำลังดึงพิกัด GPS...</span>
-      </div>
+      <div class="gps-badge" id="gpsBadge">📍 <span>กำลังดึงพิกัด GPS...</span></div>
     </div>
 
+    <div class="developer-watermark">
+      Developed by MR.CHAITHAWAT PUMKOOM<br><span style="font-size: 0.85em; opacity: 0.8;">(Software Developer & Programmer)</span>
+    </div>
   </div>
 
   <!-- Success Overlay -->
@@ -222,232 +98,150 @@
     <div class="icon">✅</div>
     <h2 id="successTitle">บันทึกสำเร็จ!</h2>
     <p id="successDesc">บันทึกข้อมูลเข้าสู่ระบบเรียบร้อย</p>
-    <a href="index.html" class="btn-return">กลับสู่หน้าหลัก</a>
   </div>
 
   <script>
-    // 🛑 API URL Web App ที่ฝังไว้เพื่อให้ใช้งานได้เลยโดยไม่ต้องพึ่ง Cache 🛑
     const HARDCODED_API_URL = "https://script.google.com/macros/s/AKfycbwSq2fRZZxr6lP-07D9uw_B2chNk48U3UXPzD7zBQioTDCt2glr9oyV7HpcSxwKtQ0/exec"; 
-    
-    // --- Helper Functions ---
-    function safeGetStorage(key, defaultVal) {
-      try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
-    }
 
     function showToast(message, type = 'success') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      toast.className = `toast ${type}`;
-      toast.innerHTML = type === 'error' ? `❌ ${message}` : message;
-      container.appendChild(toast);
-      setTimeout(() => {
-        toast.style.animation = 'toastFadeOut 0.4s ease forwards';
-        setTimeout(() => toast.remove(), 400);
-      }, 3000);
+      const container = document.getElementById('toastContainer'); const toast = document.createElement('div');
+      toast.className = `toast ${type}`; toast.innerHTML = type === 'error' ? `❌ ${message}` : message; container.appendChild(toast);
+      setTimeout(() => { toast.style.animation = 'toastFadeOut 0.4s ease forwards'; setTimeout(() => toast.remove(), 400); }, 3000);
     }
+    function setStatus(text, sub, icon) { document.getElementById('statusText').innerText = text; document.getElementById('subText').innerText = sub; document.getElementById('statusIcon').innerText = icon; }
 
-    function setStatus(text, sub, icon) {
-      document.getElementById('statusText').innerText = text;
-      document.getElementById('subText').innerText = sub;
-      document.getElementById('statusIcon').innerText = icon;
-    }
-
-    // --- State Variables ---
     const urlParams = new URLSearchParams(window.location.search);
     let scanType = urlParams.get('type') === 'out' ? 'ออกงาน' : 'เข้างาน';
-    
-    // ตั้งสี Header ตามประเภท
-    const hTitle = document.getElementById('headerTitle');
-    hTitle.innerText = scanType;
-    if (scanType === 'เข้างาน') hTitle.classList.add('in');
-    else hTitle.classList.add('out');
+    const hTitle = document.getElementById('headerTitle'); hTitle.innerText = scanType; hTitle.classList.add(scanType === 'เข้างาน' ? 'in' : 'out');
 
-    // ดึง API URL (บังคับใช้ลิงก์ที่ให้มา)
     let apiUrl = HARDCODED_API_URL;
-    
-    let knownFaces = [];
-    let isProcessing = false;
-    let currentLat = '-';
-    let currentLng = '-';
-    let locationReady = false;
-
-    // โหลดโมเดลใบหน้า (ใช้ Model จาก CDN ของ justadudewhohacks)
+    let knownFaces = [], isProcessing = false, currentLat = '-', currentLng = '-', locationReady = false;
     const MODEL_URL = 'https://justadudewhohacks.github.io/face-api.js/models';
 
-    // --- Initialization ---
     async function init() {
-      if (!apiUrl) {
-        setStatus('เกิดข้อผิดพลาด', 'ไม่พบ API URL', '⚠️');
-        return;
-      }
-
-      // 1. Get GPS
       navigator.geolocation.getCurrentPosition(
-        pos => {
-          currentLat = pos.coords.latitude;
-          currentLng = pos.coords.longitude;
-          locationReady = true;
-          document.getElementById('gpsBadge').innerHTML = '📍 <span style="color:var(--neon-in);">พิกัดพร้อมใช้งาน</span>';
-        },
-        err => {
-          document.getElementById('gpsBadge').innerHTML = '📍 <span style="color:var(--neon-out);">ไม่สามารถดึงพิกัดได้</span>';
-        }
+        pos => { currentLat = pos.coords.latitude; currentLng = pos.coords.longitude; locationReady = true; document.getElementById('gpsBadge').innerHTML = '📍 <span style="color:var(--neon-in);">พิกัดพร้อมใช้งาน</span>'; },
+        err => { document.getElementById('gpsBadge').innerHTML = '📍 <span style="color:var(--neon-out);">ไม่สามารถดึงพิกัดได้</span>'; }
       );
 
-      // 2. Load Models
       setStatus('กำลังโหลดข้อมูล AI...', 'กรุณารอสักครู่', '🧠');
       try {
-        await Promise.all([
-          faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
-          faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-          faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
-        ]);
-      } catch (e) {
-        setStatus('โหลด AI ไม่สำเร็จ', 'ตรวจสอบอินเทอร์เน็ตของคุณ', '❌');
-        return;
-      }
+        await Promise.all([ faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL), faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL), faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL) ]);
+      } catch (e) { return setStatus('โหลด AI ไม่สำเร็จ', 'ตรวจสอบอินเทอร์เน็ต', '❌'); }
 
-      // 3. Load Known Faces from Server
       setStatus('กำลังดึงฐานข้อมูล...', 'เชื่อมต่อเซิร์ฟเวอร์', '☁️');
       try {
-        const res = await fetch(apiUrl + '?action=getKnownFaces');
-        const users = await res.json();
-        
-        if (users && users.length > 0) {
-          knownFaces = users.map(u => {
-             return new faceapi.LabeledFaceDescriptors(u.label, [new Float32Array(u.descriptor)]);
-          });
-        } else {
-          setStatus('ไม่พบฐานข้อมูล', 'ยังไม่มีผู้ลงทะเบียนในระบบ', '⚠️');
-          return;
-        }
-      } catch (e) {
-        setStatus('เชื่อมต่อเซิร์ฟเวอร์ล้มเหลว', 'ลองรีเฟรชหน้าใหม่อีกครั้ง', '🔌');
-        return;
-      }
-
-      // 4. Start Camera
+        const res = await fetch(apiUrl + '?action=getKnownFaces'); const users = await res.json();
+        if (users && users.length > 0) { knownFaces = users.map(u => new faceapi.LabeledFaceDescriptors(u.label, [new Float32Array(u.descriptor)])); } 
+        else return setStatus('ไม่พบฐานข้อมูล', 'ยังไม่มีผู้ลงทะเบียน', '⚠️');
+      } catch (e) { return setStatus('เชื่อมต่อเซิร์ฟเวอร์ล้มเหลว', 'ลองรีเฟรชหน้าใหม่', '🔌'); }
       startCamera();
     }
 
     async function startCamera() {
       setStatus('กำลังเปิดกล้อง...', 'โปรดอนุญาตการเข้าถึงกล้อง', '📷');
       const video = document.getElementById('video');
-      
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-          video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } } 
-        });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } } });
         video.srcObject = stream;
-        
         video.onloadedmetadata = () => {
-          document.getElementById('focusFrame').style.display = 'block';
-          document.getElementById('laserLine').style.display = 'block';
-          setStatus('พร้อมสแกน', 'กรุณามองกล้องให้อยู่ในกรอบ', '👁️');
-          startFaceDetection(video);
+          document.getElementById('focusFrame').style.display = 'block'; document.getElementById('laserLine').style.display = 'block';
+          setStatus('พร้อมสแกน', 'กรุณามองกล้องให้อยู่ในกรอบ', '👁️'); startFaceDetection(video);
         };
-      } catch (e) {
-        setStatus('เปิดกล้องไม่ได้', 'กรุณาตรวจสอบสิทธิ์การใช้งานกล้อง', '🚫');
-      }
+      } catch (e) { setStatus('เปิดกล้องไม่ได้', 'กรุณาตรวจสอบสิทธิ์', '🚫'); }
     }
 
     function startFaceDetection(video) {
-      const canvas = document.getElementById('canvas');
-      const displaySize = { width: video.clientWidth, height: video.clientHeight };
-      faceapi.matchDimensions(canvas, displaySize);
+      const canvas = document.getElementById('canvas'); const displaySize = { width: video.clientWidth, height: video.clientHeight };
+      faceapi.matchDimensions(canvas, displaySize); 
+      
+      // 🌟 1. ปรับความเข้มงวด (ยิ่งค่าน้อย ยิ่งต้องเหมือนตัวจริงเป๊ะๆ แนะนำ 0.38 - 0.40)
+      const STRICT_THRESHOLD = 0.38; 
+      const faceMatcher = new faceapi.FaceMatcher(knownFaces, STRICT_THRESHOLD);
 
-      const faceMatcher = new faceapi.FaceMatcher(knownFaces, 0.45); // ความแม่นยำ 0.45
+      // 🌟 2. ตัวแปรนับจำนวนครั้ง ป้องกันการแสกนติดคนอื่นแบบแวบเดียว
+      let matchCount = 0;
+      let lastMatchLabel = '';
 
       setInterval(async () => {
         if (isProcessing) return;
-
         const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
-        
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         if (detection) {
-          // ตีกรอบที่ตรวจจับได้
-          const resizedDetection = faceapi.resizeResults(detection, displaySize);
-          const box = resizedDetection.detection.box;
-          
-          // สลับพิกัด X เพราะภาพสะท้อน (Mirror)
-          const drawBox = new faceapi.draw.DrawBox({
-            x: displaySize.width - box.x - box.width, y: box.y, width: box.width, height: box.height
-          }, { boxColor: 'rgba(212,175,55,0.5)', lineWidth: 2 });
+          const resizedDetection = faceapi.resizeResults(detection, displaySize); const box = resizedDetection.detection.box;
+          const drawBox = new faceapi.draw.DrawBox({ x: displaySize.width - box.x - box.width, y: box.y, width: box.width, height: box.height }, { boxColor: 'rgba(212,175,55,0.5)', lineWidth: 2 });
           drawBox.draw(canvas);
 
-          // นำใบหน้าไปเทียบ
           const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
 
-          if (bestMatch.label !== 'unknown' && bestMatch.distance < 0.45) {
-            isProcessing = true;
-            document.getElementById('laserLine').style.display = 'none';
-            document.getElementById('focusFrame').style.display = 'none';
-            handleSuccess(bestMatch.label);
+          if (bestMatch.label !== 'unknown' && bestMatch.distance <= STRICT_THRESHOLD) {
+            
+            // เช็คว่าหน้าตรงกับเฟรมที่แล้วหรือไม่
+            if (bestMatch.label === lastMatchLabel) {
+                matchCount++;
+            } else {
+                lastMatchLabel = bestMatch.label;
+                matchCount = 1;
+            }
+
+            // ต้องเจอหน้า "คนเดิม" ติดกัน 3 เฟรม ถึงจะบันทึก (กันหน้าคนอื่นโฉบเข้ามา)
+            if (matchCount >= 3) {
+                isProcessing = true; 
+                matchCount = 0;
+                document.getElementById('laserLine').style.display = 'none'; 
+                document.getElementById('focusFrame').style.display = 'none'; 
+                handleSuccess(bestMatch.label);
+            } else {
+                document.getElementById('subText').innerText = `กำลังยืนยันตัวตน... (${matchCount}/3)`;
+            }
+
           } else {
-            document.getElementById('subText').innerText = "กำลังประมวลผล... กรุณาอยู่นิ่งๆ";
+            // ถ้าระยะห่างมากไป (ไม่เหมือนตัวจริง) ให้รีเซ็ตการนับใหม่
+            matchCount = 0;
+            lastMatchLabel = '';
+            document.getElementById('subText').innerText = "กำลังประมวลผล... ค้างไว้สักครู่";
           }
-        } else {
-           document.getElementById('subText').innerText = "ไม่พบใบหน้าในกรอบ";
+        } else { 
+           // ถ้าไม่เจอหน้าคน ให้รีเซ็ตการนับ
+           matchCount = 0;
+           lastMatchLabel = '';
+           document.getElementById('subText').innerText = "ไม่พบใบหน้าในกรอบ"; 
         }
       }, 500); 
     }
 
     async function handleSuccess(name) {
       setStatus(`พบ: ${name}`, 'กำลังบันทึกข้อมูลลงระบบ...', '🔄');
-      
       try {
-        // ลบ Headers Content-Type ออกเพื่อป้องกันปัญหา CORS
-        const res = await fetch(apiUrl, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'logAttendance', name: name, type: scanType, lat: currentLat, lng: currentLng })
-        });
-        
+        const res = await fetch(apiUrl, { method: 'POST', body: JSON.stringify({ action: 'logAttendance', name: name, type: scanType, lat: currentLat, lng: currentLng }) });
         const result = await res.json();
         
         if(result.success) {
           // ซ่อนกล้อง
-          document.querySelector('.scanner-wrapper').style.display = 'none';
+          document.querySelector('.scanner-wrapper').style.display = 'none'; 
           document.querySelector('.status-card').style.display = 'none';
           
-          // โชว์หน้าต่างสำเร็จ
-          const overlay = document.getElementById('successOverlay');
-          document.getElementById('successTitle').innerText = `${scanType}สำเร็จ!`;
+          const overlay = document.getElementById('successOverlay'); 
+          document.getElementById('successTitle').innerText = `${scanType}สำเร็จ!`; 
           document.getElementById('successDesc').innerText = `คุณ ${name} \nบันทึกเวลาเรียบร้อยแล้ว`;
-          overlay.style.display = 'flex';
+          overlay.style.display = 'flex'; 
+          document.getElementById('successTitle').style.color = scanType === 'ออกงาน' ? 'var(--neon-out)' : 'var(--neon-in)';
           
-          // เปลี่ยนสีตาม In/Out
-          if(scanType === 'ออกงาน') {
-            document.getElementById('successTitle').style.color = 'var(--neon-out)';
-          } else {
-            document.getElementById('successTitle').style.color = 'var(--neon-in)';
-          }
-
-          // ปิดกล้อง
-          const stream = document.getElementById('video').srcObject;
+          const stream = document.getElementById('video').srcObject; 
           if (stream) stream.getTracks().forEach(track => track.stop());
 
-          // กลับหน้าแรกออโต้หลัง 3 วิ
+          // กลับหน้าแรกอัตโนมัติภายใน 3 วินาที
           setTimeout(() => { window.location.href = 'index.html'; }, 3000);
+
         } else {
-          showToast(result.message, 'error');
-          isProcessing = false;
-          document.getElementById('laserLine').style.display = 'block';
-          document.getElementById('focusFrame').style.display = 'block';
-          setStatus('พร้อมสแกน', 'ลองใหม่อีกครั้ง', '👁️');
+          showToast(result.message, 'error'); isProcessing = false; document.getElementById('laserLine').style.display = 'block'; document.getElementById('focusFrame').style.display = 'block'; setStatus('พร้อมสแกน', 'ลองใหม่อีกครั้ง', '👁️');
         }
       } catch (err) {
-        console.error("Fetch Error:", err); // ตรวจสอบสาเหตุที่แท้จริงใน Console
-        showToast('การเชื่อมต่อล้มเหลว', 'error');
-        isProcessing = false;
-        document.getElementById('laserLine').style.display = 'block';
-        document.getElementById('focusFrame').style.display = 'block';
-        setStatus('พร้อมสแกน', 'กรุณามองกล้อง', '👁️');
+        showToast('การเชื่อมต่อล้มเหลว', 'error'); isProcessing = false; document.getElementById('laserLine').style.display = 'block'; document.getElementById('focusFrame').style.display = 'block'; setStatus('พร้อมสแกน', 'กรุณามองกล้อง', '👁️');
       }
     }
 
-    // เริ่มทำงานเมื่อเปิดหน้า
     window.onload = init;
   </script>
 </body>
