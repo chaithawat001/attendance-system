@@ -46,12 +46,14 @@
     .grid-card .m-desc { font-size: 0.75em; color: var(--text-sub); margin-top: 6px; }
 
     .list-item { display: flex; align-items: center; padding: 18px 20px; gap: 16px; background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 20px; text-decoration: none; transition: 0.3s; backdrop-filter: blur(10px); }
-    .list-item .icon-box { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.05); }
+    .list-item .icon-box { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.05); font-size: 1.5em;}
     .c-gray .icon-box { background: rgba(255,255,255,0.05); color: #cbd5e1; }
     .c-org .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), transparent); color: var(--neon-in); border-color: rgba(16,185,129,0.3); }
     .c-admin .icon-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), transparent); color: var(--neon-admin); border-color: rgba(212,175,55,0.3); }
     .c-info .icon-box { background: linear-gradient(135deg, rgba(56,189,248,0.15), transparent); color: #38bdf8; border-color: rgba(56,189,248,0.3); }
     .c-trans .icon-box { background: linear-gradient(135deg, rgba(168,85,247,0.15), transparent); color: #a855f7; border-color: rgba(168,85,247,0.3); }
+    .c-slip .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), transparent); color: #10b981; border-color: rgba(16,185,129,0.3); }
+    .c-cert .icon-box { background: linear-gradient(135deg, rgba(252,211,77,0.15), transparent); color: #fcd34d; border-color: rgba(252,211,77,0.3); }
     
     .list-item .text-group { flex: 1; }
     .list-item .m-title { font-size: 1em; font-weight: 500; color: #fff; margin-bottom: 3px; }
@@ -63,7 +65,7 @@
     .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-light), transparent); margin: 8px 0; }
 
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
-    .modal-box { background: #0a0a0c; width: 100%; max-width: 360px; padding: 30px 25px; border-radius: 28px; text-align: center; border: 1px solid var(--gold-primary); box-shadow: 0 25px 50px rgba(0,0,0,0.8); position: relative; max-height: 90vh; overflow-y: auto; }
+    .modal-box { background: #0a0a0c; width: 100%; max-width: 380px; padding: 30px 25px; border-radius: 28px; text-align: center; border: 1px solid var(--gold-primary); box-shadow: 0 25px 50px rgba(0,0,0,0.8); position: relative; max-height: 90vh; overflow-y: auto; }
     .modal-title { font-size: 1.25em; font-weight: 600; margin-bottom: 6px; color: var(--gold-light); }
     .modal-desc { font-size: 0.85em; color: var(--text-sub); margin-bottom: 24px; }
     .input-field { width: 100%; padding: 16px; border-radius: 16px; border: 1px solid rgba(212,175,55,0.3); background: rgba(0,0,0,0.6); color: white; font-size: 1em; text-align: center; margin-bottom: 16px; outline: none; }
@@ -141,7 +143,18 @@
     </div>
     <div class="divider"></div>
 
-    <!-- เมนูแปลภาษา (Translator) -->
+    <a href="#" onclick="openModal('payslipModal')" class="card list-item c-slip">
+      <div class="icon-box">💵</div>
+      <div class="text-group"><div class="m-title" id="t-menu-slip">สลิปเงินเดือน</div><div class="m-desc" id="t-desc-slip">ดูสลิปเงินเดือนแบบย้อนหลังได้</div></div>
+      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+    </a>
+    <a href="#" onclick="openModal('certModal')" class="card list-item c-cert">
+      <div class="icon-box">📜</div>
+      <div class="text-group"><div class="m-title" id="t-menu-cert">ใบรับรองเงินเดือน</div><div class="m-desc" id="t-desc-cert">ขอหนังสือรับรองเงินเดือนออนไลน์</div></div>
+      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+    </a>
+
+    <!-- เมนูอื่นๆ -->
     <a href="#" onclick="openModal('translatorModal')" class="card list-item c-trans">
       <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg></div>
       <div class="text-group"><div class="m-title" id="t-menu-trans">แปลภาษาอัจฉริยะ</div><div class="m-desc" id="t-desc-trans">พูดและแปลอัตโนมัติ (6 ภาษา)</div></div>
@@ -190,65 +203,122 @@
     </div>
   </div>
 
-  <!-- Modals -->
-  <div id="tutorialModal" class="modal-overlay"><div class="modal-box" style="padding: 25px 20px; max-width: 400px;"><div class="modal-title" style="color: #38bdf8;" id="t-tutor-title">📖 คู่มือการใช้งาน</div><div class="modal-desc" style="margin-bottom: 15px;" id="t-tutor-desc">เรียนรู้วิธีใช้งานระบบ 88 Designs</div><div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 50vh; overflow-y:auto; text-align:left; border: 1px solid rgba(56,189,248,0.2); margin-bottom: 15px;"><h3 style="color: var(--neon-in); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s1-t">📷 1. การสแกนเข้า-ออกงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s1-d">กดปุ่ม "เข้างาน" หรือ "ออกงาน" ระบบจะสแกนใบหน้าและดึงพิกัด GPS อัตโนมัติ</p><h3 style="color: var(--neon-leave); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s2-t">📝 2. การแจ้งลา</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s2-d">กด "แจ้งลา" -> เลือกประเภทการลา -> พิมพ์ชื่อ-นามสกุลของคุณให้ถูกต้อง</p><h3 style="color: var(--neon-time); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s3-t">⏰ 3. เช็คเวลาทำงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s3-d">ตรวจสอบเวลามาสายและ OT พิมพ์ชื่อของคุณแล้วกดค้นหา</p></div><button class="btn btn-outline" onclick="closeModal('tutorialModal')" id="btn-close-tutor">ปิดหน้าต่าง</button></div></div>
-  
-  <div id="orgChartModal" class="modal-overlay"><div class="modal-box" style="max-width: 450px; padding: 25px 15px;"><div class="modal-title" style="color:var(--gold-light);" id="t-org-title">🏢 ผังองค์กร (Organization Chart)</div><div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div><div class="org-container" style="background: rgba(0,0,0,0.6); border-radius: 16px; padding: 15px 10px; max-height: 50vh; overflow-y: auto; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px; text-align: center;"><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(0,0,0,0.5)); border: 1px solid var(--gold-primary); box-shadow: 0 0 15px rgba(212,175,55,0.2); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: var(--gold-light); font-size: 1.1em; font-weight: 700;">คุณแนค</div><div style="color: var(--gold-primary); font-size: 0.75em;">Owner (เจ้ากิจการ)</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">ต้อม</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">กอล์ฟ</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ภูมิ</div><div style="color: var(--text-sub); font-size: 0.75em;">กราฟฟิคดีไซน์</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ซิน</div><div style="color: var(--text-sub); font-size: 0.75em;">นักการบัญชี</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โจ้</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">มีน</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ก๊อต</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้ช่วยหัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โกเย</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างไฟ</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อาว</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อู</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">แจ็ค</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ตัวเล็ก</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div></div></div><button class="btn btn-outline" onclick="closeModal('orgChartModal')" id="btn-close-org">ปิดหน้าต่าง</button></div></div>
-  
-  <div id="leaveSelectModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="t-l-title">เลือกประเภทการลา</div><div class="modal-desc" id="t-l-desc">กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา</div><div class="leave-grid"><button class="btn-leave" onclick="proceedLeave('ลาป่วย')" id="t-l-sick"><span>🤧</span> ลาป่วย</button><button class="btn-leave" onclick="proceedLeave('ลากิจ')" id="t-l-personal"><span>💼</span> ลากิจ</button><button class="btn-leave" onclick="proceedLeave('ลาครึ่งวันเช้า')" id="t-l-halfm"><span>🌅</span> ครึ่งวันเช้า</button><button class="btn-leave" onclick="proceedLeave('ลาครึ่งวันบ่าย')" id="t-l-halfa"><span>🌇</span> ครึ่งวันบ่าย</button><button class="btn-leave full" onclick="proceedLeave('ลาพักร้อน')" id="t-l-annual"><span>🏖️</span> ลาพักร้อน</button></div><button class="btn btn-outline" onclick="closeModal('leaveSelectModal')" id="btn-cancel-leave">ยกเลิก</button></div></div>
-  
-  <div id="leaveSubmitModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="displayLeaveType">แจ้งลา</div><div class="modal-desc" id="t-ls-desc">พิมพ์ชื่อ-นามสกุล ให้ตรงกับที่ลงทะเบียนไว้</div><input type="text" id="leaveName" class="input-field" placeholder="ชื่อ-นามสกุล..."><button class="btn btn-primary" onclick="submitLeave()" id="btn-submit-l">ยืนยันการลา</button><button class="btn btn-outline" onclick="closeModal('leaveSubmitModal')" id="btn-cancel-leave2">ยกเลิก</button></div></div>
-  
-  <div id="checkTimeModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="t-c-title">เช็คเวลาทำงาน</div><div class="modal-desc" id="t-c-desc">ตรวจสอบ OT และเวลามาสายสะสม</div><input type="text" id="checkName" class="input-field" placeholder="ชื่อ-นามสกุล..."><button class="btn btn-primary" onclick="fetchTime()" id="btn-search-time">ค้นหาข้อมูล</button><div id="resultBox" class="result-box"><div style="color: var(--gold-primary); font-weight: 600; font-size: 1.2em; margin-bottom: 16px; text-align: center;" id="resName"></div><div class="r-stat"><span style="color:#d1d5db;" id="t-r-late">มาสายสะสม:</span><span id="resLate" style="color:var(--neon-out)"></span></div><div class="r-stat"><span style="color:#d1d5db;" id="t-r-ot">ทำ OT สะสม:</span><span id="resOT" style="color:var(--neon-in)"></span></div></div><button class="btn btn-outline" onclick="closeModal('checkTimeModal')" style="margin-top: 15px;" id="btn-close-time">ปิดหน้าต่าง</button></div></div>
-  
-  <div id="passwordModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="t-pwd-title">ยืนยันสิทธิ์ Admin</div><div class="modal-desc" id="t-pwd-desc">กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน</div><input type="password" id="adminPassword" class="input-field" placeholder="รหัสผ่าน..."><div id="pwdError" style="display:none; color:var(--neon-out); font-size:0.85em; margin-top:-10px; margin-bottom:15px;">รหัสผ่านไม่ถูกต้อง</div><button class="btn btn-primary" onclick="verifyPassword()" id="btn-confirm-pwd">ยืนยัน</button><button class="btn btn-outline" onclick="closeModal('passwordModal')" id="btn-cancel-pwd">ยกเลิก</button></div></div>
-  
-  <div id="adminViewModal" class="modal-overlay"><div class="modal-box" style="max-width: 420px; padding: 25px 20px;"><div class="modal-title" id="t-a-title">📋 ข้อมูลเวลา (Admin)</div><div class="modal-desc" id="t-a-desc">ตรวจสอบเวลาเข้า-ออกรายบุคคล</div><input type="text" id="adminSearchName" class="input-field" placeholder="ชื่อ-นามสกุล..."><button class="btn btn-primary" onclick="fetchAdminData()" id="btn-search-admin">ค้นหาข้อมูล</button><div id="adminResultBox" style="display: none; background: rgba(0,0,0,0.7); border-radius: 16px; padding: 15px; margin-top: 15px; border: 1px solid rgba(212,175,55,0.2); max-height: 45vh; overflow-y: auto;"></div><button class="btn btn-outline" onclick="closeModal('adminViewModal')" style="margin-top: 15px;" id="btn-close-admin">ปิดหน้าต่าง</button></div></div>
-
-  <!-- 🌟 Modal แปลภาษาอัจฉริยะ (Translator) -->
-  <div id="translatorModal" class="modal-overlay">
-    <div class="modal-box" style="padding: 25px 20px; max-width: 420px;">
-      <div class="modal-title" id="t-trans-title">🌐 แปลภาษา & เสียงอ่าน</div>
-      <div class="modal-desc" id="t-trans-desc" style="margin-bottom: 15px;">พิมพ์หรือกดไมค์เพื่อพูด (รองรับ 6 ภาษา)</div>
+  <!-- 🌟 Modal สลิปเงินเดือน (Payslip) -->
+  <div id="payslipModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 420px; padding: 25px 20px;">
+      <div class="modal-title" id="t-slip-title">💵 สลิปเงินเดือน</div>
+      <div class="modal-desc" id="t-slip-desc">ระบุรหัสพนักงานเพื่อดึงข้อมูลสลิป</div>
       
-      <!-- Input Text/Voice -->
-      <div style="position: relative; margin-bottom: 15px;">
-        <textarea id="transInput" class="input-field" style="margin-bottom: 0; padding-right: 50px; resize: none;" rows="3" placeholder="พิมพ์ข้อความ หรือกดไมค์เพื่อพูด..."></textarea>
-        <button id="btnTransVoice" onclick="startTransVoice()" style="position: absolute; right: 10px; bottom: 10px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; width: 40px; height: 40px; color: var(--gold-light); font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">🎤</button>
+      <!-- ใช้เป็น Type Password และบังคับคีย์บอร์ดตัวเลขในมือถือ -->
+      <input type="password" id="slipInputPin" class="input-field" placeholder="รหัสพนักงาน (PIN)..." style="margin-bottom: 8px;" pattern="[0-9]*" inputmode="numeric">
+      
+      <select id="slipCycleSelect" class="input-field" style="padding: 12px; margin-bottom: 16px; font-size: 0.9em;"></select>
+      <button class="btn btn-primary" onclick="fetchPayslip()" id="btn-view-slip">ค้นหาข้อมูล</button>
+      
+      <!-- พื้นที่แสดงกระดาษสลิปเงินเดือน -->
+      <div id="slipResult" style="display:none; background:#fff; color:#000; padding:20px; border-radius:12px; font-size:0.85em; font-family:sans-serif; text-align:left; border: 1px solid #ccc; margin-top:15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);">
+        <div style="text-align:center; font-weight:bold; font-size:1.1em; margin-bottom:5px;" id="slipCompName"></div>
+        <div style="text-align:center; font-weight:bold; margin-bottom:15px; background:#f1f5f9; padding:6px; border-radius:6px;">สลิปเงินเดือน (PAYSLIP)</div>
+        <div style="margin-bottom:4px;"><b>ชื่อพนักงาน:</b> <span id="slipEmpName"></span></div>
+        <div style="margin-bottom:4px;"><b>ตำแหน่ง:</b> <span id="slipPosition"></span></div>
+        <div style="margin-bottom:15px;"><b>รอบบัญชี:</b> <span id="slipCycle"></span></div>
+        
+        <table style="width:100%; border-collapse: collapse; margin-bottom:10px;">
+          <tr style="background:#10b981; color:#fff;"><th style="padding:6px; border:1px solid #ddd; width:60%;">รายรับ (Earnings)</th><th style="padding:6px; border:1px solid #ddd; text-align:right;">จำนวน</th></tr>
+          <tr><td style="padding:6px; border:1px solid #ddd;">เงินเดือนพื้นฐาน</td><td style="padding:6px; border:1px solid #ddd; text-align:right;" id="slipSalary"></td></tr>
+        </table>
+        
+        <table style="width:100%; border-collapse: collapse; margin-bottom:15px;">
+          <tr style="background:#e11d48; color:#fff;"><th style="padding:6px; border:1px solid #ddd; width:60%;">รายการหัก/เวลาทำงาน (Deductions)</th><th style="padding:6px; border:1px solid #ddd; text-align:right;">จำนวน/เวลา</th></tr>
+          <tr><td style="padding:6px; border:1px solid #ddd;">มาสายสะสม</td><td style="padding:6px; border:1px solid #ddd; text-align:right;" id="slipLate"></td></tr>
+          <tr><td style="padding:6px; border:1px solid #ddd;">ทำ OT สะสม</td><td style="padding:6px; border:1px solid #ddd; text-align:right;" id="slipOT"></td></tr>
+          <tr><td style="padding:6px; border:1px solid #ddd;">ประกันสังคม (5%)</td><td style="padding:6px; border:1px solid #ddd; text-align:right; color:#e11d48; font-weight:bold;" id="slipSSO"></td></tr>
+        </table>
+        
+        <div style="text-align:right; font-weight:bold; font-size:1.15em; margin-bottom:10px; color:#10b981;">รับสุทธิ: <span id="slipNet"></span> บาท</div>
+        <div style="text-align:center; font-size:0.8em; color:#666; margin-top:10px;">* ข้อมูลประมวลผลอัตโนมัติ (ติดต่อ HR หากต้องการรายละเอียดเพิ่มเติม)</div>
       </div>
-
-      <!-- Language Selectors -->
-      <div style="color: var(--text-sub); font-size: 0.85em; text-align: left; margin-bottom: 8px;" id="t-trans-choose">เลือกภาษาที่ต้องการแปล:</div>
-      <div class="trans-btn-group">
-        <button class="trans-btn active" onclick="setTargetLang('th', this)">🇹🇭 ไทย</button>
-        <button class="trans-btn" onclick="setTargetLang('en', this)">🇬🇧 Eng</button>
-        <button class="trans-btn" onclick="setTargetLang('my', this)">🇲🇲 พม่า</button>
-        <button class="trans-btn" onclick="setTargetLang('zh-CN', this)">🇨🇳 จีน</button>
-        <button class="trans-btn" onclick="setTargetLang('ko', this)">🇰🇷 เกาหลี</button>
-        <button class="trans-btn" onclick="setTargetLang('mnw', this)">🚩 มอญ</button>
-      </div>
-
-      <!-- Output Text/Voice -->
-      <div style="position: relative; margin-top: 10px;">
-        <textarea id="transOutput" class="input-field" style="margin-bottom: 0; background: rgba(212,175,55,0.05); color: var(--gold-light); border-color: rgba(212,175,55,0.5); padding-right: 50px; resize: none;" rows="3" placeholder="ผลลัพธ์คำแปลจะแสดงที่นี่..." readonly></textarea>
-        <button onclick="playTranslatedVoice()" style="position: absolute; right: 10px; bottom: 10px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; width: 40px; height: 40px; color: var(--gold-light); font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">🔊</button>
-      </div>
-
-      <button class="btn btn-outline" onclick="closeModal('translatorModal')" style="margin-top: 15px;" id="btn-close-trans">ปิดหน้าต่าง</button>
+      
+      <button class="btn btn-outline" style="margin-top:10px; display:none;" id="btnPrintSlip" onclick="printDiv('slipResult')">🖨️ พิมพ์หรือเซฟเป็น PDF</button>
+      <button class="btn btn-outline" onclick="closeModal('payslipModal')" style="margin-top:15px;" id="btn-close-slip">ปิดหน้าต่าง</button>
     </div>
   </div>
 
+  <!-- 🌟 Modal ใบรับรองเงินเดือน (Certificate) -->
+  <div id="certModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 500px; padding: 25px 20px;">
+      <div class="modal-title" id="t-cert-title">📜 ใบรับรองเงินเดือน</div>
+      <div class="modal-desc" id="t-cert-desc">ระบุรหัสพนักงานเพื่อขอใบรับรอง</div>
+      
+      <input type="password" id="certInputPin" class="input-field" placeholder="รหัสพนักงาน (PIN)..." style="margin-bottom: 8px;" pattern="[0-9]*" inputmode="numeric">
+      
+      <select id="certCycleSelect" class="input-field" style="padding: 12px; margin-bottom: 16px; font-size: 0.9em;"></select>
+      <button class="btn btn-primary" onclick="fetchCertificate()" id="btn-view-cert">สร้างใบรับรอง</button>
+      
+      <!-- พื้นที่แสดงกระดาษใบรับรอง -->
+      <div id="certResult" style="display:none; background:#fff; color:#000; padding:25px; border-radius:12px; font-size:0.85em; font-family:sans-serif; text-align:left; border: 1px solid #ccc; margin-top:15px; line-height:1.6; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);">
+        <div style="text-align:center; font-weight:bold; font-size:1.2em;" id="certCompName"></div>
+        <div style="text-align:center; font-size:0.8em; color:#444; margin-bottom:15px;" id="certCompAddr"></div>
+        <div style="text-align:center; font-weight:bold; font-size:1.1em; text-decoration:underline; margin-bottom:15px;">หนังสือรับรองเงินเดือน</div>
+        <div style="text-align:right; margin-bottom:15px;">วันที่: <span id="certDate"></span></div>
+        <div><b>เรื่อง:</b> รับรองการทำงานและเงินเดือน</div>
+        <div style="margin-bottom:15px;"><b>เรียน:</b> ผู้ที่เกี่ยวข้อง (To Whom It May Concern)</div>
+        <div style="text-indent: 30px; margin-bottom:15px;">
+          หนังสือฉบับนี้ออกเพื่อเป็นหลักฐานรับรองว่า คุณ <b><span id="certEmpName"></span></b> 
+          เป็นพนักงานของบริษัท ปัจจุบันดำรงตำแหน่ง <b><span id="certPosition"></span></b>
+        </div>
+        <div style="text-indent: 30px; margin-bottom:20px;">
+          โดยได้รับอัตราเงินเดือน <b><span id="certSalary"></span></b> บาท (ไม่รวมสวัสดิการและรายได้อื่นๆ) <span id="certCycleInfo" style="color:#555; font-size:0.9em;"></span>
+        </div>
+        <div style="text-indent: 30px; margin-bottom:30px;">
+          จึงออกหนังสือฉบับนี้ไว้เพื่อเป็นหลักฐาน และขอรับรองว่าข้อความข้างต้นเป็นความจริงทุกประการ
+        </div>
+        <div style="text-align:center; margin-top:40px;">
+          <div>.......................................................</div>
+          <div style="margin-top:5px;">( ผู้มีอำนาจลงนาม / ผู้จัดการ )</div>
+        </div>
+      </div>
+      
+      <button class="btn btn-outline" style="margin-top:10px; display:none;" id="btnPrintCert" onclick="printDiv('certResult')">🖨️ พิมพ์หรือเซฟเป็น PDF</button>
+      <button class="btn btn-outline" onclick="closeModal('certModal')" style="margin-top:15px;" id="btn-close-cert">ปิดหน้าต่าง</button>
+    </div>
+  </div>
+
+  <!-- Modals เดิม -->
+  <div id="tutorialModal" class="modal-overlay"><div class="modal-box" style="padding: 25px 20px; max-width: 400px;"><div class="modal-title" style="color: #38bdf8;" id="t-tutor-title">📖 คู่มือการใช้งาน</div><div class="modal-desc" style="margin-bottom: 15px;" id="t-tutor-desc">เรียนรู้วิธีใช้งานระบบ 88 Designs</div><div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 50vh; overflow-y:auto; text-align:left; border: 1px solid rgba(56,189,248,0.2); margin-bottom: 15px;"><h3 style="color: var(--neon-in); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s1-t">📷 1. การสแกนเข้า-ออกงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s1-d">กดปุ่ม "เข้างาน" หรือ "ออกงาน" ระบบจะสแกนใบหน้าและดึงพิกัด GPS อัตโนมัติ</p><h3 style="color: var(--neon-leave); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s2-t">📝 2. การแจ้งลา</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s2-d">กด "แจ้งลา" -> เลือกประเภทการลา -> พิมพ์ชื่อ-นามสกุลของคุณให้ถูกต้อง</p><h3 style="color: var(--neon-time); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s3-t">⏰ 3. เช็คเวลาทำงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s3-d">ตรวจสอบเวลามาสายและ OT พิมพ์ชื่อของคุณแล้วกดค้นหา</p></div><button class="btn btn-outline" onclick="closeModal('tutorialModal')" id="btn-close-tutor">ปิดหน้าต่าง</button></div></div>
+  <div id="orgChartModal" class="modal-overlay"><div class="modal-box" style="max-width: 450px; padding: 25px 15px;"><div class="modal-title" style="color:var(--gold-light);" id="t-org-title">🏢 ผังองค์กร (Organization Chart)</div><div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div><div class="org-container" style="background: rgba(0,0,0,0.6); border-radius: 16px; padding: 15px 10px; max-height: 50vh; overflow-y: auto; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px; text-align: center;"><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(0,0,0,0.5)); border: 1px solid var(--gold-primary); box-shadow: 0 0 15px rgba(212,175,55,0.2); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: var(--gold-light); font-size: 1.1em; font-weight: 700;">คุณแนค</div><div style="color: var(--gold-primary); font-size: 0.75em;">Owner (เจ้าของกิจการ)</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">ต้อม</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">กอล์ฟ</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ภูมิ</div><div style="color: var(--text-sub); font-size: 0.75em;">กราฟฟิคดีไซน์</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ซิน</div><div style="color: var(--text-sub); font-size: 0.75em;">นักการบัญชี</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โจ้</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">มีน</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ก๊อต</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้ช่วยหัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โกเย</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างไฟ</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อาว</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อู</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">แจ็ค</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ตัวเล็ก</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div></div></div><button class="btn btn-outline" onclick="closeModal('orgChartModal')" id="btn-close-org">ปิดหน้าต่าง</button></div></div>
+  <div id="leaveSelectModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="t-l-title">เลือกประเภทการลา</div><div class="modal-desc" id="t-l-desc">กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา</div><div class="leave-grid"><button class="btn-leave" onclick="proceedLeave('ลาป่วย')" id="t-l-sick"><span>🤧</span> ลาป่วย</button><button class="btn-leave" onclick="proceedLeave('ลากิจ')" id="t-l-personal"><span>💼</span> ลากิจ</button><button class="btn-leave" onclick="proceedLeave('ลาครึ่งวันเช้า')" id="t-l-halfm"><span>🌅</span> ครึ่งวันเช้า</button><button class="btn-leave" onclick="proceedLeave('ลาครึ่งวันบ่าย')" id="t-l-halfa"><span>🌇</span> ครึ่งวันบ่าย</button><button class="btn-leave full" onclick="proceedLeave('ลาพักร้อน')" id="t-l-annual"><span>🏖️</span> ลาพักร้อน</button></div><button class="btn btn-outline" onclick="closeModal('leaveSelectModal')" id="btn-cancel-leave">ยกเลิก</button></div></div>
+  <div id="leaveSubmitModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="displayLeaveType">แจ้งลา</div><div class="modal-desc" id="t-ls-desc">พิมพ์ชื่อ-นามสกุล ให้ตรงกับที่ลงทะเบียนไว้</div><input type="text" id="leaveName" class="input-field" placeholder="ชื่อ-นามสกุล..."><button class="btn btn-primary" onclick="submitLeave()" id="btn-submit-l">ยืนยันการลา</button><button class="btn btn-outline" onclick="closeModal('leaveSubmitModal')" id="btn-cancel-leave2">ยกเลิก</button></div></div>
+  <div id="checkTimeModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="t-c-title">เช็คเวลาทำงาน</div><div class="modal-desc" id="t-c-desc">ตรวจสอบ OT และเวลามาสายสะสม</div><input type="text" id="checkName" class="input-field" placeholder="ชื่อ-นามสกุล..."><button class="btn btn-primary" onclick="fetchTime()" id="btn-search-time">ค้นหาข้อมูล</button><div id="resultBox" class="result-box"><div style="color: var(--gold-primary); font-weight: 600; font-size: 1.2em; margin-bottom: 16px; text-align: center;" id="resName"></div><div class="r-stat"><span style="color:#d1d5db;" id="t-r-late">มาสายสะสม:</span><span id="resLate" style="color:var(--neon-out)"></span></div><div class="r-stat"><span style="color:#d1d5db;" id="t-r-ot">ทำ OT สะสม:</span><span id="resOT" style="color:var(--neon-in)"></span></div></div><button class="btn btn-outline" onclick="closeModal('checkTimeModal')" style="margin-top: 15px;" id="btn-close-time">ปิดหน้าต่าง</button></div></div>
+  <div id="passwordModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="t-pwd-title">ยืนยันสิทธิ์ Admin</div><div class="modal-desc" id="t-pwd-desc">กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน</div><input type="password" id="adminPassword" class="input-field" placeholder="รหัสผ่าน..."><div id="pwdError" style="display:none; color:var(--neon-out); font-size:0.85em; margin-top:-10px; margin-bottom:15px;">รหัสผ่านไม่ถูกต้อง</div><button class="btn btn-primary" onclick="verifyPassword()" id="btn-confirm-pwd">ยืนยัน</button><button class="btn btn-outline" onclick="closeModal('passwordModal')" id="btn-cancel-pwd">ยกเลิก</button></div></div>
+  <div id="adminViewModal" class="modal-overlay"><div class="modal-box" style="max-width: 420px; padding: 25px 20px;"><div class="modal-title" id="t-a-title">📋 ข้อมูลเวลา (Admin)</div><div class="modal-desc" id="t-a-desc">ตรวจสอบเวลาเข้า-ออกรายบุคคล</div><input type="text" id="adminSearchName" class="input-field" placeholder="ชื่อ-นามสกุล..."><button class="btn btn-primary" onclick="fetchAdminData()" id="btn-search-admin">ค้นหาข้อมูล</button><div id="adminResultBox" style="display: none; background: rgba(0,0,0,0.7); border-radius: 16px; padding: 15px; margin-top: 15px; border: 1px solid rgba(212,175,55,0.2); max-height: 45vh; overflow-y: auto;"></div><button class="btn btn-outline" onclick="closeModal('adminViewModal')" style="margin-top: 15px;" id="btn-close-admin">ปิดหน้าต่าง</button></div></div>
+  <div id="translatorModal" class="modal-overlay"><div class="modal-box" style="padding: 25px 20px; max-width: 420px;"><div class="modal-title" id="t-trans-title">🌐 แปลภาษา & เสียงอ่าน</div><div class="modal-desc" id="t-trans-desc" style="margin-bottom: 15px;">พิมพ์หรือกดไมค์เพื่อพูด (รองรับ 6 ภาษา)</div><div style="position: relative; margin-bottom: 15px;"><textarea id="transInput" class="input-field" style="margin-bottom: 0; padding-right: 50px; resize: none;" rows="3" placeholder="พิมพ์ข้อความ หรือกดไมค์เพื่อพูด..."></textarea><button id="btnTransVoice" onclick="startTransVoice()" style="position: absolute; right: 10px; bottom: 10px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; width: 40px; height: 40px; color: var(--gold-light); font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">🎤</button></div><div style="color: var(--text-sub); font-size: 0.85em; text-align: left; margin-bottom: 8px;" id="t-trans-choose">เลือกภาษาที่ต้องการแปล:</div><div class="trans-btn-group"><button class="trans-btn active" onclick="setTargetLang('th', this)">🇹🇭 ไทย</button><button class="trans-btn" onclick="setTargetLang('en', this)">🇬🇧 Eng</button><button class="trans-btn" onclick="setTargetLang('my', this)">🇲🇲 พม่า</button><button class="trans-btn" onclick="setTargetLang('zh-CN', this)">🇨🇳 จีน</button><button class="trans-btn" onclick="setTargetLang('ko', this)">🇰🇷 เกาหลี</button><button class="trans-btn" onclick="setTargetLang('mnw', this)">🚩 มอญ</button></div><div style="position: relative; margin-top: 10px;"><textarea id="transOutput" class="input-field" style="margin-bottom: 0; background: rgba(212,175,55,0.05); color: var(--gold-light); border-color: rgba(212,175,55,0.5); padding-right: 50px; resize: none;" rows="3" placeholder="ผลลัพธ์คำแปลจะแสดงที่นี่..." readonly></textarea><button onclick="playTranslatedVoice()" style="position: absolute; right: 10px; bottom: 10px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; width: 40px; height: 40px; color: var(--gold-light); font-size: 1.2em; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">🔊</button></div><button class="btn btn-outline" onclick="closeModal('translatorModal')" style="margin-top: 15px;" id="btn-close-trans">ปิดหน้าต่าง</button></div></div>
+
   <script>
-    // API หลัก (สามารถแก้ไขตรงนี้ได้เลย)
     const HARDCODED_API_URL = "https://script.google.com/macros/s/AKfycbwSq2fRZZxr6lP-07D9uw_B2chNk48U3UXPzD7zBQioTDCt2glr9oyV7HpcSxwKtQ0/exec";
 
-    // --- 1. ระบบพจนานุกรมแปลภาษา (Dictionary) ---
+    // 🌟 ระบบจับคู่รหัสผ่าน (PIN) กับชื่อพนักงาน
+    const employeePins = {
+      "001": "ชัยธวัช พูลคุ้ม",
+      "002": "ศิริมงคล เทียนงาม",
+      "003": "Zin Min Aung",
+      "004": "ศรินดา หอกซัด",
+      "005": "คมคณิน โจมฤทธิ์",
+      "006": "Oo",
+      "007": "Tayzarlay",
+      "008": "Got samabut",
+      "009": "nay min aung"
+    };
+
+    // --- ระบบพจนานุกรมแปลภาษา ---
     const dict = {
       th: {
         "t-menu-in": "เข้างาน", "t-desc-in": "สแกนใบหน้า",
         "t-menu-out": "ออกงาน", "t-desc-out": "บันทึกเลิกงาน",
         "t-menu-leave": "แจ้งลา", "t-desc-leave": "ลาป่วย, ลากิจ, ฯลฯ",
         "t-menu-check": "เช็คเวลา", "t-desc-check": "ดูสาย และ OT",
+        "t-menu-slip": "สลิปเงินเดือน", "t-desc-slip": "ดูสลิปเงินเดือนแบบย้อนหลังได้",
+        "t-menu-cert": "ใบรับรองเงินเดือน", "t-desc-cert": "ขอหนังสือรับรองเงินเดือนออนไลน์",
         "t-menu-trans": "แปลภาษาอัจฉริยะ", "t-desc-trans": "พูดและแปลอัตโนมัติ (6 ภาษา)",
         "t-menu-tutor": "คู่มือการใช้งาน", "t-desc-tutor": "สาธิตวิธีใช้ระบบต่างๆ",
         "t-menu-org": "ผังองค์กร", "t-desc-org": "โครงสร้างและตำแหน่งพนักงาน",
@@ -272,17 +342,22 @@
         "t-trans-title": "🌐 แปลภาษา & เสียงอ่าน", "t-trans-desc": "พิมพ์หรือพูดเพื่อแปล (รองรับ 6 ภาษา)",
         "t-trans-choose": "เลือกภาษาที่ต้องการแปล:",
         "t-force-title": "ประกาศสำคัญ", "btn-ack-broadcast": "🔊 รับทราบ (ฟังประกาศ)",
+        "t-slip-title": "💵 สลิปเงินเดือน", "t-slip-desc": "ระบุรหัสพนักงานเพื่อดึงข้อมูลสลิป",
+        "t-cert-title": "📜 ใบรับรองเงินเดือน", "t-cert-desc": "ระบุรหัสพนักงานเพื่อขอใบรับรอง",
         "btn-close-tutor": "ปิดหน้าต่าง", "btn-close-org": "ปิดหน้าต่าง", "btn-cancel-leave": "ยกเลิก", "btn-cancel-leave2": "ยกเลิก",
         "btn-submit-l": "ยืนยันการลา", "btn-search-time": "ค้นหาข้อมูล", "btn-close-time": "ปิดหน้าต่าง",
         "btn-confirm-pwd": "ยืนยัน", "btn-cancel-pwd": "ยกเลิก", "btn-search-admin": "ค้นหาข้อมูล", "btn-close-admin": "ปิดหน้าต่าง",
-        "btn-close-trans": "ปิดหน้าต่าง",
-        "placeholder-name": "ชื่อ-นามสกุล..."
+        "btn-close-trans": "ปิดหน้าต่าง", "btn-view-slip": "ค้นหาข้อมูล", "btn-close-slip": "ปิดหน้าต่าง", "btn-view-cert": "สร้างใบรับรอง", "btn-close-cert": "ปิดหน้าต่าง",
+        "placeholder-name": "ชื่อ-นามสกุล...",
+        "placeholder-pin": "รหัสพนักงาน (PIN)..."
       },
       en: {
         "t-menu-in": "Check In", "t-desc-in": "Face scan",
         "t-menu-out": "Check Out", "t-desc-out": "End shift",
         "t-menu-leave": "Leave", "t-desc-leave": "Sick, Personal",
         "t-menu-check": "Check Time", "t-desc-check": "Late & OT",
+        "t-menu-slip": "Payslip", "t-desc-slip": "View historical payslips",
+        "t-menu-cert": "Certificate", "t-desc-cert": "Request salary certificate",
         "t-menu-trans": "Auto Translator", "t-desc-trans": "Voice & Text (6 Langs)",
         "t-menu-tutor": "How to Use", "t-desc-tutor": "App demonstration",
         "t-menu-org": "Org Chart", "t-desc-org": "Company structure",
@@ -306,17 +381,22 @@
         "t-trans-title": "🌐 Translator & Voice", "t-trans-desc": "Type or speak to translate",
         "t-trans-choose": "Select target language:",
         "t-force-title": "Important Announcement", "btn-ack-broadcast": "🔊 Acknowledge",
+        "t-slip-title": "💵 Payslip", "t-slip-desc": "Enter PIN to fetch payslip",
+        "t-cert-title": "📜 Salary Certificate", "t-cert-desc": "Enter PIN to generate",
         "btn-close-tutor": "Close", "btn-close-org": "Close", "btn-cancel-leave": "Cancel", "btn-cancel-leave2": "Cancel",
         "btn-submit-l": "Submit", "btn-search-time": "Search", "btn-close-time": "Close",
         "btn-confirm-pwd": "Confirm", "btn-cancel-pwd": "Cancel", "btn-search-admin": "Search", "btn-close-admin": "Close",
-        "btn-close-trans": "Close",
-        "placeholder-name": "Full Name..."
+        "btn-close-trans": "Close", "btn-view-slip": "Search", "btn-close-slip": "Close", "btn-view-cert": "Generate", "btn-close-cert": "Close",
+        "placeholder-name": "Full Name...",
+        "placeholder-pin": "Employee PIN..."
       },
       mm: {
         "t-menu-in": "အလုပ်ဝင်", "t-desc-in": "မျက်နှာဖတ်ရန်",
         "t-menu-out": "အလုပ်ဆင်း", "t-desc-out": "အလုပ်ဆင်းရန်",
         "t-menu-leave": "ခွင့်တိုင်", "t-desc-leave": "နေမကောင်း, ခွင့်",
         "t-menu-check": "အချိန်စစ်", "t-desc-check": "OT နှင့် နောက်ကျ",
+        "t-menu-slip": "လစာဖြတ်ပိုင်း", "t-desc-slip": "ယခင်လစာကိုကြည့်ရန်",
+        "t-menu-cert": "လစာထောက်ခံစာ", "t-desc-cert": "ထောက်ခံစာတောင်းရန်",
         "t-menu-trans": "ဘာသာပြန်", "t-desc-trans": "အသံနှင့် စာသား (၆ ဘာသာ)",
         "t-menu-tutor": "အသုံးပြုနည်း", "t-desc-tutor": "အက်ပ် သရုပ်ပြ",
         "t-menu-org": "ဖွဲ့စည်းပုံ", "t-desc-org": "ကုမ္ပဏီဖွဲ့စည်းပုံ",
@@ -340,11 +420,14 @@
         "t-trans-title": "🌐 ဘာသာပြန်", "t-trans-desc": "စာရိုက်ပါ သို့မဟုတ် ပြောပါ",
         "t-trans-choose": "ဘာသာစကားကိုရွေးပါ:",
         "t-force-title": "အရေးကြီးသောကြေငြာချက်", "btn-ack-broadcast": "🔊 နားလည်ပါပြီ",
+        "t-slip-title": "💵 လစာဖြတ်ပိုင်း", "t-slip-desc": "PIN ထည့်ပါ",
+        "t-cert-title": "📜 လစာထောက်ခံစာ", "t-cert-desc": "PIN ထည့်ပါ",
         "btn-close-tutor": "ပိတ်မည်", "btn-close-org": "ပိတ်မည်", "btn-cancel-leave": "ပယ်ဖျက်", "btn-cancel-leave2": "ပယ်ဖျက်",
         "btn-submit-l": "အတည်ပြုပါ", "btn-search-time": "ရှာဖွေမည်", "btn-close-time": "ပိတ်မည်",
         "btn-confirm-pwd": "အတည်ပြု", "btn-cancel-pwd": "ပယ်ဖျက်", "btn-search-admin": "ရှာဖွေမည်", "btn-close-admin": "ပိတ်မည်",
-        "btn-close-trans": "ပိတ်မည်",
-        "placeholder-name": "အမည်..."
+        "btn-close-trans": "ပိတ်မည်", "btn-view-slip": "ရှာဖွေမည်", "btn-close-slip": "ပိတ်မည်", "btn-view-cert": "တောင်းခံမည်", "btn-close-cert": "ပိတ်မည်",
+        "placeholder-name": "အမည်...",
+        "placeholder-pin": "ဝန်ထမ်း PIN..."
       }
     };
 
@@ -352,97 +435,92 @@
     let globalBroadcastText = '';
 
     function setLang(lang) {
-      currentLang = lang;
-      localStorage.setItem('appLang', lang);
+      currentLang = lang; localStorage.setItem('appLang', lang);
       document.querySelectorAll('.btn-lang').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase() === lang.toLowerCase()));
+      const d = dict[lang]; if(!d) return;
+      for (let id in d) { if(id.startsWith('placeholder-')) continue; let el = document.getElementById(id); if (el) el.innerHTML = d[id]; }
       
-      const d = dict[lang];
-      if(!d) return;
-
-      for (let id in d) {
-        if(id.startsWith('placeholder-')) continue;
-        let el = document.getElementById(id);
-        if (el) el.innerHTML = d[id];
-      }
-
       const inputs = ['leaveName', 'checkName', 'adminSearchName'];
-      inputs.forEach(id => {
-         let el = document.getElementById(id);
-         if(el) el.placeholder = d['placeholder-name'];
-      });
-
+      inputs.forEach(id => { let el = document.getElementById(id); if(el) el.placeholder = d['placeholder-name']; });
+      
+      const pinInputs = ['slipInputPin', 'certInputPin'];
+      pinInputs.forEach(id => { let el = document.getElementById(id); if(el) el.placeholder = d['placeholder-pin']; });
+      
       updateClock(); 
     }
 
     function showToast(message, type = 'success') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      toast.className = `toast ${type}`;
-      toast.innerHTML = type === 'error' ? `❌ ${message}` : message;
-      container.appendChild(toast);
-      setTimeout(() => {
-        toast.style.animation = 'toastFadeOut 0.4s ease forwards';
-        setTimeout(() => toast.remove(), 400);
-      }, 3500);
+      const container = document.getElementById('toastContainer'); const toast = document.createElement('div');
+      toast.className = `toast ${type}`; toast.innerHTML = type === 'error' ? `❌ ${message}` : message;
+      container.appendChild(toast); setTimeout(() => { toast.style.animation = 'toastFadeOut 0.4s ease forwards'; setTimeout(() => toast.remove(), 400); }, 3500);
     }
 
     window.addEventListener('click', function(e) {
-      if (e.target.classList.contains('modal-overlay') && e.target.id !== 'forceBroadcastModal') {
-          closeModal(e.target.id);
-      }
+      if (e.target.classList.contains('modal-overlay') && e.target.id !== 'forceBroadcastModal') closeModal(e.target.id);
     });
 
     function updateClock() {
       const now = new Date();
       document.getElementById('liveTime').innerText = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
       document.getElementById('liveDate').innerText = now.toLocaleDateString(currentLang === 'th' ? 'th-TH' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-      
-      const h = now.getHours();
-      let g = "";
-      if(currentLang === 'th') {
-        g = (h >= 6 && h < 9) ? "สถานะ: เข้างานปกติ 🟢" : (h >= 9 && h < 12) ? "สถานะ: เข้างานสาย 🔴" : (h >= 12 && h < 18) ? "สถานะ: ยังไม่ถึงเวลาเลิกงาน ⏳" : "สถานะ: ถึงเวลาเลิกงาน 🏠";
-      } else if (currentLang === 'en') {
-        g = (h >= 6 && h < 9) ? "Status: Normal In 🟢" : (h >= 9 && h < 12) ? "Status: Late In 🔴" : (h >= 12 && h < 18) ? "Status: Working Hours ⏳" : "Status: Time to Leave 🏠";
-      } else {
-        g = (h >= 6 && h < 9) ? "အခြေအနေ: ပုံမှန်ဝင် 🟢" : (h >= 9 && h < 12) ? "အခြေအနေ: နောက်ကျဝင် 🔴" : (h >= 12 && h < 18) ? "အခြေအနေ: အလုပ်ချိန် ⏳" : "အခြေအနေ: အလုပ်ဆင်းချိန် 🏠";
-      }
-      
-      const el = document.getElementById('greetingText');
-      el.innerText = g;
+      const h = now.getHours(); let g = "";
+      if(currentLang === 'th') g = (h >= 6 && h < 9) ? "สถานะ: เข้างานปกติ 🟢" : (h >= 9 && h < 12) ? "สถานะ: เข้างานสาย 🔴" : (h >= 12 && h < 18) ? "สถานะ: ยังไม่ถึงเวลาเลิกงาน ⏳" : "สถานะ: ถึงเวลาเลิกงาน 🏠";
+      else if (currentLang === 'en') g = (h >= 6 && h < 9) ? "Status: Normal In 🟢" : (h >= 9 && h < 12) ? "Status: Late In 🔴" : (h >= 12 && h < 18) ? "Status: Working Hours ⏳" : "Status: Time to Leave 🏠";
+      else g = (h >= 6 && h < 9) ? "အခြေအနေ: ပုံမှန်ဝင် 🟢" : (h >= 9 && h < 12) ? "အခြေအနေ: နောက်ကျဝင် 🔴" : (h >= 12 && h < 18) ? "အခြေအနေ: အလုပ်ချိန် ⏳" : "အခြေအနေ: အလုပ်ဆင်းချိန် 🏠";
+      const el = document.getElementById('greetingText'); el.innerText = g;
       el.style.color = g.includes('ปกติ') || g.includes('Normal') || g.includes('ပုံမှန်') ? 'var(--neon-in)' : g.includes('สาย') || g.includes('Late') || g.includes('နောက်ကျ') ? 'var(--neon-out)' : g.includes('ยัง') || g.includes('Working') || g.includes('အလုပ်ချိန်') ? 'var(--gold-primary)' : 'var(--gold-light)';
     }
     setInterval(updateClock, 1000);
 
+    // 🌟 ระบบสร้าง Dropdown เลือกรอบเดือนย้อนหลัง 6 เดือน
+    function populateCycles() {
+      const slipSelect = document.getElementById('slipCycleSelect');
+      const certSelect = document.getElementById('certCycleSelect');
+      if(!slipSelect || !certSelect) return;
+      
+      let optionsHTML = "";
+      let now = new Date();
+      let cycleM = now.getMonth(); let cycleY = now.getFullYear();
+      // เช็คว่าถ้าเลยวันที่ 26 ไปแล้ว ถือว่าขึ้นรอบเดือนใหม่
+      if (now.getDate() >= 26) { cycleM++; if (cycleM > 11) { cycleM = 0; cycleY++; } }
+      
+      for(let i=0; i<6; i++) {
+          let cycleStr = cycleY + "-" + (cycleM + 1).toString().padStart(2, '0');
+          let m1 = cycleM; let y1 = cycleY;
+          let m2 = cycleM - 1; let y2 = cycleY;
+          if(m2 < 0) { m2 += 12; y2--; }
+          
+          const thMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+          let label = `รอบ 26 ${thMonths[m2]} - 25 ${thMonths[m1]} ${y1}`;
+          if(i===0) label += " (ปัจจุบัน)";
+          
+          optionsHTML += `<option value="${cycleStr}">${label}</option>`;
+          
+          // ถอยหลังไป 1 เดือน
+          cycleM--; if(cycleM < 0) { cycleM = 11; cycleY--; }
+      }
+      slipSelect.innerHTML = optionsHTML;
+      certSelect.innerHTML = optionsHTML;
+    }
+
     window.onload = () => {
-      setLang(currentLang);
-      updateClock();
-      const apiUrl = HARDCODED_API_URL;
-      if (apiUrl) {
-        fetch(apiUrl + '?action=getConfig').then(r => r.json()).then(config => {
+      populateCycles(); // เรียกใช้งานเพื่อสร้างเมนู Dropdown ให้ทันที
+      setLang(currentLang); updateClock();
+      if (HARDCODED_API_URL) {
+        fetch(HARDCODED_API_URL + '?action=getConfig').then(r => r.json()).then(config => {
           if (config.broadcastMsg && config.broadcastMsg.trim() !== '') {
             globalBroadcastText = config.broadcastMsg;
             document.getElementById('broadcastText').innerHTML = config.broadcastMsg.replace(/\n/g, '<br>');
             document.getElementById('broadcastBanner').style.display = 'block';
-
             const btnReplay = document.getElementById('btnReplayAudio');
-            if(btnReplay) {
-                btnReplay.style.display = 'inline-block';
-                btnReplay.onclick = () => speakTranslatedText(config.broadcastMsg, currentLang);
-            }
-
-            // --- ตรวจสอบการรับทราบประกาศรายวัน (ตัดรอบ 09:00 น.) ---
-            let showModal = true;
-            const lastAckStr = localStorage.getItem('broadcastAcknowledgeTime');
+            if(btnReplay) { btnReplay.style.display = 'inline-block'; btnReplay.onclick = () => speakTranslatedText(config.broadcastMsg, currentLang); }
             
+            let showModal = true; const lastAckStr = localStorage.getItem('broadcastAcknowledgeTime');
             if (lastAckStr) {
-              const lastAckTime = parseInt(lastAckStr, 10);
-              const now = new Date();
-              const shiftStart = new Date(now);
-              shiftStart.setHours(9, 0, 0, 0); 
-              if (now.getHours() < 9) shiftStart.setDate(shiftStart.getDate() - 1); 
+              const lastAckTime = parseInt(lastAckStr, 10); const now = new Date(); const shiftStart = new Date(now);
+              shiftStart.setHours(9, 0, 0, 0); if (now.getHours() < 9) shiftStart.setDate(shiftStart.getDate() - 1); 
               if (lastAckTime >= shiftStart.getTime()) showModal = false; 
             }
-
             if (showModal) {
               document.getElementById('forceBroadcastText').innerHTML = config.broadcastMsg.replace(/\n/g, '<br>');
               document.getElementById('forceBroadcastModal').style.display = 'flex';
@@ -451,12 +529,10 @@
         }).catch(e => console.log('Cannot fetch broadcast'));
       }
 
-      // ระบบหน่วงเวลาแปลภาษาเมื่อพิมพ์
       const transInput = document.getElementById('transInput');
       if(transInput) {
         transInput.addEventListener('input', function() {
-          clearTimeout(translateTimeout);
-          translateTimeout = setTimeout(() => doTranslate(false), 800);
+          clearTimeout(translateTimeout); translateTimeout = setTimeout(() => doTranslate(false), 800);
         });
       }
     };
@@ -465,18 +541,13 @@
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     function acknowledgeBroadcast() {
-        speakTranslatedText(globalBroadcastText, currentLang);
-        localStorage.setItem('broadcastAcknowledgeTime', new Date().getTime().toString());
-        document.getElementById('forceBroadcastModal').style.display = 'none';
-        showToast(currentLang === 'th' ? 'รับทราบประกาศเรียบร้อย' : 'Announcement Acknowledged', 'success');
+        speakTranslatedText(globalBroadcastText, currentLang); localStorage.setItem('broadcastAcknowledgeTime', new Date().getTime().toString());
+        document.getElementById('forceBroadcastModal').style.display = 'none'; showToast(currentLang === 'th' ? 'รับทราบประกาศเรียบร้อย' : 'Announcement Acknowledged', 'success');
     }
 
     let adminActionTarget = '';
     function openAdminAuth(target) {
-      adminActionTarget = target;
-      document.getElementById('adminPassword').value = '';
-      document.getElementById('pwdError').style.display = 'none';
-      openModal('passwordModal');
+      adminActionTarget = target; document.getElementById('adminPassword').value = ''; document.getElementById('pwdError').style.display = 'none'; openModal('passwordModal');
     }
 
     function verifyPassword() {
@@ -484,24 +555,17 @@
         closeModal('passwordModal');
         if (adminActionTarget === 'config') window.location.href = 'config.html';
         else if (adminActionTarget === 'viewData') { 
-          document.getElementById('adminSearchName').value = ''; 
-          document.getElementById('adminResultBox').style.display = 'none'; 
-          openModal('adminViewModal'); 
+          document.getElementById('adminSearchName').value = ''; document.getElementById('adminResultBox').style.display = 'none'; openModal('adminViewModal'); 
         }
       } else { document.getElementById('pwdError').style.display = 'block'; }
     }
 
     let selectedLeave = '';
-    function proceedLeave(type) {
-      selectedLeave = type; closeModal('leaveSelectModal');
-      document.getElementById('displayLeaveType').innerText = '👉 ' + type; openModal('leaveSubmitModal');
-    }
+    function proceedLeave(type) { selectedLeave = type; closeModal('leaveSelectModal'); document.getElementById('displayLeaveType').innerText = '👉 ' + type; openModal('leaveSubmitModal'); }
 
     async function submitLeave() {
-      const name = document.getElementById('leaveName').value.trim();
-      if (!name) return showToast('กรุณาระบุชื่อพนักงาน', 'error');
-      const btn = document.getElementById('btn-submit-l');
-      if(btn.disabled) return; btn.disabled = true; btn.innerText = '⏳...';
+      const name = document.getElementById('leaveName').value.trim(); if (!name) return showToast('กรุณาระบุชื่อพนักงาน', 'error');
+      const btn = document.getElementById('btn-submit-l'); if(btn.disabled) return; btn.disabled = true; btn.innerText = '⏳...';
       try {
         await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'logAttendance', name: name, type: selectedLeave, lat: '-', lng: '-' }) });
         showToast('✅ บันทึกการลาเรียบร้อยแล้ว', 'success'); closeModal('leaveSubmitModal'); document.getElementById('leaveName').value = '';
@@ -509,10 +573,8 @@
     }
 
     async function fetchTime() {
-      const name = document.getElementById('checkName').value.trim();
-      if (!name) return;
-      const btn = document.getElementById('btn-search-time');
-      if(btn.disabled) return; btn.disabled = true; btn.innerText = '⏳...';
+      const name = document.getElementById('checkName').value.trim(); if (!name) return;
+      const btn = document.getElementById('btn-search-time'); if(btn.disabled) return; btn.disabled = true; btn.innerText = '⏳...';
       try {
         const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'getEmployeeSummary', name: name }) });
         const data = await res.json();
@@ -524,10 +586,8 @@
     }
 
     async function fetchAdminData() {
-      const name = document.getElementById('adminSearchName').value.trim();
-      if (!name) return;
-      const btn = document.getElementById('btn-search-admin');
-      if(btn.disabled) return; btn.disabled = true; btn.innerText = '⏳...';
+      const name = document.getElementById('adminSearchName').value.trim(); if (!name) return;
+      const btn = document.getElementById('btn-search-admin'); if(btn.disabled) return; btn.disabled = true; btn.innerText = '⏳...';
       const resultBox = document.getElementById('adminResultBox'); resultBox.style.display = 'none'; resultBox.innerHTML = '';
       try {
         const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'getEmployeeDetails', name: name }) });
@@ -550,38 +610,106 @@
     }
 
     // ==========================================
+    // 🌟 ฟังก์ชัน สลิปเงินเดือน & ใบรับรอง ย้อนหลัง
+    // ==========================================
+    async function fetchPayslip() {
+      const pin = document.getElementById('slipInputPin').value.trim(); 
+      if (!pin) return showToast(currentLang === 'th' ? 'กรุณาระบุรหัสพนักงาน' : 'Please enter PIN', 'error');
+      
+      const name = employeePins[pin];
+      if (!name) return showToast(currentLang === 'th' ? 'รหัสพนักงานไม่ถูกต้อง' : 'Invalid PIN', 'error');
+
+      const cycleValue = document.getElementById('slipCycleSelect').value;
+      const cycleLabel = document.getElementById('slipCycleSelect').options[document.getElementById('slipCycleSelect').selectedIndex].text;
+      
+      const btn = document.getElementById('btn-view-slip'); if(btn.disabled) return; btn.disabled = true; btn.innerText = '⏳...';
+      document.getElementById('slipResult').style.display = 'none'; document.getElementById('btnPrintSlip').style.display = 'none';
+      
+      try {
+        const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'getPayslip', name: name, cycle: cycleValue }) });
+        const data = await res.json();
+        
+        if (data.success) {
+          document.getElementById('slipCompName').innerText = data.companyName;
+          document.getElementById('slipEmpName').innerText = data.name;
+          document.getElementById('slipPosition').innerText = data.position;
+          document.getElementById('slipCycle').innerText = cycleLabel;
+          
+          document.getElementById('slipSalary').innerText = Number(data.salary).toLocaleString('en-US', {minimumFractionDigits: 2});
+          document.getElementById('slipLate').innerText = data.lateMins + " นาที";
+          document.getElementById('slipOT').innerText = data.otSummary;
+          document.getElementById('slipSSO').innerText = Number(data.sso).toLocaleString('en-US', {minimumFractionDigits: 2});
+          
+          document.getElementById('slipNet').innerText = Number(data.salary - data.sso).toLocaleString('en-US', {minimumFractionDigits: 2});
+          
+          document.getElementById('slipResult').style.display = 'block';
+          document.getElementById('btnPrintSlip').style.display = 'block';
+        } else { showToast(data.message, 'error'); }
+      } catch (e) { showToast('ระบบเครือข่ายมีปัญหา', 'error'); } finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-view-slip']; }
+    }
+
+    async function fetchCertificate() {
+      const pin = document.getElementById('certInputPin').value.trim(); 
+      if (!pin) return showToast(currentLang === 'th' ? 'กรุณาระบุรหัสพนักงาน' : 'Please enter PIN', 'error');
+      
+      const name = employeePins[pin];
+      if (!name) return showToast(currentLang === 'th' ? 'รหัสพนักงานไม่ถูกต้อง' : 'Invalid PIN', 'error');
+
+      const cycleValue = document.getElementById('certCycleSelect').value;
+      const cycleLabel = document.getElementById('certCycleSelect').options[document.getElementById('certCycleSelect').selectedIndex].text;
+      
+      const btn = document.getElementById('btn-view-cert'); if(btn.disabled) return; btn.disabled = true; btn.innerText = '⏳...';
+      document.getElementById('certResult').style.display = 'none'; document.getElementById('btnPrintCert').style.display = 'none';
+      
+      try {
+        const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'getCertificate', name: name, cycle: cycleValue }) });
+        const data = await res.json();
+        
+        if (data.success) {
+          document.getElementById('certCompName').innerText = data.company;
+          document.getElementById('certCompAddr').innerText = data.address + '\n' + data.tax + ' | ' + data.tel;
+          document.getElementById('certDate').innerText = data.date;
+          document.getElementById('certEmpName').innerText = data.name;
+          document.getElementById('certPosition').innerText = data.position;
+          document.getElementById('certSalary').innerText = Number(data.salary).toLocaleString('en-US', {minimumFractionDigits: 2});
+          document.getElementById('certCycleInfo').innerText = `ในรอบการทำงาน: ${cycleLabel}`;
+          
+          document.getElementById('certResult').style.display = 'block';
+          document.getElementById('btnPrintCert').style.display = 'block';
+        } else { showToast(data.message, 'error'); }
+      } catch (e) { showToast('ระบบเครือข่ายมีปัญหา', 'error'); } finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-view-cert']; }
+    }
+
+    function printDiv(divId) {
+      var printContents = document.getElementById(divId).innerHTML;
+      var originalContents = document.body.innerHTML;
+      document.body.style.backgroundColor = "white";
+      document.body.style.color = "black";
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+      window.location.reload();
+    }
+
+    // ==========================================
     // 🌟 ฟังก์ชันแปลภาษาอัจฉริยะ (Voice & Text)
     // ==========================================
-    let targetLangCode = 'th'; 
-    let translateTimeout = null;
+    let targetLangCode = 'th'; let translateTimeout = null;
     
     function setTargetLang(lang, btnElement) {
-      targetLangCode = lang; 
-      // สลับสีปุ่มที่ถูกเลือก
-      const btns = btnElement.parentElement.querySelectorAll('.trans-btn');
-      btns.forEach(b => b.classList.remove('active'));
-      btnElement.classList.add('active');
-      doTranslate(false); 
+      targetLangCode = lang; const btns = btnElement.parentElement.querySelectorAll('.trans-btn');
+      btns.forEach(b => b.classList.remove('active')); btnElement.classList.add('active'); doTranslate(false); 
     }
 
     async function doTranslate(fromVoice = false) {
-      const text = document.getElementById('transInput').value.trim(); 
-      const outputEl = document.getElementById('transOutput');
-      if (!text) { outputEl.value = ""; return; } 
-      
-      outputEl.value = "กำลังแปล...";
+      const text = document.getElementById('transInput').value.trim(); const outputEl = document.getElementById('transOutput');
+      if (!text) { outputEl.value = ""; return; } outputEl.value = "กำลังแปล...";
       try {
-        // ใช้ API แปลภาษาของ Google (ฟรี ไม่ต้องใช้ API Key)
         const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLangCode}&dt=t&q=${encodeURIComponent(text)}`);
-        const data = await res.json(); 
-        let tText = "";
+        const data = await res.json(); let tText = "";
         if (data && data[0]) data[0].forEach(part => { if (part[0]) tText += part[0]; });
-        outputEl.value = tText; 
-        
-        if (fromVoice) speakTranslatedText(tText, targetLangCode);
-      } catch(e) { 
-        outputEl.value = "เกิดข้อผิดพลาดในการแปลเครือข่ายขัดข้อง"; 
-      }
+        outputEl.value = tText; if (fromVoice) speakTranslatedText(tText, targetLangCode);
+      } catch(e) { outputEl.value = "เกิดข้อผิดพลาดในการแปลเครือข่ายขัดข้อง"; }
     }
 
     function playTranslatedVoice() {
@@ -591,61 +719,28 @@
 
     function speakTranslatedText(text, langCode) {
       if ('speechSynthesis' in window) {
-        speechSynthesis.cancel(); 
-        const cleanText = text.replace(/[*#]/g, ''); 
-        const u = new SpeechSynthesisUtterance(cleanText);
-        
-        // กำหนดเสียงตามภาษา (ถ้าระบบไม่มีภาษามอญ จะใช้เสียงภาษาไทยหรือเสียงระบบแทนอัตโนมัติ)
-        const voiceMap = { 
-            'th': 'th-TH', 
-            'en': 'en-US', 
-            'my': 'my-MM', 
-            'zh-CN': 'zh-CN', 
-            'ko': 'ko-KR', 
-            'mnw': 'th-TH' // ภาษามอญอาจไม่มีเสียง TTS มาตรฐาน จึงใช้ fallback เป็นไทยชั่วคราว
-        }; 
-        u.lang = voiceMap[langCode] || 'th-TH';
-        u.rate = 0.9; // ปรับความเร็วในการพูดให้ฟังชัดขึ้น
-        speechSynthesis.speak(u);
-      } else {
-        showToast("เบราว์เซอร์ของคุณไม่รองรับเสียงอ่าน", "error");
-      }
+        speechSynthesis.cancel(); const cleanText = text.replace(/[*#]/g, ''); const u = new SpeechSynthesisUtterance(cleanText);
+        const voiceMap = { 'th': 'th-TH', 'en': 'en-US', 'my': 'my-MM', 'zh-CN': 'zh-CN', 'ko': 'ko-KR', 'mnw': 'th-TH' }; 
+        u.lang = voiceMap[langCode] || 'th-TH'; u.rate = 0.9; speechSynthesis.speak(u);
+      } else showToast("เบราว์เซอร์ของคุณไม่รองรับเสียงอ่าน", "error");
     }
 
-    // ระบบรับเสียงพูด (Speech Recognition)
-    let transRecognition;
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
+    let transRecognition; const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
-      transRecognition = new SpeechRecognition(); 
-      transRecognition.continuous = false; 
-      transRecognition.interimResults = false;
-      transRecognition.lang = 'th-TH'; // กำหนดให้รับเสียงต้นทางเป็นภาษาไทย
-      
+      transRecognition = new SpeechRecognition(); transRecognition.continuous = false; transRecognition.interimResults = false; transRecognition.lang = 'th-TH'; 
       transRecognition.onstart = function() { 
-        document.getElementById('btnTransVoice').style.background = 'var(--neon-out)'; 
-        document.getElementById('btnTransVoice').style.borderColor = 'var(--neon-out)'; 
+        document.getElementById('btnTransVoice').style.background = 'var(--neon-out)'; document.getElementById('btnTransVoice').style.borderColor = 'var(--neon-out)'; 
         document.getElementById('transInput').placeholder = "กำลังฟังเสียงของคุณ..."; 
       };
-      
-      transRecognition.onresult = function(event) { 
-        document.getElementById('transInput').value = event.results[0][0].transcript; 
-        doTranslate(true); // แปลทันทีหลังจากพูดเสร็จและให้อ่านออกเสียง
-      };
-      
+      transRecognition.onresult = function(event) { document.getElementById('transInput').value = event.results[0][0].transcript; doTranslate(true); };
       transRecognition.onerror = transRecognition.onend = function() { 
-        document.getElementById('btnTransVoice').style.background = 'rgba(212,175,55,0.2)'; 
-        document.getElementById('btnTransVoice').style.borderColor = 'rgba(212,175,55,0.5)'; 
+        document.getElementById('btnTransVoice').style.background = 'rgba(212,175,55,0.2)'; document.getElementById('btnTransVoice').style.borderColor = 'rgba(212,175,55,0.5)'; 
         document.getElementById('transInput').placeholder = "พิมพ์ข้อความ หรือกดไมค์เพื่อพูด..."; 
       };
     }
 
     function startTransVoice() {
-      if (transRecognition) { 
-        try { transRecognition.start(); } catch(e) {} 
-      } else {
-        showToast("เบราว์เซอร์ไม่รองรับไมโครโฟน (กรุณาใช้ Chrome/Safari)", "error");
-      }
+      if (transRecognition) { try { transRecognition.start(); } catch(e) {} } else showToast("เบราว์เซอร์ไม่รองรับไมโครโฟน (กรุณาใช้ Chrome/Safari)", "error");
     }
   </script>
 </body>
