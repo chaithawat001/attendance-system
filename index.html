@@ -237,8 +237,8 @@
       <div class="modal-desc" id="t-slip-desc">ระบุรหัสพนักงานเพื่อดึงข้อมูลสลิป</div>
       
       <input type="password" id="slipInputPin" class="input-field" placeholder="รหัสพนักงาน (PIN)..." style="margin-bottom: 8px;" pattern="[0-9]*" inputmode="numeric">
-      
       <select id="slipCycleSelect" class="input-field" style="padding: 12px; margin-bottom: 16px; font-size: 0.9em;"></select>
+      
       <button class="btn btn-primary" onclick="fetchPayslip()" id="btn-view-slip">ค้นหาข้อมูล</button>
       
       <div id="slipResult" style="display:none; background:#fff; color:#000; padding:20px; border-radius:12px; font-size:0.85em; font-family:sans-serif; text-align:left; border: 1px solid #ccc; margin-top:15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);">
@@ -246,11 +246,12 @@
         <div style="text-align:center; font-weight:bold; margin-bottom:15px; background:#f1f5f9; padding:6px; border-radius:6px;">สลิปเงินเดือน (PAYSLIP)</div>
         <div style="margin-bottom:4px;"><b>ชื่อพนักงาน:</b> <span id="slipEmpName"></span></div>
         <div style="margin-bottom:4px;"><b>ตำแหน่ง:</b> <span id="slipPosition"></span></div>
-        <div style="margin-bottom:15px;"><b>รอบบัญชี:</b> <span id="slipCycle"></span></div>
+        <div style="margin-bottom:15px;"><b>รอบเดือน:</b> <span id="slipCycle"></span></div>
         
         <table style="width:100%; border-collapse: collapse; margin-bottom:10px;">
           <tr style="background:#10b981; color:#fff;"><th style="padding:6px; border:1px solid #ddd; width:60%;">รายรับ (Earnings)</th><th style="padding:6px; border:1px solid #ddd; text-align:right;">จำนวน</th></tr>
           <tr><td style="padding:6px; border:1px solid #ddd;">เงินเดือนพื้นฐาน</td><td style="padding:6px; border:1px solid #ddd; text-align:right;" id="slipSalary"></td></tr>
+          <tr><td style="padding:6px; border:1px solid #ddd; color:#10b981; font-weight:bold;">ค่าล่วงเวลา (OT)</td><td style="padding:6px; border:1px solid #ddd; text-align:right; color:#10b981; font-weight:bold;" id="slipOTPay"></td></tr>
         </table>
         
         <table style="width:100%; border-collapse: collapse; margin-bottom:15px;">
@@ -276,8 +277,8 @@
       <div class="modal-desc" id="t-cert-desc">ระบุรหัสพนักงานเพื่อขอใบรับรอง</div>
       
       <input type="password" id="certInputPin" class="input-field" placeholder="รหัสพนักงาน (PIN)..." style="margin-bottom: 8px;" pattern="[0-9]*" inputmode="numeric">
-      
       <select id="certCycleSelect" class="input-field" style="padding: 12px; margin-bottom: 16px; font-size: 0.9em;"></select>
+      
       <button class="btn btn-primary" onclick="fetchCertificate()" id="btn-view-cert">สร้างใบรับรอง</button>
       
       <div id="certResult" style="display:none; background:#fff; color:#000; padding:25px; border-radius:12px; font-size:0.85em; font-family:sans-serif; text-align:left; border: 1px solid #ccc; margin-top:15px; line-height:1.6; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);">
@@ -438,7 +439,7 @@
     }
     setInterval(updateClock, 1000);
 
-    // 🌟 ระบบสร้าง Dropdown เลือกรอบเดือนย้อนหลัง 6 เดือน
+    // 🌟 ระบบดึงรอบเดือน 26-25 ย้อนหลัง 6 เดือน
     function populateCycles() {
       const slipSelect = document.getElementById('slipCycleSelect');
       const certSelect = document.getElementById('certCycleSelect');
@@ -593,11 +594,13 @@
           document.getElementById('slipCycle').innerText = cycleLabel;
           
           document.getElementById('slipSalary').innerText = Number(data.salary).toLocaleString('en-US', {minimumFractionDigits: 2});
+          document.getElementById('slipOTPay').innerText = Number(data.otPay || 0).toLocaleString('en-US', {minimumFractionDigits: 2});
+          
           document.getElementById('slipLate').innerText = data.lateMins + " นาที";
           document.getElementById('slipOT').innerText = data.otSummary;
           document.getElementById('slipSSO').innerText = Number(data.sso).toLocaleString('en-US', {minimumFractionDigits: 2});
           
-          document.getElementById('slipNet').innerText = Number(data.salary - data.sso).toLocaleString('en-US', {minimumFractionDigits: 2});
+          document.getElementById('slipNet').innerText = Number(data.netPay).toLocaleString('en-US', {minimumFractionDigits: 2});
           
           document.getElementById('slipResult').style.display = 'block';
           document.getElementById('btnPrintSlip').style.display = 'block';
