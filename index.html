@@ -18,52 +18,69 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg-base); background-image: url('pngtree-black-gold-business-meeting-simple-image_37604.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px 20px 80px; position: relative; overflow-x: hidden; }
-    body::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%); z-index: 0; pointer-events: none; }
+    body::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%); z-index: 0; pointer-events: none; }
     
     .lang-switcher { position: absolute; top: 20px; right: 20px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--border-light); border-radius: 30px; display: flex; padding: 4px; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
     .btn-lang { background: transparent; border: none; color: var(--gold-primary); border-radius: 20px; padding: 6px 14px; font-size: 0.85em; font-weight: 600; cursor: pointer; transition: 0.3s; }
     .btn-lang.active { background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: #000; }
     
-    .header { text-align: center; margin-top: 50px; margin-bottom: 24px; width: 100%; max-width: 400px; position: relative; z-index: 1; }
+    .header { text-align: center; margin-top: 50px; margin-bottom: 20px; width: 100%; max-width: 400px; position: relative; z-index: 1; }
     .epic-logo { font-size: 2.8em; font-weight: 900; color: #ffffff; letter-spacing: 6px; margin-bottom: 25px; display: inline-block; text-shadow: 0 0 5px #fff, 0 0 15px var(--gold-light), 0 0 30px var(--gold-primary); }
     .clock-container { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 24px; padding: 22px; width: 100%; box-shadow: 0 15px 35px rgba(0,0,0,0.8); backdrop-filter: blur(10px); }
     .greeting { font-size: 1.05em; color: var(--gold-light); font-weight: 500; margin-bottom: 8px; padding: 5px 14px; border-radius: 12px; display: inline-block; background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); }
     .time-display { font-size: 3.2em; font-weight: 700; letter-spacing: 2px; background: linear-gradient(180deg, #ffffff 0%, var(--gold-primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
     .date-display { font-size: 0.9em; color: var(--gold-primary); margin-top: 8px; font-weight: 300; }
 
-    .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 16px; z-index: 1; position: relative; }
-    .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 6px; z-index: 1; position: relative; }
+    
+    /* Section Headers */
+    .section-header { width: 100%; text-align: left; font-size: 0.85em; font-weight: 700; color: var(--gold-primary); margin: 16px 0 6px 4px; text-transform: uppercase; letter-spacing: 1px; border-left: 3px solid var(--gold-primary); padding-left: 8px; line-height: 1; }
+    .admin-header { color: var(--neon-out); border-left-color: var(--neon-out); }
+
+    /* Main Grid (In/Out) */
+    .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 10px; }
     .grid-card { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 24px; text-decoration: none; position: relative; overflow: hidden; transition: 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 10px; text-align: center; backdrop-filter: blur(10px); }
     .grid-card:active { transform: scale(0.95); }
-    
     .grid-card .icon-box { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05); }
+    .grid-card .m-title { font-size: 1.1em; font-weight: 600; color: #fff; line-height: 1.2; }
+    .grid-card .m-desc { font-size: 0.75em; color: var(--text-sub); margin-top: 6px; }
+
+    /* Service Grid (Compact) */
+    .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-bottom: 10px; }
+    .service-card { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 16px; padding: 12px 10px; display: flex; align-items: center; gap: 10px; text-decoration: none; transition: 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
+    .service-card:active { transform: scale(0.95); }
+    .service-card .icon-box { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.05); font-size: 1.2em; flex-shrink: 0; }
+    .service-card .text-group { flex: 1; text-align: left; overflow: hidden; }
+    .service-card .m-title { font-size: 0.85em; font-weight: 600; color: #fff; margin-bottom: 2px; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .service-card .m-desc { font-size: 0.65em; color: var(--text-sub); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .service-card svg { width: 20px; height: 20px; stroke-width: 1.8; }
+
+    /* List Items (Tools & Admin) */
+    .list-item { display: flex; align-items: center; padding: 12px 16px; gap: 12px; background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 16px; text-decoration: none; transition: 0.3s; backdrop-filter: blur(10px); margin-bottom: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .list-item:last-child { margin-bottom: 0; }
+    .list-item .icon-box { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.05); font-size: 1.2em;}
+    .list-item .text-group { flex: 1; }
+    .list-item .m-title { font-size: 0.95em; font-weight: 500; color: #fff; margin-bottom: 2px; }
+    .list-item .m-desc { font-size: 0.7em; color: var(--text-sub); }
+    .list-item .arrow { color: var(--gold-primary); opacity: 0.7; }
+    .list-item:active { transform: scale(0.98); }
+    .list-item svg { width: 20px; height: 20px; stroke-width: 1.8; }
+
+    /* Color Classes */
     .c-in .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), transparent); color: var(--neon-in); border-color: rgba(16,185,129,0.3); }
     .c-out .icon-box { background: linear-gradient(135deg, rgba(225,29,72,0.15), transparent); color: var(--neon-out); border-color: rgba(225,29,72,0.3); }
     .c-leave .icon-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), transparent); color: var(--neon-leave); border-color: rgba(212,175,55,0.3); }
     .c-time .icon-box { background: linear-gradient(135deg, rgba(252,211,77,0.15), transparent); color: var(--neon-time); border-color: rgba(252,211,77,0.3); }
-    
-    .grid-card .m-title { font-size: 1.1em; font-weight: 600; color: #fff; line-height: 1.2; }
-    .grid-card .m-desc { font-size: 0.75em; color: var(--text-sub); margin-top: 6px; }
-
-    .list-item { display: flex; align-items: center; padding: 18px 20px; gap: 16px; background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 20px; text-decoration: none; transition: 0.3s; backdrop-filter: blur(10px); }
-    .list-item .icon-box { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.05); font-size: 1.5em;}
-    .c-gray .icon-box { background: rgba(255,255,255,0.05); color: #cbd5e1; }
-    .c-org .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), transparent); color: var(--neon-in); border-color: rgba(16,185,129,0.3); }
-    .c-admin .icon-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), transparent); color: var(--neon-admin); border-color: rgba(212,175,55,0.3); }
-    .c-info .icon-box { background: linear-gradient(135deg, rgba(56,189,248,0.15), transparent); color: #38bdf8; border-color: rgba(56,189,248,0.3); }
-    .c-trans .icon-box { background: linear-gradient(135deg, rgba(168,85,247,0.15), transparent); color: #a855f7; border-color: rgba(168,85,247,0.3); }
     .c-slip .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), transparent); color: #10b981; border-color: rgba(16,185,129,0.3); }
     .c-cert .icon-box { background: linear-gradient(135deg, rgba(252,211,77,0.15), transparent); color: #fcd34d; border-color: rgba(252,211,77,0.3); }
+    .c-trans .icon-box { background: linear-gradient(135deg, rgba(168,85,247,0.15), transparent); color: #a855f7; border-color: rgba(168,85,247,0.3); }
+    .c-info .icon-box { background: linear-gradient(135deg, rgba(56,189,248,0.15), transparent); color: #38bdf8; border-color: rgba(56,189,248,0.3); }
+    .c-org .icon-box { background: linear-gradient(135deg, rgba(16,185,129,0.15), transparent); color: var(--neon-in); border-color: rgba(16,185,129,0.3); }
+    .c-admin .icon-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), transparent); color: var(--neon-admin); border-color: rgba(212,175,55,0.3); }
+    .c-gray .icon-box { background: rgba(255,255,255,0.05); color: #cbd5e1; }
+
+    .admin-zone { background: rgba(225,29,72,0.04); padding: 10px; border-radius: 20px; border: 1px solid rgba(225,29,72,0.15); width: 100%; box-shadow: inset 0 0 20px rgba(225,29,72,0.03); }
     
-    .list-item .text-group { flex: 1; }
-    .list-item .m-title { font-size: 1em; font-weight: 500; color: #fff; margin-bottom: 3px; }
-    .list-item .m-desc { font-size: 0.8em; color: var(--text-sub); }
-    .list-item .arrow { color: var(--gold-primary); opacity: 0.7; }
-    .list-item:active { transform: scale(0.98); }
-
-    svg { width: 24px; height: 24px; stroke-width: 1.8; }
-    .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-light), transparent); margin: 8px 0; }
-
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
     .modal-box { background: #0a0a0c; width: 100%; max-width: 380px; padding: 30px 25px; border-radius: 28px; text-align: center; border: 1px solid var(--gold-primary); box-shadow: 0 25px 50px rgba(0,0,0,0.8); position: relative; max-height: 90vh; overflow-y: auto; }
     .modal-title { font-size: 1.25em; font-weight: 600; margin-bottom: 6px; color: var(--gold-light); }
@@ -77,7 +94,7 @@
     .btn-leave span { font-size: 1.5em; }
     .btn-leave.full { grid-column: span 2; flex-direction: row; justify-content: center; }
     
-    .broadcast-banner { display: none; background: linear-gradient(90deg, rgba(245,158,11,0.2), rgba(225,29,72,0.2)); border: 1px solid rgba(245,158,11,0.4); width: 100%; padding: 12px 16px; border-radius: 16px; margin-bottom: 16px; text-align:left; }
+    .broadcast-banner { display: none; background: linear-gradient(90deg, rgba(245,158,11,0.2), rgba(225,29,72,0.2)); border: 1px solid rgba(245,158,11,0.4); width: 100%; padding: 12px 16px; border-radius: 16px; margin-bottom: 10px; text-align:left; }
     .result-box { display: none; background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; margin-top: 16px; border: 1px solid var(--border-light); text-align: left; }
     .r-stat { font-size: 0.95em; display: flex; justify-content: space-between; margin-bottom: 10px; background: rgba(212,175,55,0.05); padding: 12px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.1); }
     
@@ -89,7 +106,6 @@
 
     .developer-watermark { text-align: center; font-size: 0.75em; color: rgba(212, 175, 55, 0.5); margin-top: 40px; padding-bottom: 20px; width: 100%; }
 
-    /* Translator Specific Styles */
     .trans-btn-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
     .trans-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); border-radius: 12px; padding: 10px 4px; font-weight: 600; cursor: pointer; font-size: 0.85em; transition: 0.3s; }
     .trans-btn.active { background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; border-color: transparent; }
@@ -123,6 +139,8 @@
       <div id="broadcastText" style="color: #fff; font-size: 0.95em; line-height: 1.5;"></div>
     </div>
 
+    <!-- Section 1: Time Attendance -->
+    <div class="section-header" id="t-sec-time">ลงเวลาทำงาน</div>
     <div class="main-grid">
       <a href="scan.html?type=in" class="grid-card c-in">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"></path></svg></div>
@@ -132,60 +150,69 @@
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"></path></svg></div>
         <div><div class="m-title" id="t-menu-out">ออกงาน</div><div class="m-desc" id="t-desc-out">บันทึกเลิกงาน</div></div>
       </a>
-      <a href="#" onclick="openModal('leaveSelectModal')" class="grid-card c-leave">
+    </div>
+
+    <!-- Section 2: Self Service -->
+    <div class="section-header" id="t-sec-service">บริการพนักงาน (Self Service)</div>
+    <div class="service-grid">
+      <a href="#" onclick="openModal('leaveSelectModal')" class="service-card c-leave">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path></svg></div>
-        <div><div class="m-title" id="t-menu-leave">แจ้งลา</div><div class="m-desc" id="t-desc-leave">ลาป่วย, ลากิจ, ฯลฯ</div></div>
+        <div class="text-group"><div class="m-title" id="t-menu-leave">แจ้งลา</div><div class="m-desc" id="t-desc-leave">ลาป่วย, ลากิจ</div></div>
       </a>
-      <a href="#" onclick="openModal('checkTimeModal')" class="grid-card c-time">
+      <a href="#" onclick="openModal('checkTimeModal')" class="service-card c-time">
         <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-        <div><div class="m-title" id="t-menu-check">เช็คเวลา</div><div class="m-desc" id="t-desc-check">ดูสาย และ OT</div></div>
+        <div class="text-group"><div class="m-title" id="t-menu-check">เช็คเวลา</div><div class="m-desc" id="t-desc-check">ดูสายและ OT</div></div>
+      </a>
+      <a href="#" onclick="openModal('payslipModal')" class="service-card c-slip">
+        <div class="icon-box">💵</div>
+        <div class="text-group"><div class="m-title" id="t-menu-slip">สลิปเงินเดือน</div><div class="m-desc" id="t-desc-slip">รอบปัจจุบัน/ย้อนหลัง</div></div>
+      </a>
+      <a href="#" onclick="openModal('certModal')" class="service-card c-cert">
+        <div class="icon-box">📜</div>
+        <div class="text-group"><div class="m-title" id="t-menu-cert">ใบรับรอง</div><div class="m-desc" id="t-desc-cert">หนังสือรับรองเงินเดือน</div></div>
       </a>
     </div>
-    <div class="divider"></div>
 
-    <a href="#" onclick="openModal('payslipModal')" class="card list-item c-slip">
-      <div class="icon-box">💵</div>
-      <div class="text-group"><div class="m-title" id="t-menu-slip">สลิปเงินเดือน</div><div class="m-desc" id="t-desc-slip">ดูสลิปเงินเดือนแบบย้อนหลังได้</div></div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
-    <a href="#" onclick="openModal('certModal')" class="card list-item c-cert">
-      <div class="icon-box">📜</div>
-      <div class="text-group"><div class="m-title" id="t-menu-cert">ใบรับรองเงินเดือน</div><div class="m-desc" id="t-desc-cert">ขอหนังสือรับรองเงินเดือนออนไลน์</div></div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
+    <!-- Section 3: Tools -->
+    <div class="section-header" id="t-sec-tools">เครื่องมือช่วยเหลือ</div>
+    <div style="width: 100%;">
+      <a href="#" onclick="openModal('translatorModal')" class="list-item c-trans">
+        <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg></div>
+        <div class="text-group"><div class="m-title" id="t-menu-trans">แปลภาษาอัจฉริยะ</div><div class="m-desc" id="t-desc-trans">พูดและแปลอัตโนมัติ (6 ภาษา)</div></div>
+        <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+      </a>
+      <a href="#" onclick="openModal('orgChartModal')" class="list-item c-org">
+        <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
+        <div class="text-group"><div class="m-title" id="t-menu-org">ผังองค์กร</div><div class="m-desc" id="t-desc-org">โครงสร้างและตำแหน่งพนักงาน</div></div>
+        <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+      </a>
+      <a href="#" onclick="openModal('tutorialModal')" class="list-item c-info">
+        <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+        <div class="text-group"><div class="m-title" id="t-menu-tutor">คู่มือการใช้งาน</div><div class="m-desc" id="t-desc-tutor">สาธิตวิธีใช้ระบบต่างๆ</div></div>
+        <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+      </a>
+    </div>
 
-    <!-- เมนูอื่นๆ -->
-    <a href="#" onclick="openModal('translatorModal')" class="card list-item c-trans">
-      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg></div>
-      <div class="text-group"><div class="m-title" id="t-menu-trans">แปลภาษาอัจฉริยะ</div><div class="m-desc" id="t-desc-trans">พูดและแปลอัตโนมัติ (6 ภาษา)</div></div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
+    <!-- Section 4: Admin -->
+    <div class="section-header admin-header" id="t-sec-admin">สำหรับแอดมิน</div>
+    <div class="admin-zone">
+      <a href="#" onclick="openAdminAuth('viewData')" class="list-item c-admin">
+        <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
+        <div class="text-group"><div class="m-title" id="t-menu-view">ข้อมูลเวลาพนักงาน</div><div class="m-desc" id="t-desc-view">เช็คเวลาเข้าออกแบบละเอียด</div></div>
+        <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+      </a>
+      <a href="register.html" class="list-item c-gray">
+        <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.375 21c-2.331 0-4.512-.645-6.375-1.765z"></path></svg></div>
+        <div class="text-group"><div class="m-title" id="t-menu-reg">ลงทะเบียนใบหน้า</div><div class="m-desc" id="t-desc-reg">บันทึกใบหน้าเข้าระบบ</div></div>
+        <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+      </a>
+      <a href="#" onclick="openAdminAuth('config')" class="list-item c-gray">
+        <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
+        <div class="text-group"><div class="m-title" id="t-menu-cfg">ตั้งค่าพิกัด GPS</div><div class="m-desc" id="t-desc-cfg">ระบบหลังบ้าน</div></div>
+        <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+      </a>
+    </div>
 
-    <a href="#" onclick="openModal('tutorialModal')" class="card list-item c-info">
-      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-      <div class="text-group"><div class="m-title" id="t-menu-tutor">คู่มือการใช้งาน</div><div class="m-desc" id="t-desc-tutor">สาธิตวิธีใช้ระบบต่างๆ</div></div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
-    <a href="#" onclick="openModal('orgChartModal')" class="card list-item c-org">
-      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
-      <div class="text-group"><div class="m-title" id="t-menu-org">ผังองค์กร</div><div class="m-desc" id="t-desc-org">โครงสร้างและตำแหน่งพนักงาน</div></div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
-    <a href="#" onclick="openAdminAuth('viewData')" class="card list-item c-admin">
-      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
-      <div class="text-group"><div class="m-title" id="t-menu-view">ดูข้อมูลพนักงาน</div><div class="m-desc" id="t-desc-view">เช็คเวลาเข้าออกแบบละเอียดรายวัน</div></div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
-    <a href="register.html" class="card list-item c-gray">
-      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.375 21c-2.331 0-4.512-.645-6.375-1.765z"></path></svg></div>
-      <div class="text-group"><div class="m-title" id="t-menu-reg">ลงทะเบียนพนักงาน</div><div class="m-desc" id="t-desc-reg">บันทึกใบหน้าเข้าระบบ (Admin)</div></div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
-    <a href="#" onclick="openAdminAuth('config')" class="card list-item c-gray" style="margin-top:-8px;">
-      <div class="icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
-      <div class="text-group"><div class="m-title" id="t-menu-cfg">ตั้งค่าพิกัด GPS</div><div class="m-desc" id="t-desc-cfg">ระบบหลังบ้าน (Admin)</div></div>
-      <div class="arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-    </a>
   </div>
 
   <div class="developer-watermark">
@@ -209,13 +236,11 @@
       <div class="modal-title" id="t-slip-title">💵 สลิปเงินเดือน</div>
       <div class="modal-desc" id="t-slip-desc">ระบุรหัสพนักงานเพื่อดึงข้อมูลสลิป</div>
       
-      <!-- ใช้เป็น Type Password และบังคับคีย์บอร์ดตัวเลขในมือถือ -->
       <input type="password" id="slipInputPin" class="input-field" placeholder="รหัสพนักงาน (PIN)..." style="margin-bottom: 8px;" pattern="[0-9]*" inputmode="numeric">
       
       <select id="slipCycleSelect" class="input-field" style="padding: 12px; margin-bottom: 16px; font-size: 0.9em;"></select>
       <button class="btn btn-primary" onclick="fetchPayslip()" id="btn-view-slip">ค้นหาข้อมูล</button>
       
-      <!-- พื้นที่แสดงกระดาษสลิปเงินเดือน -->
       <div id="slipResult" style="display:none; background:#fff; color:#000; padding:20px; border-radius:12px; font-size:0.85em; font-family:sans-serif; text-align:left; border: 1px solid #ccc; margin-top:15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);">
         <div style="text-align:center; font-weight:bold; font-size:1.1em; margin-bottom:5px;" id="slipCompName"></div>
         <div style="text-align:center; font-weight:bold; margin-bottom:15px; background:#f1f5f9; padding:6px; border-radius:6px;">สลิปเงินเดือน (PAYSLIP)</div>
@@ -255,7 +280,6 @@
       <select id="certCycleSelect" class="input-field" style="padding: 12px; margin-bottom: 16px; font-size: 0.9em;"></select>
       <button class="btn btn-primary" onclick="fetchCertificate()" id="btn-view-cert">สร้างใบรับรอง</button>
       
-      <!-- พื้นที่แสดงกระดาษใบรับรอง -->
       <div id="certResult" style="display:none; background:#fff; color:#000; padding:25px; border-radius:12px; font-size:0.85em; font-family:sans-serif; text-align:left; border: 1px solid #ccc; margin-top:15px; line-height:1.6; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);">
         <div style="text-align:center; font-weight:bold; font-size:1.2em;" id="certCompName"></div>
         <div style="text-align:center; font-size:0.8em; color:#444; margin-bottom:15px;" id="certCompAddr"></div>
@@ -284,7 +308,7 @@
     </div>
   </div>
 
-  <!-- Modals เดิม -->
+  <!-- Modals อื่นๆ -->
   <div id="tutorialModal" class="modal-overlay"><div class="modal-box" style="padding: 25px 20px; max-width: 400px;"><div class="modal-title" style="color: #38bdf8;" id="t-tutor-title">📖 คู่มือการใช้งาน</div><div class="modal-desc" style="margin-bottom: 15px;" id="t-tutor-desc">เรียนรู้วิธีใช้งานระบบ 88 Designs</div><div style="background:rgba(0,0,0,0.6); border-radius:16px; padding:15px; max-height: 50vh; overflow-y:auto; text-align:left; border: 1px solid rgba(56,189,248,0.2); margin-bottom: 15px;"><h3 style="color: var(--neon-in); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s1-t">📷 1. การสแกนเข้า-ออกงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s1-d">กดปุ่ม "เข้างาน" หรือ "ออกงาน" ระบบจะสแกนใบหน้าและดึงพิกัด GPS อัตโนมัติ</p><h3 style="color: var(--neon-leave); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s2-t">📝 2. การแจ้งลา</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s2-d">กด "แจ้งลา" -> เลือกประเภทการลา -> พิมพ์ชื่อ-นามสกุลของคุณให้ถูกต้อง</p><h3 style="color: var(--neon-time); font-size: 1em; margin-bottom: 8px;" id="t-tutor-s3-t">⏰ 3. เช็คเวลาทำงาน</h3><p style="font-size: 0.85em; color: var(--text-sub); line-height: 1.5; margin-bottom: 15px;" id="t-tutor-s3-d">ตรวจสอบเวลามาสายและ OT พิมพ์ชื่อของคุณแล้วกดค้นหา</p></div><button class="btn btn-outline" onclick="closeModal('tutorialModal')" id="btn-close-tutor">ปิดหน้าต่าง</button></div></div>
   <div id="orgChartModal" class="modal-overlay"><div class="modal-box" style="max-width: 450px; padding: 25px 15px;"><div class="modal-title" style="color:var(--gold-light);" id="t-org-title">🏢 ผังองค์กร (Organization Chart)</div><div class="modal-desc" style="margin-bottom: 15px;">บริษัท 88 Designs</div><div class="org-container" style="background: rgba(0,0,0,0.6); border-radius: 16px; padding: 15px 10px; max-height: 50vh; overflow-y: auto; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 15px; text-align: center;"><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(0,0,0,0.5)); border: 1px solid var(--gold-primary); box-shadow: 0 0 15px rgba(212,175,55,0.2); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: var(--gold-light); font-size: 1.1em; font-weight: 700;">คุณแนค</div><div style="color: var(--gold-primary); font-size: 0.75em;">Owner (เจ้าของกิจการ)</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">ต้อม</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #fff; font-size: 0.95em; font-weight: 600;">กอล์ฟ</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้จัดการร้าน</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ภูมิ</div><div style="color: var(--text-sub); font-size: 0.75em;">กราฟฟิคดีไซน์</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ซิน</div><div style="color: var(--text-sub); font-size: 0.75em;">นักการบัญชี</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โจ้</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">มีน</div><div style="color: var(--text-sub); font-size: 0.75em;">หัวหน้าช่าง</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ก๊อต</div><div style="color: var(--text-sub); font-size: 0.75em;">ผู้ช่วยหัวหน้าช่าง</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px; flex: 1;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">โกเย</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างไฟ</div></div></div><div style="color: rgba(212,175,55,0.5); font-size: 1.2em; margin-bottom: 10px; margin-top: -5px;">↓</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อาว</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">อู</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">แจ็ค</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div><div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 5px;"><div style="color: #e2e8f0; font-size: 0.95em; font-weight: 500;">ตัวเล็ก</div><div style="color: var(--text-sub); font-size: 0.75em;">ช่างทั่วไป</div></div></div></div><button class="btn btn-outline" onclick="closeModal('orgChartModal')" id="btn-close-org">ปิดหน้าต่าง</button></div></div>
   <div id="leaveSelectModal" class="modal-overlay"><div class="modal-box"><div class="modal-title" id="t-l-title">เลือกประเภทการลา</div><div class="modal-desc" id="t-l-desc">กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา</div><div class="leave-grid"><button class="btn-leave" onclick="proceedLeave('ลาป่วย')" id="t-l-sick"><span>🤧</span> ลาป่วย</button><button class="btn-leave" onclick="proceedLeave('ลากิจ')" id="t-l-personal"><span>💼</span> ลากิจ</button><button class="btn-leave" onclick="proceedLeave('ลาครึ่งวันเช้า')" id="t-l-halfm"><span>🌅</span> ครึ่งวันเช้า</button><button class="btn-leave" onclick="proceedLeave('ลาครึ่งวันบ่าย')" id="t-l-halfa"><span>🌇</span> ครึ่งวันบ่าย</button><button class="btn-leave full" onclick="proceedLeave('ลาพักร้อน')" id="t-l-annual"><span>🏖️</span> ลาพักร้อน</button></div><button class="btn btn-outline" onclick="closeModal('leaveSelectModal')" id="btn-cancel-leave">ยกเลิก</button></div></div>
@@ -300,121 +324,76 @@
     // --- ระบบพจนานุกรมแปลภาษา ---
     const dict = {
       th: {
-        "t-menu-in": "เข้างาน", "t-desc-in": "สแกนใบหน้า",
-        "t-menu-out": "ออกงาน", "t-desc-out": "บันทึกเลิกงาน",
-        "t-menu-leave": "แจ้งลา", "t-desc-leave": "ลาป่วย, ลากิจ, ฯลฯ",
-        "t-menu-check": "เช็คเวลา", "t-desc-check": "ดูสาย และ OT",
-        "t-menu-slip": "สลิปเงินเดือน", "t-desc-slip": "ดูสลิปเงินเดือนแบบย้อนหลังได้",
-        "t-menu-cert": "ใบรับรองเงินเดือน", "t-desc-cert": "ขอหนังสือรับรองเงินเดือนออนไลน์",
-        "t-menu-trans": "แปลภาษาอัจฉริยะ", "t-desc-trans": "พูดและแปลอัตโนมัติ (6 ภาษา)",
-        "t-menu-tutor": "คู่มือการใช้งาน", "t-desc-tutor": "สาธิตวิธีใช้ระบบต่างๆ",
-        "t-menu-org": "ผังองค์กร", "t-desc-org": "โครงสร้างและตำแหน่งพนักงาน",
-        "t-menu-view": "ดูข้อมูลพนักงาน", "t-desc-view": "เช็คเวลาเข้าออกแบบละเอียดรายวัน",
-        "t-menu-reg": "ลงทะเบียนพนักงาน", "t-desc-reg": "บันทึกใบหน้าเข้าระบบ (Admin)",
-        "t-menu-cfg": "ตั้งค่าพิกัด GPS", "t-desc-cfg": "ระบบหลังบ้าน (Admin)",
-        "t-broadcast-title": "ประกาศจากผู้บริหาร",
-        "t-tutor-title": "📖 คู่มือการใช้งาน", "t-tutor-desc": "เรียนรู้วิธีใช้งานระบบ 88 Designs",
+        "t-sec-time": "ลงเวลาทำงาน", "t-sec-service": "บริการพนักงาน", "t-sec-tools": "เครื่องมือช่วยเหลือ", "t-sec-admin": "สำหรับแอดมิน",
+        "t-menu-in": "เข้างาน", "t-desc-in": "สแกนใบหน้า", "t-menu-out": "ออกงาน", "t-desc-out": "บันทึกเลิกงาน",
+        "t-menu-leave": "แจ้งลา", "t-desc-leave": "ลาป่วย, ลากิจ", "t-menu-check": "เช็คเวลา", "t-desc-check": "ดูสายและ OT",
+        "t-menu-slip": "สลิปเงินเดือน", "t-desc-slip": "รอบปัจจุบัน/ย้อนหลัง", "t-menu-cert": "ใบรับรอง", "t-desc-cert": "หนังสือรับรองเงินเดือน",
+        "t-menu-trans": "แปลภาษาอัจฉริยะ", "t-desc-trans": "พูดและแปลอัตโนมัติ (6 ภาษา)", "t-menu-tutor": "คู่มือการใช้งาน", "t-desc-tutor": "สาธิตวิธีใช้ระบบต่างๆ",
+        "t-menu-org": "ผังองค์กร", "t-desc-org": "โครงสร้างและตำแหน่งพนักงาน", "t-menu-view": "ข้อมูลเวลาพนักงาน", "t-desc-view": "เช็คเวลาเข้าออกแบบละเอียด",
+        "t-menu-reg": "ลงทะเบียนใบหน้า", "t-desc-reg": "บันทึกใบหน้าเข้าระบบ", "t-menu-cfg": "ตั้งค่าพิกัด GPS", "t-desc-cfg": "ระบบหลังบ้าน",
+        "t-broadcast-title": "ประกาศจากผู้บริหาร", "t-tutor-title": "📖 คู่มือการใช้งาน", "t-tutor-desc": "เรียนรู้วิธีใช้งานระบบ 88 Designs",
         "t-tutor-s1-t": "📷 1. การสแกนเข้า-ออกงาน", "t-tutor-s1-d": "กดปุ่ม 'เข้างาน' หรือ 'ออกงาน' ระบบจะสแกนใบหน้าและดึงพิกัด GPS อัตโนมัติ",
-        "t-tutor-s2-t": "📝 2. การแจ้งลา", "t-tutor-s2-d": "กด 'แจ้งลา' -> เลือกประเภทการลา -> พิมพ์ชื่อ-นามสกุลของคุณให้ถูกต้อง",
+        "t-tutor-s2-t": "📝 2. การแจ้งลา", "t-tutor-s2-d": "กด 'แจ้งลา' -> เลือกประเภทการลา -> พิมพ์ชื่อของคุณให้ถูกต้อง",
         "t-tutor-s3-t": "⏰ 3. เช็คเวลาทำงาน", "t-tutor-s3-d": "ตรวจสอบเวลามาสายและ OT พิมพ์ชื่อของคุณแล้วกดค้นหา",
-        "t-org-title": "🏢 ผังองค์กร (Organization Chart)",
-        "t-l-title": "เลือกประเภทการลา", "t-l-desc": "กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา",
-        "t-l-sick": "<span>🤧</span> ลาป่วย", "t-l-personal": "<span>💼</span> ลากิจ", 
-        "t-l-halfm": "<span>🌅</span> ครึ่งวันเช้า", "t-l-halfa": "<span>🌇</span> ครึ่งวันบ่าย", "t-l-annual": "<span>🏖️</span> ลาพักร้อน",
-        "t-ls-desc": "พิมพ์ชื่อ-นามสกุล ให้ตรงกับที่ลงทะเบียนไว้",
-        "t-c-title": "เช็คเวลาทำงาน", "t-c-desc": "ตรวจสอบ OT และเวลามาสายสะสม",
-        "t-r-late": "มาสายสะสม:", "t-r-ot": "ทำ OT สะสม:",
-        "t-pwd-title": "ยืนยันสิทธิ์ Admin", "t-pwd-desc": "กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน",
-        "t-a-title": "📋 ข้อมูลเวลา (Admin)", "t-a-desc": "ตรวจสอบเวลาเข้า-ออกรายบุคคล",
-        "t-trans-title": "🌐 แปลภาษา & เสียงอ่าน", "t-trans-desc": "พิมพ์หรือพูดเพื่อแปล (รองรับ 6 ภาษา)",
-        "t-trans-choose": "เลือกภาษาที่ต้องการแปล:",
-        "t-force-title": "ประกาศสำคัญ", "btn-ack-broadcast": "🔊 รับทราบ (ฟังประกาศ)",
-        "t-slip-title": "💵 สลิปเงินเดือน", "t-slip-desc": "ระบุรหัสพนักงานเพื่อดึงข้อมูลสลิป",
-        "t-cert-title": "📜 ใบรับรองเงินเดือน", "t-cert-desc": "ระบุรหัสพนักงานเพื่อขอใบรับรอง",
+        "t-org-title": "🏢 ผังองค์กร (Organization Chart)", "t-l-title": "เลือกประเภทการลา", "t-l-desc": "กรุณาเลือกเหตุผลที่คุณต้องการแจ้งลา",
+        "t-l-sick": "<span>🤧</span> ลาป่วย", "t-l-personal": "<span>💼</span> ลากิจ", "t-l-halfm": "<span>🌅</span> ครึ่งวันเช้า", "t-l-halfa": "<span>🌇</span> ครึ่งวันบ่าย", "t-l-annual": "<span>🏖️</span> ลาพักร้อน",
+        "t-ls-desc": "พิมพ์ชื่อ-นามสกุล ให้ตรงกับที่ลงทะเบียนไว้", "t-c-title": "เช็คเวลาทำงาน", "t-c-desc": "ตรวจสอบ OT และเวลามาสายสะสม",
+        "t-r-late": "มาสายสะสม:", "t-r-ot": "ทำ OT สะสม:", "t-pwd-title": "ยืนยันสิทธิ์ Admin", "t-pwd-desc": "กรุณาใส่รหัสผ่านเพื่อเข้าใช้งาน",
+        "t-a-title": "📋 ข้อมูลเวลา (Admin)", "t-a-desc": "ตรวจสอบเวลาเข้า-ออกรายบุคคล", "t-trans-title": "🌐 แปลภาษา & เสียงอ่าน", "t-trans-desc": "พิมพ์หรือพูดเพื่อแปล (รองรับ 6 ภาษา)",
+        "t-trans-choose": "เลือกภาษาที่ต้องการแปล:", "t-force-title": "ประกาศสำคัญ", "btn-ack-broadcast": "🔊 รับทราบ (ฟังประกาศ)",
+        "t-slip-title": "💵 สลิปเงินเดือน", "t-slip-desc": "ระบุรหัสพนักงานเพื่อดึงข้อมูลสลิป", "t-cert-title": "📜 ใบรับรองเงินเดือน", "t-cert-desc": "ระบุรหัสพนักงานเพื่อขอใบรับรอง",
         "btn-close-tutor": "ปิดหน้าต่าง", "btn-close-org": "ปิดหน้าต่าง", "btn-cancel-leave": "ยกเลิก", "btn-cancel-leave2": "ยกเลิก",
-        "btn-submit-l": "ยืนยันการลา", "btn-search-time": "ค้นหาข้อมูล", "btn-close-time": "ปิดหน้าต่าง",
-        "btn-confirm-pwd": "ยืนยัน", "btn-cancel-pwd": "ยกเลิก", "btn-search-admin": "ค้นหาข้อมูล", "btn-close-admin": "ปิดหน้าต่าง",
-        "btn-close-trans": "ปิดหน้าต่าง", "btn-view-slip": "ค้นหาข้อมูล", "btn-close-slip": "ปิดหน้าต่าง", "btn-view-cert": "สร้างใบรับรอง", "btn-close-cert": "ปิดหน้าต่าง",
-        "placeholder-name": "ชื่อ-นามสกุล...",
-        "placeholder-pin": "รหัสพนักงาน (PIN)..."
+        "btn-submit-l": "ยืนยันการลา", "btn-search-time": "ค้นหาข้อมูล", "btn-close-time": "ปิดหน้าต่าง", "btn-confirm-pwd": "ยืนยัน", "btn-cancel-pwd": "ยกเลิก",
+        "btn-search-admin": "ค้นหาข้อมูล", "btn-close-admin": "ปิดหน้าต่าง", "btn-close-trans": "ปิดหน้าต่าง", "btn-view-slip": "ค้นหาข้อมูล", "btn-close-slip": "ปิดหน้าต่าง",
+        "btn-view-cert": "สร้างใบรับรอง", "btn-close-cert": "ปิดหน้าต่าง", "placeholder-name": "ชื่อ-นามสกุล...", "placeholder-pin": "รหัสพนักงาน (PIN)..."
       },
       en: {
-        "t-menu-in": "Check In", "t-desc-in": "Face scan",
-        "t-menu-out": "Check Out", "t-desc-out": "End shift",
-        "t-menu-leave": "Leave", "t-desc-leave": "Sick, Personal",
-        "t-menu-check": "Check Time", "t-desc-check": "Late & OT",
-        "t-menu-slip": "Payslip", "t-desc-slip": "View historical payslips",
-        "t-menu-cert": "Certificate", "t-desc-cert": "Request salary certificate",
-        "t-menu-trans": "Auto Translator", "t-desc-trans": "Voice & Text (6 Langs)",
-        "t-menu-tutor": "How to Use", "t-desc-tutor": "App demonstration",
-        "t-menu-org": "Org Chart", "t-desc-org": "Company structure",
-        "t-menu-view": "View Records", "t-desc-view": "Daily details for Admin",
-        "t-menu-reg": "Register Staff", "t-desc-reg": "Enroll face data",
-        "t-menu-cfg": "GPS Settings", "t-desc-cfg": "Admin Dashboard",
-        "t-broadcast-title": "Announcement",
-        "t-tutor-title": "📖 User Guide", "t-tutor-desc": "Learn how to use the app",
+        "t-sec-time": "Time Attendance", "t-sec-service": "Self Service", "t-sec-tools": "Tools & Guides", "t-sec-admin": "Administrator",
+        "t-menu-in": "Check In", "t-desc-in": "Face scan", "t-menu-out": "Check Out", "t-desc-out": "End shift",
+        "t-menu-leave": "Leave", "t-desc-leave": "Sick, Personal", "t-menu-check": "Check Time", "t-desc-check": "Late & OT",
+        "t-menu-slip": "Payslip", "t-desc-slip": "View historical", "t-menu-cert": "Certificate", "t-desc-cert": "Salary cert",
+        "t-menu-trans": "Auto Translator", "t-desc-trans": "Voice & Text (6 Langs)", "t-menu-tutor": "How to Use", "t-desc-tutor": "App demonstration",
+        "t-menu-org": "Org Chart", "t-desc-org": "Company structure", "t-menu-view": "View Records", "t-desc-view": "Daily details for Admin",
+        "t-menu-reg": "Register Staff", "t-desc-reg": "Enroll face data", "t-menu-cfg": "GPS Settings", "t-desc-cfg": "Admin Dashboard",
+        "t-broadcast-title": "Announcement", "t-tutor-title": "📖 User Guide", "t-tutor-desc": "Learn how to use the app",
         "t-tutor-s1-t": "📷 1. Check In/Out", "t-tutor-s1-d": "Tap 'Check In/Out' to scan face and record GPS.",
         "t-tutor-s2-t": "📝 2. Leave Request", "t-tutor-s2-d": "Tap 'Leave' -> Select type -> Enter name.",
         "t-tutor-s3-t": "⏰ 3. Check Time", "t-tutor-s3-d": "Search your name to see Late/OT summary.",
-        "t-org-title": "🏢 Organization Chart",
-        "t-l-title": "Select Leave Type", "t-l-desc": "Choose your reason",
-        "t-l-sick": "<span>🤧</span> Sick", "t-l-personal": "<span>💼</span> Personal", 
-        "t-l-halfm": "<span>🌅</span> Half (AM)", "t-l-halfa": "<span>🌇</span> Half (PM)", "t-l-annual": "<span>🏖️</span> Annual",
-        "t-ls-desc": "Enter registered full name",
-        "t-c-title": "Work Time", "t-c-desc": "View your OT and Late",
-        "t-r-late": "Total Late:", "t-r-ot": "Total OT:",
-        "t-pwd-title": "Admin Auth", "t-pwd-desc": "Enter admin password",
-        "t-a-title": "📋 Admin Records", "t-a-desc": "Check daily attendance",
-        "t-trans-title": "🌐 Translator & Voice", "t-trans-desc": "Type or speak to translate",
-        "t-trans-choose": "Select target language:",
-        "t-force-title": "Important Announcement", "btn-ack-broadcast": "🔊 Acknowledge",
-        "t-slip-title": "💵 Payslip", "t-slip-desc": "Enter PIN to fetch payslip",
-        "t-cert-title": "📜 Salary Certificate", "t-cert-desc": "Enter PIN to generate",
+        "t-org-title": "🏢 Organization Chart", "t-l-title": "Select Leave Type", "t-l-desc": "Choose your reason",
+        "t-l-sick": "<span>🤧</span> Sick", "t-l-personal": "<span>💼</span> Personal", "t-l-halfm": "<span>🌅</span> Half (AM)", "t-l-halfa": "<span>🌇</span> Half (PM)", "t-l-annual": "<span>🏖️</span> Annual",
+        "t-ls-desc": "Enter registered full name", "t-c-title": "Work Time", "t-c-desc": "View your OT and Late",
+        "t-r-late": "Total Late:", "t-r-ot": "Total OT:", "t-pwd-title": "Admin Auth", "t-pwd-desc": "Enter admin password",
+        "t-a-title": "📋 Admin Records", "t-a-desc": "Check daily attendance", "t-trans-title": "🌐 Translator & Voice", "t-trans-desc": "Type or speak to translate",
+        "t-trans-choose": "Select target language:", "t-force-title": "Important Announcement", "btn-ack-broadcast": "🔊 Acknowledge",
+        "t-slip-title": "💵 Payslip", "t-slip-desc": "Enter PIN to fetch payslip", "t-cert-title": "📜 Salary Certificate", "t-cert-desc": "Enter PIN to generate",
         "btn-close-tutor": "Close", "btn-close-org": "Close", "btn-cancel-leave": "Cancel", "btn-cancel-leave2": "Cancel",
-        "btn-submit-l": "Submit", "btn-search-time": "Search", "btn-close-time": "Close",
-        "btn-confirm-pwd": "Confirm", "btn-cancel-pwd": "Cancel", "btn-search-admin": "Search", "btn-close-admin": "Close",
-        "btn-close-trans": "Close", "btn-view-slip": "Search", "btn-close-slip": "Close", "btn-view-cert": "Generate", "btn-close-cert": "Close",
-        "placeholder-name": "Full Name...",
-        "placeholder-pin": "Employee PIN..."
+        "btn-submit-l": "Submit", "btn-search-time": "Search", "btn-close-time": "Close", "btn-confirm-pwd": "Confirm", "btn-cancel-pwd": "Cancel",
+        "btn-search-admin": "Search", "btn-close-admin": "Close", "btn-close-trans": "Close", "btn-view-slip": "Search", "btn-close-slip": "Close",
+        "btn-view-cert": "Generate", "btn-close-cert": "Close", "placeholder-name": "Full Name...", "placeholder-pin": "Employee PIN..."
       },
       mm: {
-        "t-menu-in": "အလုပ်ဝင်", "t-desc-in": "မျက်နှာဖတ်ရန်",
-        "t-menu-out": "အလုပ်ဆင်း", "t-desc-out": "အလုပ်ဆင်းရန်",
-        "t-menu-leave": "ခွင့်တိုင်", "t-desc-leave": "နေမကောင်း, ခွင့်",
-        "t-menu-check": "အချိန်စစ်", "t-desc-check": "OT နှင့် နောက်ကျ",
-        "t-menu-slip": "လစာဖြတ်ပိုင်း", "t-desc-slip": "ယခင်လစာကိုကြည့်ရန်",
-        "t-menu-cert": "လစာထောက်ခံစာ", "t-desc-cert": "ထောက်ခံစာတောင်းရန်",
-        "t-menu-trans": "ဘာသာပြန်", "t-desc-trans": "အသံနှင့် စာသား (၆ ဘာသာ)",
-        "t-menu-tutor": "အသုံးပြုနည်း", "t-desc-tutor": "အက်ပ် သရုပ်ပြ",
-        "t-menu-org": "ဖွဲ့စည်းပုံ", "t-desc-org": "ကုမ္ပဏီဖွဲ့စည်းပုံ",
-        "t-menu-view": "မှတ်တမ်းကြည့်ရန်", "t-desc-view": "ဝန်ထမ်းမှတ်တမ်းကြည့်ရန်",
-        "t-menu-reg": "စာရင်းသွင်းရန်", "t-desc-reg": "မျက်နှာစာရင်းသွင်းပါ",
-        "t-menu-cfg": "GPS နေရာ", "t-desc-cfg": "Admin သာလျှင်",
-        "t-broadcast-title": "ကြေငြာချက်",
-        "t-tutor-title": "📖 အသုံးပြုသူလမ်းညွှန်", "t-tutor-desc": "အသုံးပြုနည်း",
+        "t-sec-time": "အချိန်မှတ်တမ်း", "t-sec-service": "ဝန်ထမ်းဝန်ဆောင်မှု", "t-sec-tools": "ကိရိယာများ", "t-sec-admin": "စီမံခန့်ခွဲသူ",
+        "t-menu-in": "အလုပ်ဝင်", "t-desc-in": "မျက်နှာဖတ်ရန်", "t-menu-out": "အလုပ်ဆင်း", "t-desc-out": "အလုပ်ဆင်းရန်",
+        "t-menu-leave": "ခွင့်တိုင်", "t-desc-leave": "နေမကောင်း, ခွင့်", "t-menu-check": "အချိန်စစ်", "t-desc-check": "OT နှင့် နောက်ကျ",
+        "t-menu-slip": "လစာဖြတ်ပိုင်း", "t-desc-slip": "ယခင်လစာကိုကြည့်ရန်", "t-menu-cert": "ထောက်ခံစာ", "t-desc-cert": "လစာထောက်ခံစာတောင်းရန်",
+        "t-menu-trans": "ဘာသာပြန်", "t-desc-trans": "အသံနှင့် စာသား (၆ ဘာသာ)", "t-menu-tutor": "အသုံးပြုနည်း", "t-desc-tutor": "အက်ပ် သရုပ်ပြ",
+        "t-menu-org": "ဖွဲ့စည်းပုံ", "t-desc-org": "ကုမ္ပဏီဖွဲ့စည်းပုံ", "t-menu-view": "မှတ်တမ်းကြည့်ရန်", "t-desc-view": "နေ့စဉ်အချိန်ကြည့်ရန်",
+        "t-menu-reg": "စာရင်းသွင်းရန်", "t-desc-reg": "မျက်နှာစာရင်းသွင်းပါ", "t-menu-cfg": "GPS နေရာ", "t-desc-cfg": "Admin သာလျှင်",
+        "t-broadcast-title": "ကြေငြာချက်", "t-tutor-title": "📖 အသုံးပြုသူလမ်းညွှန်", "t-tutor-desc": "အသုံးပြုနည်း",
         "t-tutor-s1-t": "📷 1. အလုပ်ဝင် / ဆင်း", "t-tutor-s1-d": "မျက်နှာဖတ်ပြီး GPS မှတ်တမ်းတင်ရန် နှိပ်ပါ။",
         "t-tutor-s2-t": "📝 2. ခွင့်တိုင်ရန်", "t-tutor-s2-d": "အမျိုးအစားကိုရွေးပါ -> အမည်ထည့်ပါ။",
         "t-tutor-s3-t": "⏰ 3. အချိန်စစ်ရန်", "t-tutor-s3-d": "သင်၏ OT နှင့် နောက်ကျမှုကိုကြည့်ရန် အမည်ရှာပါ။",
-        "t-org-title": "🏢 ကုမ္ပဏီဖွဲ့စည်းပုံ",
-        "t-l-title": "ခွင့်အမျိုးအစား", "t-l-desc": "အကြောင်းပြချက်ရွေးပါ",
-        "t-l-sick": "<span>🤧</span> ဖျားနာ", "t-l-personal": "<span>💼</span> ကိုယ်ရေးကိုယ်တာ", 
-        "t-l-halfm": "<span>🌅</span> မနက်ပိုင်း", "t-l-halfa": "<span>🌇</span> ညနေပိုင်း", "t-l-annual": "<span>🏖️</span> နှစ်စဉ်ခွင့်",
-        "t-ls-desc": "သင်၏အမည်အပြည့်အစုံကိုထည့်ပါ",
-        "t-c-title": "အချိန်စစ်", "t-c-desc": "OT နှင့် နောက်ကျအချိန်ကိုကြည့်ပါ",
-        "t-r-late": "နောက်ကျ:", "t-r-ot": "OT စုစုပေါင်း:",
-        "t-pwd-title": "Admin အတည်ပြုရန်", "t-pwd-desc": "စကားဝှက်ထည့်ပါ",
-        "t-a-title": "📋 Admin မှတ်တမ်း", "t-a-desc": "နေ့စဉ်အချိန်ကြည့်ရန်",
-        "t-trans-title": "🌐 ဘာသာပြန်", "t-trans-desc": "စာရိုက်ပါ သို့မဟုတ် ပြောပါ",
-        "t-trans-choose": "ဘာသာစကားကိုရွေးပါ:",
-        "t-force-title": "အရေးကြီးသောကြေငြာချက်", "btn-ack-broadcast": "🔊 နားလည်ပါပြီ",
-        "t-slip-title": "💵 လစာဖြတ်ပိုင်း", "t-slip-desc": "PIN ထည့်ပါ",
-        "t-cert-title": "📜 လစာထောက်ခံစာ", "t-cert-desc": "PIN ထည့်ပါ",
+        "t-org-title": "🏢 ကုမ္ပဏီဖွဲ့စည်းပုံ", "t-l-title": "ခွင့်အမျိုးအစား", "t-l-desc": "အကြောင်းပြချက်ရွေးပါ",
+        "t-l-sick": "<span>🤧</span> ဖျားနာ", "t-l-personal": "<span>💼</span> ကိုယ်ရေးကိုယ်တာ", "t-l-halfm": "<span>🌅</span> မနက်ပိုင်း", "t-l-halfa": "<span>🌇</span> ညနေပိုင်း", "t-l-annual": "<span>🏖️</span> နှစ်စဉ်ခွင့်",
+        "t-ls-desc": "သင်၏အမည်အပြည့်အစုံကိုထည့်ပါ", "t-c-title": "အချိန်စစ်", "t-c-desc": "OT နှင့် နောက်ကျအချိန်ကိုကြည့်ပါ",
+        "t-r-late": "နောက်ကျ:", "t-r-ot": "OT စုစုပေါင်း:", "t-pwd-title": "Admin အတည်ပြုရန်", "t-pwd-desc": "စကားဝှက်ထည့်ပါ",
+        "t-a-title": "📋 Admin မှတ်တမ်း", "t-a-desc": "နေ့စဉ်အချိန်ကြည့်ရန်", "t-trans-title": "🌐 ဘာသာပြန်", "t-trans-desc": "စာရိုက်ပါ သို့မဟုတ် ပြောပါ",
+        "t-trans-choose": "ဘာသာစကားကိုရွေးပါ:", "t-force-title": "အရေးကြီးသောကြေငြာချက်", "btn-ack-broadcast": "🔊 နားလည်ပါပြီ",
+        "t-slip-title": "💵 လစာဖြတ်ပိုင်း", "t-slip-desc": "PIN ထည့်ပါ", "t-cert-title": "📜 လစာထောက်ခံစာ", "t-cert-desc": "PIN ထည့်ပါ",
         "btn-close-tutor": "ပိတ်မည်", "btn-close-org": "ပိတ်မည်", "btn-cancel-leave": "ပယ်ဖျက်", "btn-cancel-leave2": "ပယ်ဖျက်",
-        "btn-submit-l": "အတည်ပြုပါ", "btn-search-time": "ရှာဖွေမည်", "btn-close-time": "ပိတ်မည်",
-        "btn-confirm-pwd": "အတည်ပြု", "btn-cancel-pwd": "ပယ်ဖျက်", "btn-search-admin": "ရှာဖွေမည်", "btn-close-admin": "ပိတ်မည်",
-        "btn-close-trans": "ပိတ်မည်", "btn-view-slip": "ရှာဖွေမည်", "btn-close-slip": "ပိတ်မည်", "btn-view-cert": "တောင်းခံမည်", "btn-close-cert": "ပိတ်မည်",
-        "placeholder-name": "အမည်...",
-        "placeholder-pin": "ဝန်ထမ်း PIN..."
+        "btn-submit-l": "အတည်ပြုပါ", "btn-search-time": "ရှာဖွေမည်", "btn-close-time": "ပိတ်မည်", "btn-confirm-pwd": "အတည်ပြု", "btn-cancel-pwd": "ပယ်ဖျက်",
+        "btn-search-admin": "ရှာဖွေမည်", "btn-close-admin": "ပိတ်မည်", "btn-close-trans": "ပိတ်မည်", "btn-view-slip": "ရှာဖွေမည်", "btn-close-slip": "ပိတ်မည်",
+        "btn-view-cert": "တောင်းခံမည်", "btn-close-cert": "ပိတ်မည်", "placeholder-name": "အမည်...", "placeholder-pin": "ဝန်ထမ်း PIN..."
       }
     };
 
@@ -593,10 +572,6 @@
       } catch (e) { showToast('ระบบเครือข่ายมีปัญหา', 'error'); } finally { btn.disabled = false; btn.innerText = dict[currentLang]['btn-search-admin']; }
     }
 
-    // ==========================================
-    // 🌟 ฟังก์ชัน สลิปเงินเดือน & ใบรับรอง ย้อนหลัง
-    // (ส่ง PIN ไปยัง Backend เพื่อประมวลผล)
-    // ==========================================
     async function fetchPayslip() {
       const pin = document.getElementById('slipInputPin').value.trim(); 
       if (!pin) return showToast(currentLang === 'th' ? 'กรุณาระบุรหัสพนักงาน' : 'Please enter PIN', 'error');
