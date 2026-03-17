@@ -297,19 +297,6 @@
   <script>
     const HARDCODED_API_URL = "https://script.google.com/macros/s/AKfycbwSq2fRZZxr6lP-07D9uw_B2chNk48U3UXPzD7zBQioTDCt2glr9oyV7HpcSxwKtQ0/exec";
 
-    // 🌟 ระบบจับคู่รหัสผ่าน (PIN) กับชื่อพนักงาน
-    const employeePins = {
-      "001": "ชัยธวัช พูลคุ้ม",
-      "002": "ศิริมงคล เทียนงาม",
-      "003": "Zin Min Aung",
-      "004": "ศรินดา หอกซัด",
-      "005": "คมคณิน โจมฤทธิ์",
-      "006": "Oo",
-      "007": "Tayzarlay",
-      "008": "Got samabut",
-      "009": "nay min aung"
-    };
-
     // --- ระบบพจนานุกรมแปลภาษา ---
     const dict = {
       th: {
@@ -481,7 +468,6 @@
       let optionsHTML = "";
       let now = new Date();
       let cycleM = now.getMonth(); let cycleY = now.getFullYear();
-      // เช็คว่าถ้าเลยวันที่ 26 ไปแล้ว ถือว่าขึ้นรอบเดือนใหม่
       if (now.getDate() >= 26) { cycleM++; if (cycleM > 11) { cycleM = 0; cycleY++; } }
       
       for(let i=0; i<6; i++) {
@@ -495,8 +481,6 @@
           if(i===0) label += " (ปัจจุบัน)";
           
           optionsHTML += `<option value="${cycleStr}">${label}</option>`;
-          
-          // ถอยหลังไป 1 เดือน
           cycleM--; if(cycleM < 0) { cycleM = 11; cycleY--; }
       }
       slipSelect.innerHTML = optionsHTML;
@@ -504,7 +488,7 @@
     }
 
     window.onload = () => {
-      populateCycles(); // เรียกใช้งานเพื่อสร้างเมนู Dropdown ให้ทันที
+      populateCycles(); 
       setLang(currentLang); updateClock();
       if (HARDCODED_API_URL) {
         fetch(HARDCODED_API_URL + '?action=getConfig').then(r => r.json()).then(config => {
@@ -611,14 +595,12 @@
 
     // ==========================================
     // 🌟 ฟังก์ชัน สลิปเงินเดือน & ใบรับรอง ย้อนหลัง
+    // (ส่ง PIN ไปยัง Backend เพื่อประมวลผล)
     // ==========================================
     async function fetchPayslip() {
       const pin = document.getElementById('slipInputPin').value.trim(); 
       if (!pin) return showToast(currentLang === 'th' ? 'กรุณาระบุรหัสพนักงาน' : 'Please enter PIN', 'error');
       
-      const name = employeePins[pin];
-      if (!name) return showToast(currentLang === 'th' ? 'รหัสพนักงานไม่ถูกต้อง' : 'Invalid PIN', 'error');
-
       const cycleValue = document.getElementById('slipCycleSelect').value;
       const cycleLabel = document.getElementById('slipCycleSelect').options[document.getElementById('slipCycleSelect').selectedIndex].text;
       
@@ -626,7 +608,7 @@
       document.getElementById('slipResult').style.display = 'none'; document.getElementById('btnPrintSlip').style.display = 'none';
       
       try {
-        const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'getPayslip', name: name, cycle: cycleValue }) });
+        const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'getPayslipByPin', pin: pin, cycle: cycleValue }) });
         const data = await res.json();
         
         if (data.success) {
@@ -652,9 +634,6 @@
       const pin = document.getElementById('certInputPin').value.trim(); 
       if (!pin) return showToast(currentLang === 'th' ? 'กรุณาระบุรหัสพนักงาน' : 'Please enter PIN', 'error');
       
-      const name = employeePins[pin];
-      if (!name) return showToast(currentLang === 'th' ? 'รหัสพนักงานไม่ถูกต้อง' : 'Invalid PIN', 'error');
-
       const cycleValue = document.getElementById('certCycleSelect').value;
       const cycleLabel = document.getElementById('certCycleSelect').options[document.getElementById('certCycleSelect').selectedIndex].text;
       
@@ -662,7 +641,7 @@
       document.getElementById('certResult').style.display = 'none'; document.getElementById('btnPrintCert').style.display = 'none';
       
       try {
-        const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'getCertificate', name: name, cycle: cycleValue }) });
+        const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'getCertificateByPin', pin: pin, cycle: cycleValue }) });
         const data = await res.json();
         
         if (data.success) {
