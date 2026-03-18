@@ -44,7 +44,7 @@
     .status-icon { font-size: 2.5em; margin-bottom: 10px; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
     .status-text { font-size: 1.1em; font-weight: 600; color: var(--gold-light); }
-    .sub-text { font-size: 0.85em; color: var(--text-sub); margin-top: 5px; }
+    .sub-text { font-size: 0.9em; color: #fff; margin-top: 5px; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 10px; display: inline-block;}
     .gps-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 12px; font-size: 0.8em; color: #cbd5e1; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1); }
 
     .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 400px; }
@@ -85,6 +85,7 @@
       <div class="status-icon" id="statusIcon">⏳</div>
       <div class="status-text" id="statusText">กำลังโหลดระบบ...</div>
       <div class="sub-text" id="subText">กรุณารอสักครู่</div>
+      <br>
       <div class="gps-badge" id="gpsBadge">📍 <span>กำลังดึงพิกัด GPS...</span></div>
     </div>
 
@@ -121,104 +122,125 @@
     async function init() {
       navigator.geolocation.getCurrentPosition(
         pos => { currentLat = pos.coords.latitude; currentLng = pos.coords.longitude; locationReady = true; document.getElementById('gpsBadge').innerHTML = '📍 <span style="color:var(--neon-in);">พิกัดพร้อมใช้งาน</span>'; },
-        err => { document.getElementById('gpsBadge').innerHTML = '📍 <span style="color:var(--neon-out);">ไม่สามารถดึงพิกัดได้</span>'; }
+        err => { document.getElementById('gpsBadge').innerHTML = '📍 <span style="color:var(--neon-out);">ไม่สามารถดึงพิกัดได้ (อาจบันทึกไม่ได้)</span>'; }
       );
 
-      setStatus('กำลังโหลดข้อมูล AI...', 'กรุณารอสักครู่', '🧠');
+      setStatus('กำลังโหลดข้อมูล AI...', 'กรุณารอสักครู่ (อาจใช้เวลา 5-10 วินาที)', '🧠');
       try {
         await Promise.all([ faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL), faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL), faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL) ]);
-      } catch (e) { return setStatus('โหลด AI ไม่สำเร็จ', 'ตรวจสอบอินเทอร์เน็ต', '❌'); }
+      } catch (e) { return setStatus('โหลด AI ไม่สำเร็จ', 'โปรดตรวจสอบความเร็วอินเทอร์เน็ต', '❌'); }
 
-      setStatus('กำลังดึงฐานข้อมูล...', 'เชื่อมต่อเซิร์ฟเวอร์', '☁️');
+      setStatus('กำลังโหลดข้อมูลพนักงาน...', 'เชื่อมต่อเซิร์ฟเวอร์', '☁️');
       try {
         const res = await fetch(apiUrl + '?action=getKnownFaces'); const users = await res.json();
         if (users && users.length > 0) { knownFaces = users.map(u => new faceapi.LabeledFaceDescriptors(u.label, [new Float32Array(u.descriptor)])); } 
-        else return setStatus('ไม่พบฐานข้อมูล', 'ยังไม่มีผู้ลงทะเบียน', '⚠️');
-      } catch (e) { return setStatus('เชื่อมต่อเซิร์ฟเวอร์ล้มเหลว', 'ลองรีเฟรชหน้าใหม่', '🔌'); }
+        else return setStatus('ไม่พบฐานข้อมูล', 'ยังไม่มีผู้ลงทะเบียนในระบบ', '⚠️');
+      } catch (e) { return setStatus('เชื่อมต่อเซิร์ฟเวอร์ล้มเหลว', 'ลองรีเฟรชหน้าใหม่อีกครั้ง', '🔌'); }
       startCamera();
     }
 
     async function startCamera() {
-      setStatus('กำลังเปิดกล้อง...', 'โปรดอนุญาตการเข้าถึงกล้อง', '📷');
+      setStatus('กำลังเปิดกล้อง...', 'โปรดอนุญาตการเข้าถึงกล้องของคุณ', '📷');
       const video = document.getElementById('video');
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } } });
         video.srcObject = stream;
         video.onloadedmetadata = () => {
           document.getElementById('focusFrame').style.display = 'block'; document.getElementById('laserLine').style.display = 'block';
-          setStatus('พร้อมสแกน', 'กรุณามองกล้องให้อยู่ในกรอบ', '👁️'); startFaceDetection(video);
+          setStatus('พร้อมสแกน', 'จัดใบหน้าให้อยู่ในกรอบและมีแสงสว่าง', '👁️'); startFaceDetection(video);
         };
-      } catch (e) { setStatus('เปิดกล้องไม่ได้', 'กรุณาตรวจสอบสิทธิ์', '🚫'); }
+      } catch (e) { setStatus('เปิดกล้องไม่ได้', 'กรุณาตรวจสอบสิทธิ์ของเบราว์เซอร์', '🚫'); }
     }
 
     function startFaceDetection(video) {
       const canvas = document.getElementById('canvas'); const displaySize = { width: video.clientWidth, height: video.clientHeight };
       faceapi.matchDimensions(canvas, displaySize); 
       
-      // 🌟 1. ปรับความเข้มงวด (ยิ่งค่าน้อย ยิ่งต้องเหมือนตัวจริงเป๊ะๆ แนะนำ 0.38 - 0.40)
-      const STRICT_THRESHOLD = 0.38; 
+      // 🌟 ปรับปรุง: ผ่อนปรนค่าความเข้มงวด (0.38 -> 0.48) ให้สแกนติดง่ายขึ้นมาก แต่ยังปลอดภัย
+      const STRICT_THRESHOLD = 0.48; 
       const faceMatcher = new faceapi.FaceMatcher(knownFaces, STRICT_THRESHOLD);
 
-      // 🌟 2. ตัวแปรนับจำนวนครั้ง ป้องกันการแสกนติดคนอื่นแบบแวบเดียว
       let matchCount = 0;
       let lastMatchLabel = '';
 
+      // 🌟 ปรับปรุง: เพิ่มความเร็วการสแกน (500ms -> 150ms) ให้ลื่นไหลและจับจังหวะง่ายขึ้น
       setInterval(async () => {
         if (isProcessing) return;
         const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
         const ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         if (detection) {
-          const resizedDetection = faceapi.resizeResults(detection, displaySize); const box = resizedDetection.detection.box;
-          const drawBox = new faceapi.draw.DrawBox({ x: displaySize.width - box.x - box.width, y: box.y, width: box.width, height: box.height }, { boxColor: 'rgba(212,175,55,0.5)', lineWidth: 2 });
-          drawBox.draw(canvas);
+          // 🌟 ปรับปรุง: เช็คว่าภาพเบลอหรือมืดไปไหม ถ้าใช่ให้เตือนพนักงาน
+          if(detection.detection.score < 0.4) {
+             document.getElementById('subText').innerText = "หน้าไม่ชัดเจน โปรดขยับหรือเพิ่มแสงสว่าง💡";
+             document.getElementById('subText').style.color = "#fca5a5";
+             return;
+          }
 
+          const resizedDetection = faceapi.resizeResults(detection, displaySize); const box = resizedDetection.detection.box;
           const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
 
-          if (bestMatch.label !== 'unknown' && bestMatch.distance <= STRICT_THRESHOLD) {
-            
-            // เช็คว่าหน้าตรงกับเฟรมที่แล้วหรือไม่
-            if (bestMatch.label === lastMatchLabel) {
-                matchCount++;
-            } else {
-                lastMatchLabel = bestMatch.label;
-                matchCount = 1;
-            }
+          let boxColor = 'rgba(225,29,72,0.8)'; // สีแดง = ไม่รู้จัก
+          let msgText = "ไม่รู้จักใบหน้านี้ (Unknown)";
+          let msgColor = "#fca5a5";
 
-            // ต้องเจอหน้า "คนเดิม" ติดกัน 3 เฟรม ถึงจะบันทึก (กันหน้าคนอื่นโฉบเข้ามา)
-            if (matchCount >= 3) {
+          if (bestMatch.label !== 'unknown' && bestMatch.distance <= STRICT_THRESHOLD) {
+            boxColor = 'rgba(252,211,77,0.8)'; // สีเหลือง = กำลังยืนยัน
+            msgText = `กำลังยืนยันคุณ ${bestMatch.label}... (${matchCount + 1}/4)`;
+            msgColor = "#fcd34d";
+
+            if (bestMatch.label === lastMatchLabel) { matchCount++; } 
+            else { lastMatchLabel = bestMatch.label; matchCount = 1; }
+
+            // ยืนยันติดกัน 4 เฟรม (ที่ 150ms = ใช้เวลาแค่ 0.6 วินาที)
+            if (matchCount >= 4) {
+                boxColor = 'rgba(16,185,129,0.9)'; // สีเขียว = สำเร็จ
                 isProcessing = true; 
                 matchCount = 0;
                 document.getElementById('laserLine').style.display = 'none'; 
                 document.getElementById('focusFrame').style.display = 'none'; 
+                
+                // วาดกรอบสีเขียวค้างไว้ก่อนโหลด
+                const finalBox = new faceapi.draw.DrawBox({ x: displaySize.width - box.x - box.width, y: box.y, width: box.width, height: box.height }, { boxColor: boxColor, lineWidth: 4 });
+                finalBox.draw(canvas);
+                
                 handleSuccess(bestMatch.label);
-            } else {
-                document.getElementById('subText').innerText = `กำลังยืนยันตัวตน... (${matchCount}/3)`;
+                return;
             }
-
           } else {
-            // ถ้าระยะห่างมากไป (ไม่เหมือนตัวจริง) ให้รีเซ็ตการนับใหม่
-            matchCount = 0;
-            lastMatchLabel = '';
-            document.getElementById('subText').innerText = "กำลังประมวลผล... ค้างไว้สักครู่";
+            matchCount = 0; lastMatchLabel = '';
+            
+            // 🌟 ปรับปรุง: ถ้าหน้าคล้ายๆ แต่ไม่ผ่าน (ระยะห่างเกินนิดหน่อย) ให้ใบ้พนักงาน
+            if (bestMatch.label !== 'unknown' && bestMatch.distance <= (STRICT_THRESHOLD + 0.12)) {
+               msgText = `หน้าคล้ายคุณ ${bestMatch.label} โปรดมองกล้องตรงๆ/ถอดแว่น`;
+               msgColor = "#93c5fd";
+               boxColor = 'rgba(56,189,248,0.8)'; // สีฟ้า
+            }
           }
+
+          // วาดกรอบแสดงสถานะให้พนักงานเห็น
+          const drawBox = new faceapi.draw.DrawBox({ x: displaySize.width - box.x - box.width, y: box.y, width: box.width, height: box.height }, { boxColor: boxColor, lineWidth: 3 });
+          drawBox.draw(canvas);
+          
+          document.getElementById('subText').innerText = msgText;
+          document.getElementById('subText').style.color = msgColor;
+
         } else { 
-           // ถ้าไม่เจอหน้าคน ให้รีเซ็ตการนับ
-           matchCount = 0;
-           lastMatchLabel = '';
-           document.getElementById('subText').innerText = "ไม่พบใบหน้าในกรอบ"; 
+           matchCount = 0; lastMatchLabel = '';
+           document.getElementById('subText').innerText = "ไม่พบใบหน้า โปรดอยู่ในกรอบโฟกัส"; 
+           document.getElementById('subText').style.color = "#ffffff";
         }
-      }, 500); 
+      }, 150); 
     }
 
     async function handleSuccess(name) {
-      setStatus(`พบ: ${name}`, 'กำลังบันทึกข้อมูลลงระบบ...', '🔄');
+      setStatus(`พบ: ${name}`, 'กำลังบันทึกข้อมูลเข้าฐานข้อมูล...', '🔄');
+      document.getElementById('subText').style.color = "#10b981";
       try {
         const res = await fetch(apiUrl, { method: 'POST', body: JSON.stringify({ action: 'logAttendance', name: name, type: scanType, lat: currentLat, lng: currentLng }) });
         const result = await res.json();
         
         if(result.success) {
-          // ซ่อนกล้อง
           document.querySelector('.scanner-wrapper').style.display = 'none'; 
           document.querySelector('.status-card').style.display = 'none';
           
@@ -231,14 +253,13 @@
           const stream = document.getElementById('video').srcObject; 
           if (stream) stream.getTracks().forEach(track => track.stop());
 
-          // กลับหน้าแรกอัตโนมัติภายใน 3 วินาที
           setTimeout(() => { window.location.href = 'index.html'; }, 3000);
 
         } else {
-          showToast(result.message, 'error'); isProcessing = false; document.getElementById('laserLine').style.display = 'block'; document.getElementById('focusFrame').style.display = 'block'; setStatus('พร้อมสแกน', 'ลองใหม่อีกครั้ง', '👁️');
+          showToast(result.message, 'error'); isProcessing = false; document.getElementById('laserLine').style.display = 'block'; document.getElementById('focusFrame').style.display = 'block'; setStatus('พร้อมสแกน', 'เกิดข้อผิดพลาด ลองใหม่อีกครั้ง', '👁️');
         }
       } catch (err) {
-        showToast('การเชื่อมต่อล้มเหลว', 'error'); isProcessing = false; document.getElementById('laserLine').style.display = 'block'; document.getElementById('focusFrame').style.display = 'block'; setStatus('พร้อมสแกน', 'กรุณามองกล้อง', '👁️');
+        showToast('การเชื่อมต่อล้มเหลว', 'error'); isProcessing = false; document.getElementById('laserLine').style.display = 'block'; document.getElementById('focusFrame').style.display = 'block'; setStatus('พร้อมสแกน', 'อินเทอร์เน็ตมีปัญหา', '👁️');
       }
     }
 
