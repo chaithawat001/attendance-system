@@ -2,330 +2,130 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ลงทะเบียนใบหน้า</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <script src="js/api-config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ลงทะเบียนใบหน้า | 88 Designs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg-base: #000000; --card-bg: rgba(12, 12, 12, 0.85); --gold-primary: #d4af37; --gold-light: #fef08a; --gold-dark: #b45309; --text-main: #ffffff; --text-sub: #d1d5db; --neon-in: #10b981; --neon-out: #e11d48; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; }
+    body { background-color: var(--bg-base); background-image: url('pngtree-black-gold-business-meeting-simple-image_37604.jpg'); background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat; color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; overflow-x: hidden; }
+    body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.95) 100%); z-index: 0; pointer-events: none; }
+    
+    .container { width: 100%; max-width: 450px; z-index: 1; display: flex; flex-direction: column; height: 100vh; }
+    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-top: 10px; }
+    .back-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); text-decoration: none; padding: 10px 20px; border-radius: 20px; font-weight: 600; font-size: 0.95em; transition: 0.3s; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); }
+    .page-title { font-size: 1.4em; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--gold-primary); }
 
-    body {
-      font-family: 'Sarabun', sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #0d1b2a 100%);
-      color: #e2e8f0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 28px 16px 60px;
-      position: relative;
-    }
+    .scanner-wrapper { position: relative; width: 100%; aspect-ratio: 3/4; background: #000; border-radius: 30px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 0 2px rgba(212,175,55,0.3); margin-bottom: 20px; }
+    video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; }
 
-    /* Ambient orb */
-    body::before {
-      content: '';
-      position: fixed;
-      width: 400px; height: 400px;
-      background: #6366f1;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.12;
-      top: -80px; left: -80px;
-      pointer-events: none; z-index: 0;
-    }
+    .input-card { background: var(--card-bg); border: 1px solid rgba(212,175,55,0.2); border-radius: 20px; padding: 20px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .input-field { width: 100%; padding: 14px; border-radius: 16px; border: 1px solid rgba(212,175,55,0.3); background: rgba(0,0,0,0.6); color: white; font-size: 1em; text-align: center; margin-bottom: 12px; outline: none; }
+    .btn { width: 100%; padding: 14px; border-radius: 16px; border: none; font-size: 1em; font-weight: 600; cursor: pointer; transition: 0.3s; background: linear-gradient(135deg, var(--gold-light), var(--gold-primary)); color: #000; box-shadow: 0 4px 15px rgba(212,175,55,0.3); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; background: #333; color: #888; box-shadow: none; border: 1px solid #555; }
 
-    .container {
-      width: 100%;
-      max-width: 520px;
-      position: relative; z-index: 1;
-      animation: fadeIn 0.5s ease;
-    }
-
-    /* Header */
-    .page-header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .back-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: #64748b; text-decoration: none; font-size: 0.88em;
-      padding: 6px 12px; border-radius: 20px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.25s ease;
-      margin-bottom: 16px;
-    }
-    .back-btn:hover { color: #e2e8f0; background: rgba(255,255,255,0.1); }
-
-    h2 {
-      font-size: 1.6em; font-weight: 700;
-      background: linear-gradient(135deg, #a5b4fc, #e2e8f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 4px;
-    }
-    .instruction {
-      font-size: 0.83em; color: #64748b; line-height: 1.6;
-    }
-
-    /* Step dots */
-    .step-dots {
-      display: flex; justify-content: center; gap: 10px;
-      margin: 16px 0 20px;
-    }
-    .dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.2);
-      transition: all 0.3s ease;
-    }
-    .dot.active {
-      background: #6366f1;
-      box-shadow: 0 0 10px rgba(99,102,241,0.6);
-    }
-
-    /* Status */
-    #status {
-      font-size: 0.88em; color: #64748b;
-      margin-bottom: 14px; min-height: 20px;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    .spinner {
-      display: inline-block;
-      width: 14px; height: 14px;
-      border: 2px solid rgba(99,102,241,0.3);
-      border-top-color: #6366f1;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    /* Video */
-    .video-wrapper {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 2px solid rgba(99,102,241,0.4);
-      box-shadow: 0 0 30px rgba(99,102,241,0.2), inset 0 0 30px rgba(0,0,0,0.3);
-      background: #0a0a1a;
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-    video {
-      width: 100%; display: block;
-      transform: scaleX(-1);
-      border-radius: 18px;
-    }
-
-    /* Form Section */
-    .form-section {
-      margin-top: 22px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 18px;
-      padding: 22px 20px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    .input-group {
-      position: relative;
-      margin-bottom: 16px;
-    }
-    .input-group input {
-      width: 100%;
-      padding: 14px 16px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 12px;
-      color: #e2e8f0;
-      font-size: 15px;
-      font-family: 'Sarabun', sans-serif;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-    .input-group input::placeholder { color: #475569; }
-    .input-group input:focus {
-      border-color: rgba(99,102,241,0.6);
-      background: rgba(99,102,241,0.06);
-      box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
-    }
-
-    #btnSave {
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, #6366f1, #4f46e5);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      font-size: 16px;
-      font-weight: 600;
-      font-family: 'Sarabun', sans-serif;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(99,102,241,0.3);
-    }
-    #btnSave:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(99,102,241,0.5);
-    }
-    #btnSave:disabled {
-      background: rgba(255,255,255,0.1);
-      color: #475569;
-      box-shadow: none;
-      cursor: default;
-    }
-
-    .count-badge {
-      background: rgba(255,255,255,0.2);
-      padding: 2px 10px;
-      border-radius: 20px;
-      font-size: 13px;
-    }
-    #btnSave:not(:disabled) .count-badge {
-      background: rgba(255,255,255,0.25);
-    }
-
-    #msg {
-      margin-top: 14px; min-height: 24px;
-      font-size: 0.9em; font-weight: 600;
-      text-align: center;
-    }
-    .msg-success { color: #34d399; }
-    .msg-error   { color: #f87171; }
-
-    /* Animations */
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes spin   { to { transform: rotate(360deg); } }
+    .developer-watermark { text-align: center; font-size: 0.75em; color: rgba(212, 175, 55, 0.5); margin-top: auto; padding-top: 20px; padding-bottom: 10px; line-height: 1.4; width: 100%; z-index: 10; }
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="page-header">
-    <a href="index.html" class="back-btn">← กลับ</a>
-    <h2>👤 ลงทะเบียนใบหน้า</h2>
-    <p class="instruction">บันทึก 3 มุม: หน้าตรง / หันซ้ายเล็กน้อย / หันขวาเล็กน้อย<br>เพื่อความแม่นยำสูงสุด</p>
-  </div>
 
-  <div class="step-dots">
-    <div class="dot" id="dot1"></div>
-    <div class="dot" id="dot2"></div>
-    <div class="dot" id="dot3"></div>
-  </div>
-
-  <div id="status">
-    <span class="spinner"></span> กำลังโหลด AI Model...
-  </div>
-
-  <div class="video-wrapper">
-    <video id="video" autoplay muted playsinline></video>
-  </div>
-
-  <div class="form-section">
-    <div class="input-group">
-      <input type="text" id="username" placeholder="ชื่อ-นามสกุลพนักงาน">
+  <div class="container">
+    <div class="top-bar">
+      <a href="index.html" class="back-btn"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>กลับ</a>
+      <div class="page-title">ลงทะเบียนใบหน้า</div>
+      <div style="width: 80px;"></div>
     </div>
 
-    <button id="btnSave" onclick="saveFace()" disabled>
-      📸 บันทึกใบหน้า <span id="saveCount" class="count-badge">0</span>
-    </button>
+    <div class="scanner-wrapper">
+      <video id="video" autoplay muted playsinline></video>
+      <canvas id="canvas"></canvas>
+    </div>
 
-    <div id="msg"></div>
+    <div class="input-card">
+      <div id="statusText" style="color:var(--gold-light); margin-bottom:10px; font-weight:600;">กำลังโหลด AI...</div>
+      <input type="text" id="employeeName" class="input-field" placeholder="ชื่อ-นามสกุลจริง (ห้ามพิมพ์ผิด)">
+      <button class="btn" id="btnRegister" onclick="registerFace()" disabled>📸 บันทึกใบหน้า</button>
+    </div>
+
+    <div class="developer-watermark">
+      Developed by MR.CHAITHAWAT PUMKOOM<br><span style="font-size: 0.85em; opacity: 0.8;">(Software Developer & Programmer)</span>
+    </div>
   </div>
-</div>
 
-<script>
-  const API_URL   = localStorage.getItem('gasApiUrl') || GAS_API_URL;
-  const video     = document.getElementById('video');
-  const statusDiv = document.getElementById('status');
-  const btnSave   = document.getElementById('btnSave');
-  const msgDiv    = document.getElementById('msg');
-  const countSpan = document.getElementById('saveCount');
-  let saveCounter = 0;
+  <script>
+    const HARDCODED_API_URL = "https://script.google.com/macros/s/AKfycbwSq2fRZZxr6lP-07D9uw_B2chNk48U3UXPzD7zBQioTDCt2glr9oyV7HpcSxwKtQ0/exec"; 
+    let currentDescriptor = null;
+    const MODEL_URL = 'https://justadudewhohacks.github.io/face-api.js/models';
 
-  if (!API_URL) {
-    statusDiv.innerHTML = '<span style="color:#f87171">❌ ยังไม่ได้ตั้งค่า API URL — <a href="config.html" style="color:#fbbf24">ไปตั้งค่า</a></span>';
-  } else {
-    window.addEventListener('load', initModels);
-  }
-
-  function updateDots() {
-    [1,2,3].forEach(i => {
-      const dot = document.getElementById('dot' + i);
-      dot.className = 'dot' + (i <= saveCounter ? ' active' : '');
-    });
-  }
-
-  async function initModels() {
-    try {
-      const MODEL_URL = 'https://justadudewhohacks.github.io/face-api.js/models';
-      await Promise.all([
-        faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
-        faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-        faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
-      ]);
-      startCamera();
-    } catch (e) {
-      statusDiv.innerHTML = '<span style="color:#f87171">❌ โหลด AI Model ล้มเหลว: ' + e.message + '</span>';
-    }
-  }
-
-  function startCamera() {
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
-      .then(stream => {
+    async function init() {
+      const video = document.getElementById('video');
+      document.getElementById('statusText').innerText = "กำลังโหลด AI... (ใช้เวลาสักครู่)";
+      try {
+        await Promise.all([ faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL), faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL), faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL) ]);
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } } });
         video.srcObject = stream;
-        statusDiv.innerText = '';
-        btnSave.disabled = false;
-      })
-      .catch(err => {
-        statusDiv.innerHTML = '<span style="color:#f87171">❌ เปิดกล้องไม่ได้: ' + err.message + '</span>';
-      });
-  }
-
-  async function saveFace() {
-    const name = document.getElementById('username').value.trim();
-    if (!name) return alert('กรุณาใส่ชื่อก่อน');
-
-    btnSave.disabled = true;
-    btnSave.innerHTML = '⏳ กำลังประมวลผล... <span class="count-badge">' + saveCounter + '</span>';
-    msgDiv.innerText = '';
-
-    const detection = await faceapi
-      .detectSingleFace(video)
-      .withFaceLandmarks()
-      .withFaceDescriptor();
-
-    if (!detection) {
-      alert('ไม่พบใบหน้า! กรุณามองกล้องให้ชัดเจน');
-      btnSave.disabled = false;
-      btnSave.innerHTML = '📸 บันทึกใบหน้า <span class="count-badge" id="saveCount">' + saveCounter + '</span>';
-      return;
+        video.onloadedmetadata = () => { 
+            document.getElementById('statusText').innerText = "พร้อมแล้ว! กรุณามองกล้องให้อยู่ในที่สว่าง 💡"; 
+            startFaceDetection(video); 
+        };
+      } catch(e) { document.getElementById('statusText').innerText = "เปิดกล้องไม่สำเร็จ อนุญาตสิทธิ์ก่อนครับ"; }
     }
 
-    const descriptorArray = Array.from(detection.descriptor);
+    function startFaceDetection(video) {
+      const canvas = document.getElementById('canvas'); const displaySize = { width: video.clientWidth, height: video.clientHeight };
+      faceapi.matchDimensions(canvas, displaySize);
 
-    try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'registerUser', name, faceDescriptor: descriptorArray })
-      });
-      const data = await res.json();
+      setInterval(async () => {
+        const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
+        const ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const btn = document.getElementById('btnRegister');
+        const statusEl = document.getElementById('statusText');
 
-      saveCounter++;
-      countSpan.innerText = saveCounter;
-      updateDots();
-      msgDiv.innerHTML = '<span class="msg-success">✅ บันทึกครั้งที่ ' + saveCounter + ' สำเร็จ! ขยับหน้าเล็กน้อยแล้วกดอีกครั้ง</span>';
-      btnSave.disabled = false;
-      btnSave.innerHTML = '📸 บันทึกเพิ่ม <span class="count-badge" id="saveCount">' + saveCounter + '</span>';
-    } catch (e) {
-      msgDiv.innerHTML = '<span class="msg-error">❌ บันทึกล้มเหลว: ' + e.message + '</span>';
-      btnSave.disabled = false;
-      btnSave.innerHTML = '📸 บันทึกใบหน้า <span class="count-badge" id="saveCount">' + saveCounter + '</span>';
+        if (detection) {
+          // 🌟 ปรับปรุง: บังคับให้ AI มั่นใจเกิน 85% ว่านี่คือหน้าคนที่ชัดเจน (แสงพอ หน้าตรง) ถึงจะให้เซฟ
+          if (detection.detection.score < 0.85) {
+              statusEl.innerText = "⚠️ ใบหน้ายังไม่ชัดเจน โปรดหันหน้าตรงและอยู่ในที่สว่าง";
+              statusEl.style.color = "var(--neon-out)";
+              currentDescriptor = null; 
+              btn.disabled = true;
+          } else {
+              const resizedDetection = faceapi.resizeResults(detection, displaySize); const box = resizedDetection.detection.box;
+              const drawBox = new faceapi.draw.DrawBox({ x: displaySize.width - box.x - box.width, y: box.y, width: box.width, height: box.height }, { boxColor: 'rgba(16,185,129,0.8)', lineWidth: 3 });
+              drawBox.draw(canvas);
+              currentDescriptor = Array.from(detection.descriptor);
+              
+              statusEl.innerText = "✅ ใบหน้าชัดเจน พร้อมลงทะเบียน";
+              statusEl.style.color = "var(--neon-in)";
+              btn.disabled = false;
+          }
+        } else { 
+          currentDescriptor = null; 
+          btn.disabled = true; 
+          statusEl.innerText = "ไม่พบใบหน้า...";
+          statusEl.style.color = "var(--gold-light)";
+        }
+      }, 200); // 🌟 สแกนตอนลงทะเบียนให้ไวขึ้นด้วย
     }
-  }
-</script>
+
+    async function registerFace() {
+      const name = document.getElementById('employeeName').value.trim();
+      if (!name) return alert("กรุณาใส่ชื่อ-นามสกุลพนักงาน!");
+      if (!currentDescriptor) return alert("ใบหน้าไม่ชัดเจน หรือสว่างไม่พอ กรุณาปรับมุมกล้อง!");
+      
+      const btn = document.getElementById('btnRegister');
+      btn.disabled = true; btn.innerText = "กำลังอัปโหลดข้อมูลหน้าไปที่ระบบ...";
+
+      try {
+        const res = await fetch(HARDCODED_API_URL, { method: 'POST', body: JSON.stringify({ action: 'registerUser', name: name, faceDescriptor: currentDescriptor }) });
+        const result = await res.json();
+        if(result.success) { alert("🎉 ลงทะเบียนเสร็จสิ้น! พนักงานสามารถสแกนเข้างานได้ทันที"); window.location.href = "index.html"; } 
+        else { alert("เกิดข้อผิดพลาดจากเซิร์ฟเวอร์: " + result.message); }
+      } catch(e) { alert("การเชื่อมต่อล้มเหลว ตรวจสอบเน็ตครับ"); } finally { btn.innerText = "📸 บันทึกใบหน้า"; btn.disabled = false; }
+    }
+    window.onload = init;
+  </script>
 </body>
 </html>
